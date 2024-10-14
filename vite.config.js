@@ -5,5 +5,9 @@ export default {
     plugins: [
         vue(),
         svgLoader(),
-    ]
+    ],
+    server: {
+        host: '0.0.0.0',
+        port: 5173,
+    },
 }
