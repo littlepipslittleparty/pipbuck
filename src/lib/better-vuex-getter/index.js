@@ -61,7 +61,7 @@ const betterMapGetters = normalizeNamespace((namespace, getters) => {
         return
       }
       */
-      if (process.env.NODE_ENV !== 'production' && !(val in this.$store.getters)) {
+      if (import.meta.env.MODE !== 'production' && !(val in this.$store.getters)) {
         console.error((`[better-vuex-getter] unknown getter: ${val}`));
         return undefined;
       }

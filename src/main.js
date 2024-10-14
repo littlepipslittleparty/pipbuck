@@ -21,7 +21,7 @@ Vue.use(Meta, {
 });
 
 Vue.use(VueAnalytics, {
-  id: process.env.NODE_ENV !== 'production' ? 'UA-47744366-5' : 'UA-47744366-4',
+  id: import.meta.env.MODE !== 'production' ? 'UA-47744366-5' : 'UA-47744366-4',
   router,
   autoTracking: {
     pageviewOnLoad: true,
@@ -42,7 +42,9 @@ const ignored = new Vue({
   render: h => h(App),
 }).$mount('#app');
 
-if (process.env.NODE_ENV !== 'production') {
-  global.$vm = ignored;
+if (import.meta.env.MODE !== 'production') {
+  globalThis.$vm = ignored;
 }
-screenfull.request();
+if (screenfull.isEnabled) {
+  screenfull.request().then();
+}

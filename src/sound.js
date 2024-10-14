@@ -112,7 +112,7 @@ const sounds = {
   ],
 };
 
-const pipbuckConfig = require('./assets/sprites/pipbuck_sprites.json');
+import pipbuckConfig from './assets/sprites/pipbuck_sprites.json';
 
 // Setup the new Howl.
 const pipbuckSprites = new Howl({

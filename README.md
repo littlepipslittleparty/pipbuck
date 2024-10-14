@@ -6,8 +6,19 @@ Pipboy mobile webapp, with a hint of Fallout Equestria.
 
 Demo at https://pip.bonbotics.com.
 
-
 ## Project setup
+Build with node 18.
+```bash
+nvm use 18
+yarn install
+```
+
+Using vite for development.
+```bash
+yarn dev
+```
+
+## Project setup (old)
 ```
 nvm use 12
 yarn install

@@ -9,13 +9,13 @@ Vue.use(Vuex);
 
 const vuexLocal = new VuexPersistence({
   storage: window.sessionStorage, // window.localStorage,
-  strictMode: process.env.NODE_ENV !== 'production',
+  strictMode: import.meta.env.MODE !== 'production',
   key: 'pipbuck-gamedata',
 });
 
 const radio = {
-  debug: process.env.NODE_ENV !== 'production',
-  strict: process.env.NODE_ENV !== 'production',
+  debug: import.meta.env.MODE !== 'production',
+  strict: import.meta.env.MODE !== 'production',
   state: {
     current_time: 0, // audio.currentTime = 60;
     selected: null,
@@ -101,8 +101,8 @@ const radio = {
 };
 
 const store = new Vuex.Store({
-  debug: process.env.NODE_ENV !== 'production',
-  strict: process.env.NODE_ENV !== 'production',
+  debug: import.meta.env.MODE !== 'production',
+  strict: import.meta.env.MODE !== 'production',
   plugins: [vuexLocal.plugin],
   modules: {
     radio: {
