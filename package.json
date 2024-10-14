@@ -7,7 +7,8 @@
     "build": "vite build",
     "serve": "vite preview",
     "lint": "vue-cli-service lint",
-    "now-build": "yarn run build"
+    "now-build": "yarn run build",
+    "tauri": "tauri"
   },
   "dependencies": {
     "@vitejs/plugin-vue2": "^2.3.1",
