@@ -9,6 +9,8 @@ Demo at https://pip.bonbotics.com.
 ## Project setup
 Build with node 18.
 ```bash
+brew install nvm yarn
+
 nvm use 18
 yarn install
 ```
@@ -18,10 +20,39 @@ Using vite for development.
 yarn dev
 ```
 
-## Tauri setup
+## Tauri initial setup
+```shell
+# prepare js
+yarn install
+
+# prepare rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+echo '# cargo / rust' >> ~/.zshrc
+echo '. "$HOME/.cargo/env"' >> ~/.zshrc 
+#or: brew install rust
+
+# prepare xcode
+open https://developer.apple.com/download/all/?q=Simulator%20Runtime%2017.4
+echo 'Please download: iOS 17.4 Simulator Runtime'
+
+xcodebuild -runFirstLaunch
+export dmg="~/Downloads/iOS_17.4_Simulator_Runtime.dmg" && xcodebuild -importPlatform "${dmg}" || xcrun simctl runtime add "${dmg}"
+
+# prepare tauri
+yarn tauri dev init
+
+brew install cocoapods
+yarn tauri ios init 
 ```
+
+
+## Tauri build
+```shell
 yarn install
 yarn tauri dev # for desktop version
+
+yarn tauri ios dev 'iPhone 12 mini' # for iOS version in the simulator
+# or
 yarn tauri ios dev 'iPhone 15' # for iOS version in the simulator
 ```
 
