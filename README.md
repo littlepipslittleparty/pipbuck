@@ -39,11 +39,13 @@ xcodebuild -runFirstLaunch
 export dmg="~/Downloads/iOS_17.4_Simulator_Runtime.dmg" && xcodebuild -importPlatform "${dmg}" || xcrun simctl runtime add "${dmg}"
 
 # prepare tauri
-yarn tauri dev init
-
 brew install cocoapods
-yarn tauri ios init 
+yarn install
+yarn tauri ios init
 ```
+On initial setup, you might need to install the iOS simulator in the version recommended to you.  
+![install-recommended-ios-version](install-recommended-ios-version.png)  
+Yes, even if it's different to the one you want. 
 
 
 ## Tauri build
