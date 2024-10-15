@@ -18,6 +18,13 @@ Using vite for development.
 yarn dev
 ```
 
+## Tauri setup
+```
+yarn install
+yarn tauri dev # for desktop version
+yarn tauri ios dev 'iPhone 15' # for iOS version in the simulator
+```
+
 ## Project setup (old)
 ```
 nvm use 12
