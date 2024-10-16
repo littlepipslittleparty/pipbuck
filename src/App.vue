@@ -67,6 +67,7 @@ const app = {
       scroll: 0.00,
       scroll_prevent: null,
       hardwareButtonPosition: this.calculateHardwareButtonPosition(),
+      bgImage,
     };
   },
   computed: {

@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import { createMetaManager } from 'vue-meta';
-import VueGtag from "vue-gtag";
+import VueGtag from 'vue-gtag';
 import screenfull from 'screenfull';
 import './lib/audiocontect-patch';
 import App from './App.vue';
@@ -19,6 +19,7 @@ app.use(VueGtag, {
     params: {
       send_page_view: true,
     },
+    appName: 'Pipbuck v2'
   },
   pageTrackerScreenviewEnabled: true,
 }, router);
@@ -28,5 +29,5 @@ if (process.env.NODE_ENV !== 'production') {
   globalThis.$vm = app;
 }
 if (screenfull.isEnabled) {
-  screenfull.request();
+  // screenfull.request();
 }

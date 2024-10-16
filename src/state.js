@@ -72,7 +72,7 @@ const radio = {
         return '';
       }
       if (
-          getters.current.file.length >= 1 && getters.current.file[0] === '/' // starts with slash
+        getters.current.file.length >= 1 && getters.current.file[0] === '/' // starts with slash
           && getters.current.file.length >= 2 && getters.current.file[1] !== '/' // but not double
       ) {
         // is relative path

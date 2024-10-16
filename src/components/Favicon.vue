@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div v-show="false">
     <slot ref="svg"></slot>
-    <slot name="link"><link rel='icon' ref="icon" :url="data" /></slot>
+    <slot name="link"><link rel='icon' ref="icon" :urn="data" /></slot>
   </div>
 </template>
 
