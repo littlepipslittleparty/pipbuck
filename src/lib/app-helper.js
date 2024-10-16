@@ -75,3 +75,45 @@ export function beforeDestroy() {
     }
     window.removeEventListener('orientationchange', this.updateHardwareButtonPosition.bind(this));
 }
+
+export function mapButtonPositionToFlex(hardwareButtonPosition) {
+    switch (hardwareButtonPosition) {
+        case 'top':
+            return 'column-reverse';
+        case 'left':
+            return 'row-reverse';
+        case 'right':
+            return 'row';
+        case 'bottom':
+        default:
+            return 'column';
+    }
+}
+
+export function calcHwBtnPosition(orientation) {
+    if (orientation !== undefined) {
+        switch (orientation) {
+            default:
+            case 'portrait-primary':
+                return 'bottom';
+            case 'landscape-primary':
+                return 'right';
+            case 'landscape-secondary':
+                return 'left';
+            case 'portrait-secondary':
+                return 'top';
+        }
+    } else {
+        switch (window.orientation) {
+            default:
+            case 0:
+                return 'bottom';
+            case 90:
+                return 'left';
+            case -90:
+                return 'right';
+            case 180:
+                return 'top';
+        }
+    }
+}

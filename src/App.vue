@@ -1,8 +1,6 @@
 <script>
-import { mapState, mapGetters } from 'vuex';
-import Shake from 'shake.js';
-import { ui } from './sound';
-import { HexToHSL, hsl } from './lib/colorspace';
+import {ui} from './sound';
+import {HexToHSL, hsl} from './lib/colorspace';
 import VirtualButtons from './components/VirtualButtons.vue';
 import Favicon from './components/Favicon.vue';
 import StableColt from './components/StableColt.vue';
@@ -10,12 +8,13 @@ import ColorizedBg from './lib/vue-colorized/directive';
 import bgImage from './assets/img/bg.png';
 import {useStyleStore} from "@/stores/style";
 import {computed} from "vue";
-import {beforeDestroy, mounted} from "@/lib/app-helper"; // Import the image using ES module syntax
+import {beforeDestroy, mounted, mapButtonPositionToFlex, calcHwBtnPosition} from "@/lib/app-helper";
+import {useRadioStore} from "@/stores/radio";
 
 const app = {
   name: 'app',
-  components: { VirtualButtons, Favicon, StableColt },
-  directives: { ColorizedBg },
+  components: {VirtualButtons, Favicon, StableColt},
+  directives: {ColorizedBg},
   bgImage,
   metaInfo() {
     return {
@@ -44,6 +43,9 @@ const app = {
       return `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)};`;
     });
 
+    const radioStore = useRadioStore();
+    const currentFile = computed(() => radioStore.currentFile);
+
     return {
       showHardwareButtons,
       colorFront,
@@ -51,6 +53,8 @@ const app = {
       hair,
       back,
       shadow,
+      // radio
+      currentFile,
     };
   },
   data() {
@@ -62,10 +66,6 @@ const app = {
     };
   },
   computed: {
-    ...mapState([
-      'radio',
-    ]),
-    ...mapGetters({ currentRadio: 'radio/current', currentFile: 'radio/currentFile' }),
     hair() {
       return HexToHSL(this.colorFront);
     },
@@ -80,17 +80,7 @@ const app = {
       return `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)};`;
     },
     wrapperFlex() {
-      switch (this.hardwareButtonPosition) {
-        case 'top':
-          return 'column-reverse';
-        case 'left':
-          return 'row-reverse';
-        case 'right':
-          return 'row';
-        case 'bottom':
-        default:
-          return 'column';
-      }
+      return mapButtonPositionToFlex(this.hardwareButtonPosition);
     },
   },
   watched: {
@@ -107,33 +97,8 @@ const app = {
       this.hardwareButtonPosition = this.calculateHardwareButtonPosition();
     },
     calculateHardwareButtonPosition() {
-      const orientation = window.screen.msOrientation
-          || (window.screen.orientation || window.screen.mozOrientation || {}).type;
-      if (orientation !== undefined) {
-        switch (orientation) {
-          default:
-          case 'portrait-primary':
-            return 'bottom';
-          case 'landscape-primary':
-            return 'right';
-          case 'landscape-secondary':
-            return 'left';
-          case 'portrait-secondary':
-            return 'top';
-        }
-      } else {
-        switch (window.orientation) {
-          default:
-          case 0:
-            return 'bottom';
-          case 90:
-            return 'left';
-          case -90:
-            return 'right';
-          case 180:
-            return 'top';
-        }
-      }
+      const orientation = window.screen.msOrientation || (window.screen.orientation || window.screen.mozOrientation || {}).type;
+      return calcHwBtnPosition(orientation);
     },
   },
   mounted,
@@ -141,32 +106,37 @@ const app = {
 };
 export default app;
 </script>
+
 <template>
   <div
-    id="app"
-   :style="{ '--color-front': colorFront, '--color-back': colorBack, 'text-shadow': shadow }"
+      id="app"
+      :style="{ '--color-front': colorFront, '--color-back': colorBack, 'text-shadow': shadow }"
   >
-    <favicon><stable-colt :hair="hair" :back="back"/></favicon>
-    <keep-alive><audio
-      ref="radio"
-      :src="currentFile"
-      autoplay="autoplay"
-      autobuffer playsinline
-      loop="loop"
-      preload="auto"
-      controls="controls"
-      crossorigin="anonymous"
-    ></audio></keep-alive> <!-- :crossorigin="currentFile.anonymousCrossorigin"
+    <favicon>
+      <stable-colt :hair="hair" :back="back"/>
+    </favicon>
+    <keep-alive>
+      <audio
+          ref="radio"
+          :src="currentFile"
+          autoplay="autoplay"
+          autobuffer playsinline
+          loop="loop"
+          preload="auto"
+          controls="controls"
+          crossorigin="anonymous"
+      />
+    </keep-alive> <!-- :crossorigin="currentFile.anonymousCrossorigin"
     @timeupdate="this.updated()" -->
     <div class="outer" :style="{ 'flex-direction': wrapperFlex }">
       <div class="wrapper">
         <div class="effect display-animations"></div>
         <div class="crt">
-          <router-view @pipbuck-play="pipbuckSound" />
+          <router-view @pipbuck-play="pipbuckSound"/>
         </div>
         <div
-          class="effect display-background"
-          v-colorized-bg="{
+            class="effect display-background"
+            v-colorized-bg="{
             src: bgImage, hue: hair.h,
           }"
         ></div>
@@ -177,7 +147,7 @@ export default app;
           :position="hardwareButtonPosition"
           @scroll.prevent @wheel.prevent @touchstart.prevent @touchmove.prevent @drag.prevent
           @pipbuck-play="pipbuckSound"
-        />
+      />
     </div>
   </div>
 </template>
@@ -188,7 +158,8 @@ export default app;
   font-family: 'Monofonto';
   src: url('/fonts/monofonto.ttf');
 }
-*, *:after, *:before {  // Minimalist Reset 3
+
+*, *:after, *:before { // Minimalist Reset 3
   vertical-align: baseline;
   font-weight: inherit;
   font-family: inherit;
@@ -200,6 +171,7 @@ export default app;
   margin: 0;
   box-sizing: border-box;
 }
+
 body {
   background-color: black;
   user-select: none;
@@ -220,6 +192,7 @@ body {
   right: 0;
   position: absolute;
 }
+
 a {
   color: var(--color-front);
   text-decoration: none;
@@ -229,10 +202,11 @@ a {
 
   &.active, &.router-link-exact-active {
     border: var(--color-front) 0.75vmin solid;
-    background-color: rgba(255,225,255, 0.1);
+    background-color: rgba(255, 225, 255, 0.1);
 
   }
 }
+
 ul li {
   list-style: none;
 }
@@ -244,6 +218,7 @@ ul li {
   height: 100%;
   flex-direction: column-reverse;
 }
+
 .wrapper {
   //width: 100%;
   //height: 100%;
@@ -252,6 +227,7 @@ ul li {
   overflow: hidden;
   position: relative;
 }
+
 .crt {
   justify-content: flex-start;
   // overflow-scrolling: touch;
@@ -262,25 +238,31 @@ ul li {
   //top: 0;
   //position: absolute;
 }
+
 .hardware {
   // min-width: 15.22491349vw;
   // min-height: 15.22491349vh;
   //width: 100%;
   flex-grow: 1;
-};
+}
+
+;
 #nav {
   padding: 30px;
+
   a {
-     padding-top: 2px;
-     padding-bottom: 2px;
-     padding-right: 4px;
-     padding-left: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 4px;
+    padding-left: 4px;
     font-weight: bold;
+
     &.router-link-exact-active {
 
     }
   }
 }
+
 audio {
   position: fixed;
   bottom: 0;
@@ -294,12 +276,13 @@ audio {
 <style lang="scss" scoped>
 
 .effect {
-  pointer-events:none;
+  pointer-events: none;
   position: absolute;
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
+
 .display-background {
   z-index: -1;
 
@@ -312,10 +295,11 @@ audio {
   right: 0;
   bottom: 0;
 }
+
 .display-beam {
   background: radial-gradient(
-      rgba(0,255,0,.3) 0%,
-      rgba(0,255,0,0) 70%);
+          rgba(0, 255, 0, .3) 0%,
+          rgba(0, 255, 0, 0) 70%);
   border-radius: 50%;
   top: 2.5vh;
   right: -14vw;
@@ -335,14 +319,14 @@ audio {
   left: 0;
   right: 0;
   background: linear-gradient(
-    to top,
-    rgba(255,255,255,0.2) 0%,
-    rgba(255,255,255,0.144) 11%,
-    rgba(255,255,255,0.124) 31%,
-    rgba(255,255,255,0.102) 35%,
-    rgba(255,255,255,0.028) 61%,
-    rgba(255,255,255,0.008) 79%,
-    rgba(255,255,255,0.000) 100%
+          to top,
+          rgba(255, 255, 255, 0.2) 0%,
+          rgba(255, 255, 255, 0.144) 11%,
+          rgba(255, 255, 255, 0.124) 31%,
+          rgba(255, 255, 255, 0.102) 35%,
+          rgba(255, 255, 255, 0.028) 61%,
+          rgba(255, 255, 255, 0.008) 79%,
+          rgba(255, 255, 255, 0.000) 100%
   );
   // ~0:06 run time, ~0:02 screen time
   animation: scanline 6300ms infinite linear;
@@ -364,12 +348,12 @@ audio {
     opacity: 0.2;
   }
   30% { // 100%
-      top: 100%;
-      opacity: 0;
+    top: 100%;
+    opacity: 0;
   }
   100% {
-      top: 100%;
-      opacity: 0;
+    top: 100%;
+    opacity: 0;
   }
 }
 
@@ -384,13 +368,13 @@ audio {
   right: 0;
 
   background: linear-gradient(
-      rgba(18, 16, 16, 0) 50%,
-      rgba(0, 0, 0, 0.25) 50%
+          rgba(18, 16, 16, 0) 50%,
+          rgba(0, 0, 0, 0.25) 50%
   ), linear-gradient(
-      90deg,
-      rgba(255, 0, 0, 0.06),
-      rgba(0, 255, 0, 0.02),
-      rgba(0, 0, 255, 0.06)
+          90deg,
+          rgba(255, 0, 0, 0.06),
+          rgba(0, 255, 0, 0.02),
+          rgba(0, 0, 255, 0.06)
   );
   z-index: 2;
   background-size: 100% 2px, 3px 100%;
