@@ -1,8 +1,5 @@
-/**
- * Main app; data store. Loads App.vue.
- */
 import { createApp } from 'vue';
-import { plugin as vueMetaPlugin } from 'vue-meta';
+import { createMetaManager } from 'vue-meta';
 import VueGtag from "vue-gtag";
 import screenfull from 'screenfull';
 import './lib/audiocontect-patch';
@@ -13,7 +10,8 @@ import store from './state';
 const app = createApp(App);
 app.use(router).use(store);
 
-app.use(vueMetaPlugin);
+const metaManager = createMetaManager();
+app.use(metaManager);
 
 app.use(VueGtag, {
   config: {
@@ -27,6 +25,8 @@ app.use(VueGtag, {
 app.mount('#app');
 
 if (process.env.NODE_ENV !== 'production') {
-  global.$vm = app;
+  globalThis.$vm = app;
 }
-screenfull.request();
+if (screenfull.isEnabled) {
+  screenfull.request();
+}

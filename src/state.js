@@ -1,11 +1,11 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 import VuexPersistence from 'vuex-persist';
 import { hsl } from './lib/colorspace';
 import game from './data/generators/Root';
 
 const vuexLocal = new VuexPersistence({
-  storage: window.sessionStorage, // window.localStorage,
+  storage: window.localStorage,
   strictMode: process.env.NODE_ENV !== 'production',
   key: 'pipbuck-gamedata',
 });
@@ -72,8 +72,8 @@ const radio = {
         return '';
       }
       if (
-        getters.current.file.length >= 1 && getters.current.file[0] === '/' // starts with slash
-        && getters.current.file.length >= 2 && getters.current.file[1] !== '/' // but not double
+          getters.current.file.length >= 1 && getters.current.file[0] === '/' // starts with slash
+          && getters.current.file.length >= 2 && getters.current.file[1] !== '/' // but not double
       ) {
         // is relative path
         return window.location.origin + getters.current.file;
@@ -97,7 +97,7 @@ const radio = {
   },
 };
 
-const store = Vuex.createStore({
+const store = createStore({
   debug: process.env.NODE_ENV !== 'production',
   strict: process.env.NODE_ENV !== 'production',
   plugins: [vuexLocal.plugin],
@@ -138,7 +138,9 @@ const store = Vuex.createStore({
     // colorBack2: '#1d2c24',
   },
   mutations: {
-    RESTORE_MUTATION: vuexLocal.RESTORE_MUTATION,
+    RESTORE_MUTATION: (state) => {
+      console.log('RESTORE_MUTATION');
+    },
     setColorFront(state, color) {
       state.colorFront = color;
     },

@@ -24,7 +24,7 @@
         <div
           class="effect display-background"
           v-colorized-bg="{
-            src: require('./assets/img/bg.png'), hue: hair.h,
+            src: bgImage, hue: hair.h,
           }"
         ></div>
       </div>
@@ -47,11 +47,13 @@ import VirtualButtons from './components/VirtualButtons.vue';
 import Favicon from './components/Favicon.vue';
 import StableColt from './components/StableColt.vue';
 import ColorizedBg from './lib/vue-colorized/directive';
+import bgImage from './assets/img/bg.png'; // Import the image using ES module syntax
 
 const app = {
   name: 'app',
   components: { VirtualButtons, Favicon, StableColt },
   directives: { ColorizedBg },
+  bgImage,
   metaInfo() {
     return {
       // Theme Color for Chrome, Firefox OS and Opera
