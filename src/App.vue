@@ -47,7 +47,8 @@ import VirtualButtons from './components/VirtualButtons.vue';
 import Favicon from './components/Favicon.vue';
 import StableColt from './components/StableColt.vue';
 import ColorizedBg from './lib/vue-colorized/directive';
-import bgImage from './assets/img/bg.png'; // Import the image using ES module syntax
+import bgImage from './assets/img/bg.png';
+import {useStyleStore} from "@/stores/style"; // Import the image using ES module syntax
 
 const app = {
   name: 'app',
@@ -62,6 +63,15 @@ const app = {
       'msapplication-TileColor': this.colorFront,
     };
   },
+  setup() {
+    const styleStore = useStyleStore();
+    return {
+      colorFront: styleStore.colorFront,
+      colorBack: styleStore.colorBack,
+      showHardwareButtons: styleStore.showHardwareButtons,
+      bgImage,
+    };
+  },
   data() {
     return {
       scroll: 0.00,
@@ -72,7 +82,7 @@ const app = {
   },
   computed: {
     ...mapState([
-      'colorFront', 'colorBack', 'showHardwareButtons', 'radio',
+        'radio',
     ]),
     ...mapGetters({ currentRadio: 'radio/current', currentFile: 'radio/currentFile' }),
     hair() {

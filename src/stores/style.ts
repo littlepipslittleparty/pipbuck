@@ -1,9 +1,10 @@
 // Init styles pinia store
 import { defineStore } from 'pinia';
+import { hsl } from "@/lib/colorspace";
 
 export const useStyleStore = defineStore('style', () => {
-    const colorFront = 'hsl(37, 100, 63, \'#ffb642\')';
-    const colorBack = 'hsl(37, 78, 14, \'#402a08\')';
+    const colorFront = 'hsl(37, 100%, 63%)'; // replacement for hsl(37, 100, 63, '#ffb642') as it doesn't work with pinia
+    const colorBack = 'hsl(37, 78%, 14%)'; // replacement for hsl(37, 78, 14, '#402a08') as it doesn't work with pinia
     const color_hair_bright = '#48f564';
     const color_hair_normal = '#39c64b';
     const color_hair_dark = '#299432';
@@ -27,4 +28,4 @@ export const useStyleStore = defineStore('style', () => {
         color_bg,
         showHardwareButtons,
     };
-}
+});

@@ -14,6 +14,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@vue/composition-api": "^1.7.2",
     "core-js": "^3.6.5",
     "howler": "^2.2.3",
     "mapbox-gl": "^2.6.1",
@@ -21,7 +22,7 @@
     "register-service-worker": "^1.7.1",
     "screenfull": "^6.0.0",
     "shake.js": "^1.2.2",
-    "vue": "^3.2.23",
+    "vue": "^3.3.4",
     "vue-gtag": "^2.0.1",
     "vue-meta": "^3.0.0-alpha.2",
     "vue-router": "^4.0.0-0",
