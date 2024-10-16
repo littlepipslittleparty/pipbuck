@@ -33,17 +33,17 @@
 
 <script>
 import {computed, reactive} from 'vue';
-import {useStore} from 'vuex';
 import * as screenfull from 'screenfull';
 import {HexToHSL, hsl} from '../../lib/colorspace';
 import StableColt from '../../components/StableColt.vue';
 import {ui} from '../../sound';
+import {useStyleStore} from "@/stores/style";
 
 export default {
   name: 'Settings',
   components: {StableColt},
   setup() {
-    const store = useStore();
+    const styleStore = useStyleStore();
     const colors = reactive([
       [
         {
@@ -108,13 +108,14 @@ export default {
       ],
     ]);
 
-    const hair = computed(() => HexToHSL(store.state.colorFront));
-    const back = computed(() => HexToHSL(store.state.colorBack));
+    const hair = computed(() => HexToHSL(styleStore.colorFront));
+    const back = computed(() => HexToHSL(styleStore.colorBack));
     const screenfullState = computed(() => screenfull);
 
     const leToggleVirtualButtons = (state) => {
       console.log('commiting toggleHardwareButtons state: ', state);
-      store.commit('toggleHardwareButtons', state);
+      // styleStore.commit('toggleHardwareButtons', state);
+      styleStore.toggleHardwareButtons();
     };
 
     const toggleFullscreen = () => {
@@ -124,8 +125,12 @@ export default {
 
     const setColor = (color) => {
       console.log('commiting setColorFront state: ', color);
-      store.commit('setColorFront', color.foreground);
-      store.commit('setColorBack', color.background);
+      // styleStore.commit('setColorFront', color.foreground);
+      // styleStore.commit('setColorBack', color.background);
+      // styleStore.colorFront = color.foreground;
+      // styleStore.colorBack = color.background;
+      styleStore.setFrontColor(color.foreground);
+      styleStore.setBackColor(color.background);
     };
 
     return {

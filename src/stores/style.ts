@@ -1,10 +1,11 @@
 // Init styles pinia store
 import { defineStore } from 'pinia';
 import { hsl } from "@/lib/colorspace";
+import { ref } from 'vue';
 
 export const useStyleStore = defineStore('style', () => {
-    const colorFront = hsl(37, 100, 63, '#ffb642');
-    const colorBack = hsl(37, 78, 14, '#402a08');
+    const colorFront = ref(hsl(37, 100, 63, '#ffb642'));
+    const colorBack = ref(hsl(37, 78, 14, '#402a08'));
     const color_hair_bright = '#48f564';
     const color_hair_normal = '#39c64b';
     const color_hair_dark = '#299432';
@@ -13,7 +14,23 @@ export const useStyleStore = defineStore('style', () => {
     const color_body_normal = '#08401f';
     const color_body_dark = '#063016';
     const color_bg = '#021709';
-    const showHardwareButtons = true;
+    const showHardwareButtons = ref(true);
+
+    // Actions to update the state
+    const setFrontColor = (newColor) => {
+        console.log('Set front color', newColor);
+        colorFront.value = newColor;
+    };
+
+    const setBackColor = (newColor) => {
+        console.log('Set back color', newColor);
+        colorBack.value = newColor;
+    };
+
+    const toggleHardwareButtons = () => {
+        console.log('toggleHardwareButtons');
+        showHardwareButtons.value = !showHardwareButtons.value;
+    };
 
     return {
         colorFront,
@@ -27,5 +44,9 @@ export const useStyleStore = defineStore('style', () => {
         color_body_dark,
         color_bg,
         showHardwareButtons,
+        // Actions
+        setFrontColor,
+        setBackColor,
+        toggleHardwareButtons,
     };
 });

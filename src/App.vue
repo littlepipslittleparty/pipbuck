@@ -1,43 +1,3 @@
-<template>
-  <div
-    id="app"
-   :style="{ '--color-front': colorFront, '--color-back': colorBack, 'text-shadow': shadow }"
-  >
-    <favicon><stable-colt :hair="hair" :back="back"/></favicon>
-    <keep-alive><audio
-      ref="radio"
-      :src="currentFile"
-      autoplay="autoplay"
-      autobuffer playsinline
-      loop="loop"
-      preload="auto"
-      controls="controls"
-      crossorigin="anonymous"
-    ></audio></keep-alive> <!-- :crossorigin="currentFile.anonymousCrossorigin"
-    @timeupdate="this.updated()" -->
-    <div class="outer" :style="{ 'flex-direction': wrapperFlex }">
-      <div class="wrapper">
-        <div class="effect display-animations"></div>
-        <div class="crt">
-          <router-view @pipbuck-play="pipbuckSound" />
-        </div>
-        <div
-          class="effect display-background"
-          v-colorized-bg="{
-            src: bgImage, hue: hair.h,
-          }"
-        ></div>
-      </div>
-      <virtual-buttons
-          v-if="showHardwareButtons"
-          class="hardware noscroll"
-          :position="hardwareButtonPosition"
-          @scroll.prevent @wheel.prevent @touchstart.prevent @touchmove.prevent @drag.prevent
-          @pipbuck-play="pipbuckSound"
-        />
-    </div>
-  </div>
-</template>
 <script>
 import { mapState, mapGetters } from 'vuex';
 import Shake from 'shake.js';
@@ -48,7 +8,8 @@ import Favicon from './components/Favicon.vue';
 import StableColt from './components/StableColt.vue';
 import ColorizedBg from './lib/vue-colorized/directive';
 import bgImage from './assets/img/bg.png';
-import {useStyleStore} from "@/stores/style"; // Import the image using ES module syntax
+import {useStyleStore} from "@/stores/style";
+import {computed} from "vue"; // Import the image using ES module syntax
 
 const app = {
   name: 'app',
@@ -65,11 +26,30 @@ const app = {
   },
   setup() {
     const styleStore = useStyleStore();
+
+    // Access the reactive properties from the store
+    const showHardwareButtons = computed(() => styleStore.showHardwareButtons);
+    const colorFront = computed(() => styleStore.colorFront);
+    const colorBack = computed(() => styleStore.colorBack);
+
+    const hair = computed(() => HexToHSL(colorFront.value));
+    const back = computed(() => HexToHSL(colorBack.value));
+
+    const shadow = computed(() => {
+      const color1 = hair.value;
+      const color2 = hair.value;
+      color1.s /= 2;
+      color2.s /= 2;
+      return `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)};`;
+    });
+
     return {
-      colorFront: styleStore.colorFront,
-      colorBack: styleStore.colorBack,
-      showHardwareButtons: styleStore.showHardwareButtons,
-      bgImage,
+      showHardwareButtons,
+      colorFront,
+      colorBack,
+      hair,
+      back,
+      shadow,
     };
   },
   data() {
@@ -82,7 +62,7 @@ const app = {
   },
   computed: {
     ...mapState([
-        'radio',
+      'radio',
     ]),
     ...mapGetters({ currentRadio: 'radio/current', currentFile: 'radio/currentFile' }),
     hair() {
@@ -127,7 +107,7 @@ const app = {
     },
     calculateHardwareButtonPosition() {
       const orientation = window.screen.msOrientation
-        || (window.screen.orientation || window.screen.mozOrientation || {}).type;
+          || (window.screen.orientation || window.screen.mozOrientation || {}).type;
       if (orientation !== undefined) {
         switch (orientation) {
           default:
@@ -158,12 +138,12 @@ const app = {
   mounted() {
     // watch colorFront and colorBack to update the <body> element styles.
     this.$watch(
-      'colorFront',
-      // eslint-disable-next-line prefer-arrow-callback
-      function watchColorFront(newColor) {
-        document.body.style.color = newColor;
-      },
-      { immediate: true },
+        'colorFront',
+        // eslint-disable-next-line prefer-arrow-callback
+        function watchColorFront(newColor) {
+          document.body.style.color = newColor;
+        },
+        { immediate: true },
     );
     /* this.$watch(
       'colorBack',
@@ -231,6 +211,48 @@ const app = {
 };
 export default app;
 </script>
+
+<template>
+  <div
+    id="app"
+   :style="{ '--color-front': colorFront, '--color-back': colorBack, 'text-shadow': shadow }"
+  >
+    <favicon><stable-colt :hair="hair" :back="back"/></favicon>
+    <keep-alive><audio
+      ref="radio"
+      :src="currentFile"
+      autoplay="autoplay"
+      autobuffer playsinline
+      loop="loop"
+      preload="auto"
+      controls="controls"
+      crossorigin="anonymous"
+    ></audio></keep-alive> <!-- :crossorigin="currentFile.anonymousCrossorigin"
+    @timeupdate="this.updated()" -->
+    <div class="outer" :style="{ 'flex-direction': wrapperFlex }">
+      <div class="wrapper">
+        <div class="effect display-animations"></div>
+        <div class="crt">
+          <router-view @pipbuck-play="pipbuckSound" />
+        </div>
+        <div
+          class="effect display-background"
+          v-colorized-bg="{
+            src: bgImage, hue: hair.h,
+          }"
+        ></div>
+      </div>
+      <virtual-buttons
+          v-if="showHardwareButtons"
+          class="hardware noscroll"
+          :position="hardwareButtonPosition"
+          @scroll.prevent @wheel.prevent @touchstart.prevent @touchmove.prevent @drag.prevent
+          @pipbuck-play="pipbuckSound"
+        />
+    </div>
+  </div>
+</template>
+
 
 <style lang="scss">
 @font-face {
