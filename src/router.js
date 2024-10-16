@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Placeholder from './views/Placeholder.vue';
+import Profile from "@/views/stats/Profile.vue";
 
 export default createRouter({
   history: createWebHistory(),
@@ -103,10 +104,10 @@ export default createRouter({
           component: Placeholder,
         },
         {
-          path: '/stats/general',
-          name: 'General',
+          path: '/stats/profile',
+          name: 'Profile',
           // index: [0, 4],
-          component: Placeholder,
+          component: Profile,
         },
       ],
     },

@@ -6,7 +6,7 @@
       { to: { path: '/stats/special' }, label: 'S.P.E.C.I.A.L.' },
       { to: { path: '/stats/skills' }, label: 'Skills' },
       { to: { path: '/stats/perks' }, label: 'Perks' },
-      { to: { path: '/stats/general' }, label: 'General' },
+      { to: { path: '/stats/profile' }, label: 'Profile' },
     ]"
   >
     <template v-slot:statistics>
