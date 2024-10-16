@@ -86,10 +86,10 @@ const app = {
     ]),
     ...mapGetters({ currentRadio: 'radio/current', currentFile: 'radio/currentFile' }),
     hair() {
-      return HexToHSL(this.$store.state.colorFront);
+      return HexToHSL(this.colorFront);
     },
     back() {
-      return HexToHSL(this.$store.state.colorBack);
+      return HexToHSL(this.colorBack);
     },
     shadow() {
       const color1 = this.hair;
