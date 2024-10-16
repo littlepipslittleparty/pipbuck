@@ -27,9 +27,9 @@ export const useStyleStore = defineStore('style', () => {
         colorBack.value = newColor;
     };
 
-    const toggleHardwareButtons = () => {
+    const setHardwareButtons = (state) => {
         console.log('toggleHardwareButtons');
-        showHardwareButtons.value = !showHardwareButtons.value;
+        showHardwareButtons.value = state
     };
 
     return {
@@ -47,6 +47,6 @@ export const useStyleStore = defineStore('style', () => {
         // Actions
         setFrontColor,
         setBackColor,
-        toggleHardwareButtons,
+        setHardwareButtons,
     };
 });

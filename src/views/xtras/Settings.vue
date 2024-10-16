@@ -115,7 +115,7 @@ export default {
     const leToggleVirtualButtons = (state) => {
       console.log('commiting toggleHardwareButtons state: ', state);
       // styleStore.commit('toggleHardwareButtons', state);
-      styleStore.toggleHardwareButtons();
+      styleStore.setHardwareButtons(state);
     };
 
     const toggleFullscreen = () => {

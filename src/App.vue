@@ -40,7 +40,7 @@ const app = {
       const color2 = hair.value;
       color1.s /= 2;
       color2.s /= 2;
-      return `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)};`;
+      return `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)}`;
     });
 
     const radioStore = useRadioStore();
@@ -66,19 +66,6 @@ const app = {
     };
   },
   computed: {
-    hair() {
-      return HexToHSL(this.colorFront);
-    },
-    back() {
-      return HexToHSL(this.colorBack);
-    },
-    shadow() {
-      const color1 = this.hair;
-      const color2 = this.hair;
-      color1.s /= 2;
-      color2.s /= 2;
-      return `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)};`;
-    },
     wrapperFlex() {
       return mapButtonPositionToFlex(this.hardwareButtonPosition);
     },
