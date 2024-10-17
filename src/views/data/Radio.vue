@@ -29,56 +29,47 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import Oscilloscope from '../../components/Oscilloscope.vue';
 import {useRadioStore} from "@/stores/radio";
 import {useStyleStore} from "@/stores/style";
+import {computed, defineComponent} from "vue";
 
-export default {
-  name: 'radio',
-  components: { Oscilloscope },
-  setup() {
-    const radio = useRadioStore();
-    const style = useStyleStore();
-    return {
-      radio,
-      style,
-    };
-  },
-  data() {
-    return {
-      rounded: true,
-      squared: false,
-      zigzagg: false,
-      fftSize: 32,
-      fftEach: 3,
-    };
-  },
-  computed: {
-    audioElement() {
-      return this.$parent.$parent.$parent.$refs.radio;
-    },
-  },
-  methods: {
-    playTrack(name) {
-      console.log('<radio-element>', this.audioElement);
-      console.log('file', this.radio.selected, name);
-      if (this.radio.selected !== null && this.radio.selected !== name) {
-        // is already playing something else.
-        // turn off
-        console.log('pause', name);
-        this.radio.selectTrack(null);
-        this.audioElement.pause();
-      } else {
-        // is not playing
-        // load track
-        console.log('play', name);
-        this.selectTrack(name);
-        this.audioElement.load();
-      }
-    },
-  },
+const rounded = true;
+const squared = false;
+const zigzagg = false;
+const fftSize = 32;
+const fftEach = 3;
+
+const radio = useRadioStore();
+const style = useStyleStore();
+
+const audioElement = computed(() => {
+  return this.$parent.$parent.$parent.$refs.radio;
+});
+
+const playTrack = (name) => {
+  console.log('<radio-element>', audioElement.value);
+  console.log('file', radio.selected, name);
+  if (radio.selected !== null && radio.selected !== name) {
+    // is already playing something else.
+    // turn off
+    console.log('pause', name);
+    radio.selectTrack(null);
+    audioElement.value.pause();
+  } else {
+    // is not playing
+    // load track
+    console.log('play', name);
+    radio.selectTrack(name);
+    audioElement.value.load();
+  }
 };
+
+defineComponent({
+  name: 'Radio',
+  components: {Oscilloscope},
+});
 </script>
 
 <style scoped lang="scss">
