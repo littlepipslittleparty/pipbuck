@@ -16,7 +16,6 @@ const app = {
   name: 'app',
   components: {VirtualButtons, Favicon, StableColt},
   directives: {ColorizedBg: vColorizedBg},
-  bgImage,
   setup() {
     const styleStore = useStyleStore();
 
