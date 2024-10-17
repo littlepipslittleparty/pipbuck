@@ -15,7 +15,7 @@
     "build": "vite build",
     "_build": "vue-cli-service build",
     "type-check": "vue-tsc --build --force",
-    "lint": "eslint .",
+    "lint": "eslint . --quiet",
     "_lint": "vue-cli-service lint",
     "format": "prettier --write src/",
     "fix": "eslint . --fix",
@@ -72,7 +72,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,vue,ts,tsx}": [
-      "eslint .",
+      "eslint . --quiet",
       "git add"
     ]
   }
