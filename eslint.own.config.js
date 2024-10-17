@@ -1,4 +1,4 @@
-export const _default = {
+export const rules = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -32,5 +32,3 @@ export const _default = {
 export const ignore = {
   ignores: ["src-tauri/*"],
 };
-
-export { _default as default };
