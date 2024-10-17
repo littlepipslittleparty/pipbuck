@@ -7,7 +7,7 @@
         v-if="!track.disabled"
       >
         <a
-          :class="{ active: current.file === track.file }"
+          :class="{ active: radio.currentFile === track.file }"
           @click="playTrack(name)"
         >{{ name }}</a>
       </li>
@@ -15,7 +15,7 @@
     <div class="right-content">
       <oscilloscope
         class="oscilloscope"
-        :color="colorFront"
+        :color="style.colorFront"
         :fftSize="fftSize"
         :fftEach="fftEach"
         :rounded="rounded"
@@ -30,14 +30,21 @@
 </template>
 
 <script>
-import { mapState, createNamespacedHelpers } from 'vuex';
 import Oscilloscope from '../../components/Oscilloscope.vue';
-
-const radioNamespace = createNamespacedHelpers('radio');
+import {useRadioStore} from "@/stores/radio";
+import {useStyleStore} from "@/stores/style";
 
 export default {
   name: 'radio',
   components: { Oscilloscope },
+  setup() {
+    const radio = useRadioStore();
+    const style = useStyleStore();
+    return {
+      radio,
+      style,
+    };
+  },
   data() {
     return {
       rounded: true,
@@ -48,11 +55,6 @@ export default {
     };
   },
   computed: {
-    ...mapState([
-      'colorFront', 'radio',
-    ]),
-    ...radioNamespace.mapState(['selected']),
-    ...radioNamespace.mapGetters(['current', 'currentFile']),
     audioElement() {
       return this.$parent.$parent.$parent.$refs.radio;
     },
@@ -60,12 +62,12 @@ export default {
   methods: {
     playTrack(name) {
       console.log('<radio-element>', this.audioElement);
-      console.log('file', this.selected, name);
-      if (this.selected !== null && this.selected !== name) {
+      console.log('file', this.radio.selected, name);
+      if (this.radio.selected !== null && this.radio.selected !== name) {
         // is already playing something else.
         // turn off
         console.log('pause', name);
-        this.selectTrack(null);
+        this.radio.selectTrack(null);
         this.audioElement.pause();
       } else {
         // is not playing
@@ -75,7 +77,6 @@ export default {
         this.audioElement.load();
       }
     },
-    ...radioNamespace.mapMutations(['selectTrack']),
   },
 };
 </script>
