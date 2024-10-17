@@ -1,5 +1,5 @@
 <template>
-  <MenuGui
+  <Menu
     title="Data" :titleLink="{ path: '/settings' }"
     :links="[
       { to: { path: '/data/local_map' }, label: 'Local Map' },
@@ -14,16 +14,16 @@
       <div class="stat">{{ day }}.{{ month }}.{{ year }}, {{ hour }}:{{ minute }}</div>
     </template>
     <router-view />
-  </MenuGui>
+  </Menu>
 </template>
 
 <script>
 import { mapState, betterMapGetters } from '../lib/better-vuex-getter';
-import MenuGui from './MenuGui.vue';
+import Menu from './Menu.vue';
 
 export default {
   name: 'Data',
-  components: { MenuGui },
+  components: { Menu },
   computed: {
     ...mapState([
       'showHardwareButtons',

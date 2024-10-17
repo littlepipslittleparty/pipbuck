@@ -1,5 +1,5 @@
 <template>
-  <MenuGui
+  <Menu
     title="Items" :titleLink="{ path: '/items/extra' }"
     :links="[
       { to: { path: '/items/weapons' }, label: 'Weapons' },
@@ -16,16 +16,16 @@
       <div class="stat">Caps {{ bottlecaps }}</div>
     </template>
     <router-view />
-  </MenuGui>
+  </Menu>
 </template>
 
 <script>
 import { betterMapState, betterMapGetters } from '../lib/better-vuex-getter';
-import MenuGui from './MenuGui.vue';
+import Menu from './Menu.vue';
 
 export default {
   name: 'Items',
-  components: { MenuGui },
+  components: { Menu },
   computed: {
     ...betterMapState('game/PlayerInfo', {
       healthPoints: ['CurrHP', Math.floor],

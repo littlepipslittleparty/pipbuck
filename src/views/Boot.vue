@@ -6,7 +6,7 @@
       <br>
       <a href="http://github.com/luckydonald/pipbuck">Source code on Github</a>
     </div>
-    <MenuGui
+    <Menu
       v-show="!off"
       title="Pip-OS(R) v12 build 4458"
       :links="[]"
@@ -36,13 +36,13 @@
         </div>
       </div>
       <div v-else>&nbsp;</div>
-    </MenuGui>
+    </Menu>
   </div>
 </template>
 
 <script>
 import screenfull from 'screenfull';
-import MenuGui from './MenuGui.vue';
+import Menu from './Menu.vue';
 import StableColt from '../components/StableColt.vue';
 import TyperCss from '../components/typer/TyperCss.vue';
 import { ui } from '../sound';
@@ -50,7 +50,7 @@ import { ui } from '../sound';
 // https://stackoverflow.com/a/40460122/3423324#showing-loading-spinner-for-async-vue-2-components
 export default {
   name: 'Boot',
-  components: { MenuGui, StableColt, TyperCss },
+  components: { Menu, StableColt, TyperCss },
   data() {
     return {
       off: true,  // is turned off, waiting for turning on
