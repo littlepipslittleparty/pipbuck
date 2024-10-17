@@ -14,7 +14,7 @@ import {useRadioStore} from "@/stores/radio";
 const app = {
   name: 'app',
   components: {VirtualButtons, Favicon, StableColt},
-  directives: {vColorizedBg},
+  directives: {ColorizedBg: vColorizedBg},
   bgImage,
   metaInfo() {
     return {
