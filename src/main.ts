@@ -1,4 +1,4 @@
-import {createApp} from 'vue';
+import { createApp } from 'vue';
 import { createHead } from '@unhead/vue'
 import VueGtag from 'vue-gtag';
 import screenfull from 'screenfull';
@@ -6,7 +6,7 @@ import './lib/audiocontect-patch';
 import App from './App.vue';
 import router from './router';
 import store from './state';
-import {createPinia} from "pinia";
+import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
 const head = createHead()
