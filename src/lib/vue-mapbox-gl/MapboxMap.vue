@@ -36,7 +36,7 @@ export default {
       required: true,
     },
     mapOptions: {
-      type: Object as PropType<MapboxOptions>,
+      type: object as PropType<MapboxOptions>,
       required: true,
     },
     mapMarkers: {
@@ -45,14 +45,14 @@ export default {
       default: () => [],
     },
     navControl: {
-      type: Object,
+      type: object,
       default: () => ({
         show: true,
         position: 'top-right',
       }),
     },
     geolocateControl: {
-      type: Object,
+      type: object,
       default: () => ({
         show: false,
         position: 'top-left',
@@ -60,7 +60,7 @@ export default {
       }),
     },
     scaleControl: {
-      type: Object,
+      type: object,
       default: () => ({
         show: false,
         position: 'top-left',
@@ -68,7 +68,7 @@ export default {
       }),
     },
     fullscreenControl: {
-      type: Object,
+      type: object,
       default: () => ({
         show: false,
         position: 'top-right',
@@ -117,15 +117,15 @@ export default {
         this.$emit('map-load', map);
       });
       // Map Mouse Move
-      map.on('mousemove', (e: Object | undefined) => {
+      map.on('mousemove', (e: object | undefined) => {
         this.$emit('map-mousemove', map, e);
       });
       // Map Clicked
-      map.on('click', (e: Object | undefined) => {
+      map.on('click', (e: object | undefined) => {
         this.$emit('map-click', map, e);
       });
       // Map Context Menu
-      map.on('contextmenu', (e: Object | undefined) => {
+      map.on('contextmenu', (e: object | undefined) => {
         this.$emit('map-contextmenu', map, e);
       });
       // Map Resized
@@ -133,11 +133,11 @@ export default {
         this.$emit('map-resize', map);
       });
       // Map Webgl Context Lost
-      map.on('webglcontextlost', (e: Object | undefined) => {
+      map.on('webglcontextlost', (e: object | undefined) => {
         this.$emit('map-webglcontextlost', map, e);
       });
       // Map Webgl Context Restored
-      map.on('webglcontextrestored', (e: Object | undefined) => {
+      map.on('webglcontextrestored', (e: object | undefined) => {
         this.$emit('map-webglcontextrestored', map, e);
       });
       // Map Removed
@@ -145,59 +145,59 @@ export default {
         this.$emit('map-remove', map);
       });
       // Map Source Data Loading
-      map.on('sourcedataloading', (e: Object | undefined) => {
+      map.on('sourcedataloading', (e: object | undefined) => {
         this.$emit('map-sourcedataloading', map, e);
       });
       // Map Touch Start
-      map.on('touchstart', (e: Object | undefined) => {
+      map.on('touchstart', (e: object | undefined) => {
         this.$emit('map-touchstart', map, e);
       });
       // Map Move Start
-      map.on('movestart', (e: Object | undefined) => {
+      map.on('movestart', (e: object | undefined) => {
         this.$emit('map-movestart', map, e);
       });
       // Map Move
-      map.on('move', (e: Object | undefined) => {
+      map.on('move', (e: object | undefined) => {
         this.$emit('map-move', map, e);
       });
       // Map Move End
-      map.on('moveend', (e: Object | undefined) => {
+      map.on('moveend', (e: object | undefined) => {
         this.$emit('map-moveend', map, e);
       });
       // Map Error
-      map.on('error', (e: Object | undefined) => {
+      map.on('error', (e: object | undefined) => {
         this.$emit('map-error', map, e);
       });
       // Map Data
-      map.on('data', (e: Object | undefined) => {
+      map.on('data', (e: object | undefined) => {
         this.$emit('map-data', map, e);
       });
       // Map Style Data
-      map.on('styledata', (e: Object | undefined) => {
+      map.on('styledata', (e: object | undefined) => {
         this.$emit('map-styledata', map, e);
       });
       // Map Mouse Up
-      map.on('mouseup', (e: Object | undefined) => {
+      map.on('mouseup', (e: object | undefined) => {
         this.$emit('map-mouseup', map, e);
       });
       // Map Touch Cancel
-      map.on('touchcancel', (e: Object | undefined) => {
+      map.on('touchcancel', (e: object | undefined) => {
         this.$emit('map-touchcancel', map, e);
       });
       // Map Source Data
-      map.on('sourcedata', (e: Object | undefined) => {
+      map.on('sourcedata', (e: object | undefined) => {
         this.$emit('map-sourcedata', map, e);
       });
       // Map Data Loading
-      map.on('dataloading', (e: Object | undefined) => {
+      map.on('dataloading', (e: object | undefined) => {
         this.$emit('map-dataloading', map, e);
       });
       // Map Style Data Loading
-      map.on('styledataloading', (e: Object | undefined) => {
+      map.on('styledataloading', (e: object | undefined) => {
         this.$emit('map-styledataloading', map, e);
       });
       // Map Double Click
-      map.on('dblclick', (e: Object | undefined) => {
+      map.on('dblclick', (e: object | undefined) => {
         this.$emit('map-dblclick', map, e);
       });
       // Map Render
@@ -205,83 +205,83 @@ export default {
         this.$emit('map-render', map);
       });
       // Map Mouse Out
-      map.on('mouseout', (e: Object | undefined) => {
+      map.on('mouseout', (e: object | undefined) => {
         this.$emit('map-mouseout', map, e);
       });
       // Map Mouse Down
-      map.on('mousedown', (e: Object | undefined) => {
+      map.on('mousedown', (e: object | undefined) => {
         this.$emit('map-mousedown', map, e);
       });
       // Map Mouse Over
-      map.on('mouseover', (e: Object | undefined) => {
+      map.on('mouseover', (e: object | undefined) => {
         this.$emit('map-mouseover', map, e);
       });
       // Map Touch End
-      map.on('touchend', (e: Object | undefined) => {
+      map.on('touchend', (e: object | undefined) => {
         this.$emit('map-touchend', map, e);
       });
       // Map Touch Move
-      map.on('touchmove', (e: Object | undefined) => {
+      map.on('touchmove', (e: object | undefined) => {
         this.$emit('map-touchmove', map, e);
       });
       // Map Zoom Start
-      map.on('zoomstart', (e: Object | undefined) => {
+      map.on('zoomstart', (e: object | undefined) => {
         this.$emit('map-zoomstart', map, e);
       });
       // Map Zoom End
-      map.on('zoomend', (e: Object | undefined) => {
+      map.on('zoomend', (e: object | undefined) => {
         this.$emit('map-zoomend', map, e);
       });
       // Map Zoom
-      map.on('zoom', (e: Object | undefined) => {
+      map.on('zoom', (e: object | undefined) => {
         this.$emit('map-zoom', map, e);
       });
       // Map Box Zoom Cancel
-      map.on('boxzoomcancel', (e: Object | undefined) => {
+      map.on('boxzoomcancel', (e: object | undefined) => {
         this.$emit('map-boxzoomcancel', map, e);
       });
       // Map Box Zoom End
-      map.on('boxzoomend', (e: Object | undefined) => {
+      map.on('boxzoomend', (e: object | undefined) => {
         this.$emit('map-boxzoomend', map, e);
       });
       // Map Box Zoom Start
-      map.on('boxzoomstart', (e: Object | undefined) => {
+      map.on('boxzoomstart', (e: object | undefined) => {
         this.$emit('map-boxzoomstart', map, e);
       });
       // Map Rotate Start
-      map.on('rotatestart', (e: Object | undefined) => {
+      map.on('rotatestart', (e: object | undefined) => {
         this.$emit('map-rotatestart', map, e);
       });
       // Map Rotate
-      map.on('rotate', (e: Object | undefined) => {
+      map.on('rotate', (e: object | undefined) => {
         this.$emit('map-rotate', map, e);
       });
       // Map Rotate End
-      map.on('rotateend', (e: Object | undefined) => {
+      map.on('rotateend', (e: object | undefined) => {
         this.$emit('map-rotateend', map, e);
       });
       // Map Drag End
-      map.on('dragend', (e: Object | undefined) => {
+      map.on('dragend', (e: object | undefined) => {
         this.$emit('map-dragend', map, e);
       });
       // Map Drag
-      map.on('drag', (e: Object | undefined) => {
+      map.on('drag', (e: object | undefined) => {
         this.$emit('map-drag', map, e);
       });
       // Map Drag
-      map.on('dragstart', (e: Object | undefined) => {
+      map.on('dragstart', (e: object | undefined) => {
         this.$emit('map-dragstart', map, e);
       });
       // Map Pitch
-      map.on('pitch', (e: Object | undefined) => {
+      map.on('pitch', (e: object | undefined) => {
         this.$emit('map-pitch', map, e);
       });
       // Map Pitch Start
-      map.on('pitchstart', (e: Object | undefined) => {
+      map.on('pitchstart', (e: object | undefined) => {
         this.$emit('map-pitchstart', map, e);
       });
       // Map Pitch End
-      map.on('pitchend', (e: Object | undefined) => {
+      map.on('pitchend', (e: object | undefined) => {
         this.$emit('map-pitchend', map, e);
       });
     },
