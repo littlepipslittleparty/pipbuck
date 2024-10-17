@@ -39,7 +39,7 @@ import { ui } from '../sound';
 import Placeholder from './Placeholder.vue';
 
 export default {
-  name: 'Menu',
+  name: 'MenuGui',
   components: { Placeholder },
   props: {
     title: {

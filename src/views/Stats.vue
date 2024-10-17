@@ -1,5 +1,5 @@
 <template>
-  <Menu
+  <MenuGui
     title="Stats" :titleLink="{ path: '/stats/extra' }"
     :links="[
       { to: { path: '/stats/status' }, label: 'Status' },
@@ -16,16 +16,16 @@
       <div class="stat">XP {{ experiencePoints }}/{{ nextLevelXP }}</div>
     </template>
     <router-view />
-  </Menu>
+  </MenuGui>
 </template>
 
 <script>
 import { betterMapState, betterMapGetters } from '../lib/better-vuex-getter';
-import Menu from './Menu.vue';
+import MenuGui from './MenuGui.vue';
 
 export default {
   name: 'Stats',
-  components: { Menu },
+  components: { MenuGui },
   computed: {
     ...betterMapState('game/PlayerInfo', {
       level: ['XPLevel', Math.floor],
