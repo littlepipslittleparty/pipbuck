@@ -49,6 +49,18 @@ export const useRadioStore = defineStore(
             hidden: false,
             position: 0,
         },
+        'Ponyville FM': {
+            file: 'https://dj.bronyradio.com/stream.mp3',
+            disabled: false,
+            hidden: false,
+            position: 0,
+        },
+        'Brony Radio Germany': {
+            file: 'http://radio.bronyradiogermany.com:8000/stream',
+            disabled: false,
+            hidden: false,
+            position: 0,
+        },
     });
     const selected = ref<keyof typeof tracks.value | null>(null);
 
