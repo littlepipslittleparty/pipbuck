@@ -1,0 +1,13 @@
+# don't submit the big radio files
+audio/radio/test.mp3
+audio/radio/gnr.mp3
+audio/radio/dcr.mp3
+
+audio/sprites/pipbuck_sprites.ac3
+audio/sprites/pipbuck_sprites.m4a
+audio/sprites/pipbuck_sprites.mp3
+audio/sprites/pipbuck_sprites.ogg
+audio/sprites/pipbuck_sprites.webm
+
+# fonts/monofonto.ttf
+
