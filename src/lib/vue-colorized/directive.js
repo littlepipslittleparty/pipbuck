@@ -2,14 +2,16 @@ import common from './common';
 
 const directive = {
   name: 'colorized-bg',
-  inserted(el, binding, vnode) {                     // eslint-disable-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  inserted(el, binding, vnode) {
     // eslint-disable-next-line no-param-reassign
     el.colorized = {
       img: common.createImage(),
     };
     this.update(el, binding, vnode, null);
   },
-  update(el, binding, vnode, oldVnode) {             // eslint-disable-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  update(el, binding, vnode, oldVnode) {
     // Implementing the following:
     // ```js
     // watch: {
@@ -45,13 +47,13 @@ const directive = {
       cssAttribute: binding.arg || (
         typeof binding.value === 'object' && typeof binding.value.cssAttribute !== 'undefined'
           ? binding.value.cssAttribute
-          // eslint-disable-next-line no-shadow, no-unused-vars
+          // eslint-disable-next-line no-shadow, no-unused-vars, @typescript-eslint/no-unused-vars, @typescript-eslint/no-unused-vars
           : (image, options) => 'background-image'
       ),
       cssTemplate: (
         typeof binding.value === 'object' && typeof binding.value.cssTemplate === 'function'
           ? binding.value.cssTemplate
-          // eslint-disable-next-line no-shadow, no-unused-vars
+          // eslint-disable-next-line no-shadow, no-unused-vars, @typescript-eslint/no-unused-vars
           : (image, options) => `url("${image}")`
       ),
       img: el.colorized.img,

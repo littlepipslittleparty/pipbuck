@@ -1,6 +1,6 @@
 /* eslint-disable object-shorthand */
 // eslint-disable-next-line max-len
-/* eslint no-unused-vars: ["error", { varsIgnorePattern: "^(ignored)$", argsIgnorePattern: "^(ignored|state|getters)$" }] */
+/* eslint no-unused-vars: ["error", { varsIgnorePattern: "^(ignored)$", argsIgnorePattern: "^(ignored|state|getters)$" }], @typescript-eslint/no-unused-vars: ["error", { varsIgnorePattern: "^(ignored)$", argsIgnorePattern: "^(ignored|state|getters)$" }] */
 // "PlayerInfo" node
 const theState = {
   /**

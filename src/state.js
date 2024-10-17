@@ -61,7 +61,7 @@ const radio = {
     /**
      * returns the file or null
      * @return {null|{file: string, disabled: string, hidden: string, position: string}}
-     */// eslint-disable-next-line no-unused-vars
+     */// eslint-disable-next-lineno-unused-vars, @typescript-eslint/no-unused-vars
     currentOrNull: (state, getters) => {
       if (state.selected === null) {
         return null;
@@ -87,7 +87,7 @@ const radio = {
      * returns the file or object filled with null
      * @return {{file: null|string, disabled: null|string,
      *           hidden: null|string, position: null|string}}
-     */// eslint-disable-next-line no-unused-vars
+     */// eslint-disable-next-lineno-unused-vars, @typescript-eslint/no-unused-vars
     current: (state, getters) => state.tracks[state.selected],
 
     isPlaying: (state, getters) => {

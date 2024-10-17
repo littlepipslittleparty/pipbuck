@@ -41,8 +41,10 @@ const app = {
       color1.s /= 2;
       color2.s /= 2;
       // TODO: Use as a text jitter effect on screen change
-      // return `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)}`;
+      const result = `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)}`;
       return 'none';
+      // noinspection UnreachableCodeJS
+      return result;
     });
 
     const radioStore = useRadioStore();

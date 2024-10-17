@@ -73,8 +73,8 @@ export function HexToRGB(hex: HexColor): RGB | null {
  * @return {{h: number, s: number,  l: number }} The HSL representation
    * @see http://rgb2hsl.nichabi.com/javascript-function.php
  */
-export function RGBtoHSL(r: number, g: number, b: number): HSL;  // eslint-disable-line no-unused-vars,max-len
-export function RGBtoHSL(r: RGB): HSL;  // eslint-disable-line no-unused-vars,max-len
+export function RGBtoHSL(r: number, g: number, b: number): HSL;  // eslint-disable-line no-unused-vars, @typescript-eslint/no-unused-vars
+export function RGBtoHSL(r: RGB): HSL;  // eslint-disable-line no-unused-vars, @typescript-eslint/no-unused-vars
 export function RGBtoHSL(r: number | RGB, g?: number, b?: number): HSL {
   if (isRGB(r)) {
     if (g !== undefined && b !== undefined) {
@@ -137,8 +137,8 @@ export function RGBtoHSL(r: number | RGB, g?: number, b?: number): HSL {
  * @returns {} The RGB representation
  * @see http://hsl2rgb.nichabi.com/javascript-function.php
  */
-export function HSLtoRGB(h: number, s: number, l: number): RGB;  // eslint-disable-line no-unused-vars,max-len
-export function HSLtoRGB(h: HSL): RGB;  // eslint-disable-line no-unused-vars,max-len
+export function HSLtoRGB(h: number, s: number, l: number): RGB;  // eslint-disable-line no-unused-vars
+export function HSLtoRGB(h: HSL): RGB;  // eslint-disable-line no-unused-vars, @typescript-eslint/no-unused-vars
 export function HSLtoRGB(h: number | HSL, s?: number, l?: number): RGB {
   if (isHSL(h, true)) {
     if (s !== undefined && l !== undefined) {
@@ -304,8 +304,8 @@ export function HSBtoRGB(h: number, s: number, v: number): RGB {
  *    Either the hex format `"#RRGGBB"` without alpha,
  *    or `"rgba(R, G, B, A)"` if a numeric alpha is given.
  */
-export function hsl(h: number, s: number, l: number, a?: number|null): string;  // eslint-disable-line no-unused-vars,max-len
-export function hsl(h: HSL|HSLA): string;  // eslint-disable-line no-unused-vars,max-len
+export function hsl(h: number, s: number, l: number, a?: number|null): string;  // eslint-disable-line no-unused-vars, @typescript-eslint/no-unused-vars
+export function hsl(h: HSL|HSLA): string;  // eslint-disable-line no-unused-vars, @typescript-eslint/no-unused-vars
 export function hsl(h: number|HSL|HSLA, s?: number, l?: number, a?: number|null): string {
   if (isHSLA(h, true)) {
     if (s !== undefined && l !== undefined && a !== undefined) {
