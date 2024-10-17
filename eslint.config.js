@@ -3,7 +3,7 @@ import vueTsEslintConfig from '@vue/eslint-config-typescript'
 import pluginVitest from '@vitest/eslint-plugin'
 import pluginPlaywright from 'eslint-plugin-playwright'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
-import { _default as ownConfig } from './eslint.own.config.js'
+import { _default as ownConfig, ignore as ownConfigIgnore } from './eslint.own.config.js'
 
 export default [
   {
@@ -30,4 +30,5 @@ export default [
   },
   skipFormatting,
   ownConfig,
+  ownConfigIgnore,
 ]
