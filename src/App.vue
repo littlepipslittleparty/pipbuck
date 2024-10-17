@@ -40,7 +40,9 @@ const app = {
       const color2 = hair.value;
       color1.s /= 2;
       color2.s /= 2;
-      return `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)}`;
+      // TODO: Use as a text jitter effect on screen change
+      // return `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)}`;
+      return 'none';
     });
 
     const radioStore = useRadioStore();
