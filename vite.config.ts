@@ -9,6 +9,12 @@ import svgLoader from 'vite-svg-loader';
 
 // https://vite.dev/config/
 export default defineConfig({
+    optimizeDeps: {
+      entries: [
+        // globs are supported, too.
+        './index.html',
+      ],
+    },
     plugins: [
       vue(),
       svgLoader(),
