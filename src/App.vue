@@ -4,7 +4,7 @@ import {HexToHSL, hsl} from './lib/colorspace';
 import VirtualButtons from './components/VirtualButtons.vue';
 import Favicon from './components/Favicon.vue';
 import StableColt from './components/StableColt.vue';
-import ColorizedBg from './lib/vue-colorized/directive';
+import vColorizedBg from './lib/vue-colorized/directive';
 import bgImage from './assets/img/bg.png';
 import {useStyleStore} from "@/stores/style";
 import {computed} from "vue";
@@ -14,7 +14,7 @@ import {useRadioStore} from "@/stores/radio";
 const app = {
   name: 'app',
   components: {VirtualButtons, Favicon, StableColt},
-  directives: {ColorizedBg},
+  directives: {vColorizedBg},
   bgImage,
   metaInfo() {
     return {
