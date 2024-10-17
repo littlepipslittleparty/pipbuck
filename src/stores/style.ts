@@ -3,7 +3,9 @@ import { defineStore } from 'pinia';
 import { hsl } from "@/lib/colorspace";
 import { ref } from 'vue';
 
-export const useStyleStore = defineStore('style', () => {
+export const useStyleStore = defineStore(
+  'style',
+  () => {
     const colorFront = ref(hsl(37, 100, 63, '#ffb642'));
     const colorBack = ref(hsl(37, 78, 14, '#402a08'));
     const color_hair_bright = '#48f564';
@@ -49,4 +51,5 @@ export const useStyleStore = defineStore('style', () => {
         setBackColor,
         setHardwareButtons,
     };
-});
+  },
+);

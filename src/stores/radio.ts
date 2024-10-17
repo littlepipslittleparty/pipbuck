@@ -1,7 +1,9 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
 
-export const useRadioStore = defineStore('radio', () => {
+export const useRadioStore = defineStore(
+  'radio',
+  () => {
     const current_time = ref(0);
     const selected = ref<string | null>(null);
     const tracks = ref({
@@ -70,4 +72,5 @@ export const useRadioStore = defineStore('radio', () => {
         currentFile,
         isPlaying,
     };
-});
+  },
+);
