@@ -1,5 +1,5 @@
 import {createApp} from 'vue';
-import {createMetaManager} from 'vue-meta';
+import { createHead } from '@unhead/vue'
 import VueGtag from 'vue-gtag';
 import screenfull from 'screenfull';
 import './lib/audiocontect-patch';
@@ -9,6 +9,8 @@ import store from './state';
 import {createPinia} from "pinia";
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 
+const head = createHead()
+
 const pinia = createPinia();
 pinia.use(piniaPluginPersistedstate)
 
@@ -16,7 +18,7 @@ const app = createApp(App);
 app.use(pinia)
     .use(router)
     .use(store)
-    .use(createMetaManager())
+    .use(head)
     .use(VueGtag, {
         config: {
             id: process.env.NODE_ENV !== 'production' ? 'UA-47744366-5' : 'UA-47744366-4',

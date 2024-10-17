@@ -10,20 +10,13 @@ import {useStyleStore} from "@/stores/style";
 import {computed} from "vue";
 import {beforeDestroy, mounted, mapButtonPositionToFlex, calcHwBtnPosition} from "@/lib/app-helper";
 import {useRadioStore} from "@/stores/radio";
+import { useHead } from "@unhead/vue";
 
 const app = {
   name: 'app',
   components: {VirtualButtons, Favicon, StableColt},
   directives: {ColorizedBg: vColorizedBg},
   bgImage,
-  metaInfo() {
-    return {
-      // Theme Color for Chrome, Firefox OS and Opera
-      'theme-color': this.colorFront,
-      // Color for windows tiles
-      'msapplication-TileColor': this.colorFront,
-    };
-  },
   setup() {
     const styleStore = useStyleStore();
 
@@ -49,6 +42,13 @@ const app = {
 
     const radioStore = useRadioStore();
     const currentFile = computed(() => radioStore.currentFile);
+
+    useHead({
+      // Theme Color for Chrome, Firefox OS and Opera
+      'theme-color': colorFront.value,
+      // Color for windows tiles
+      'msapplication-TileColor': colorFront.value,
+    });
 
     return {
       showHardwareButtons,
