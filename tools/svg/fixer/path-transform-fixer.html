@@ -5,7 +5,7 @@
   <title>SVG Viewbox Fixer</title>
 </head>
 <body>
-<div id="render" style="float: right; display: inline"></div>
+<div id="render" style="float: right; display: inline; border: 1px solid hotpink"></div>
 <h1>SVG</h1>
 <textarea id="svg">
   <svg viewBox="212.445 217.724 572.599 572.598" xmlns="http://www.w3.org/2000/svg">
@@ -52,62 +52,70 @@
     console.log({svg, wantedWidth, wantedHeight});
 
     let viewBox = svg.querySelector('svg').getAttribute('viewBox').split(' ').map((item) => Number.parseFloat(item));
-    let path = svg.querySelector('svg > path').getAttribute('d');
-    const transform = svg.querySelector('svg path').getAttribute('transform');
+    let pathes = svg.querySelectorAll('svg > path');
+    for (const pathElem of pathes) {
+        let pathPath = path.getAttribute('d');
+        if (pathPath === undefined || pathPath === null) {
+            continue;
+        }
 
-    if (!path.indexOf('m') === 0) {
-      throw new Error('Path must start with "m"!')
-    }
+        if (!pathPath.indexOf('m') === 0) {
+            throw new Error('Path must start with "m"!');
+        }
 
-    let [ left, top, width, height ] = viewBox;
-    console.log({viewBox, path});
-    const m = /^m(?<x>-?\d+(?:\.\d+)?) (?<y>-?\d+(?:\.\d+)?)(?<rest>\w.+)$/g.exec(path);  // https://regex101.com/r/iIgl3a/1
-    if (!m) {
-      throw new Error('Path must start with "m<NUM> <NUM>".')
-    }
-    console.log({x: m.groups.x, y: m.groups.y, rest: m.groups.rest})
-    const path2 = `m${m.groups.x} ${m.groups.y}${m.groups.rest}`;
-    if (path !== path2) {
-      console.log({ path3: path, path2 });
-      throw new Error('Path could not be parsed.');
-    }
-    let startPosition = [Number.parseFloat(m.groups.x), Number.parseFloat(m.groups.y)]
-    console.log({startPosition})
+        const transform = path.getAttribute('transform');
 
-    if(transform) {
-      const matchTransform = /^translate\((?<x>-?\d+(?:\.\d+)?) (?<y>-?\d+(?:\.\d+)?)\)$/g.exec(transform);  // https://regex101.com/r/UJvDFK/1
-      viewBox[2] +=  matchTransform.groups.x;
-      viewBox[3] += matchTransform.groups.y;
-    }
-    console.log({viewBox, path});
+        let [left, top, width, height] = viewBox;
+        console.log({viewBox, pathPath});
 
-    if (viewBox[0] !== 0) {
-      viewBox[2] += viewBox[0];
-      startPosition[0] += viewBox[0] / 2;
-      viewBox[0] = 0;
-    }
-    if (viewBox[1] !== 0) {
-      viewBox[3] += viewBox[1];
-      startPosition[1] += viewBox[1] / 2;
-      viewBox[1] = 0;
-    }
-    console.log({startPosition, test: `m${startPosition} ${startPosition[1]}${m.groups.rest}`})
-    const newPath = `m${startPosition[0]} ${startPosition[1]}${m.groups.rest}`;
-    const newViewBox = `${viewBox[0]} ${viewBox[1]} ${viewBox[2]} ${viewBox[3]}`;
-    console.log({newViewBox, newPath});
+        const m = /^m(?<x>-?\d+(?:\.\d+)?) (?<y>-?\d+(?:\.\d+)?)(?<rest>\w.+)$/g.exec(pathPath);  // https://regex101.com/r/iIgl3a/1
+        if (!m) {
+            throw new Error('Path must start with "m<NUM> <NUM>".')
+        }
 
-    // https://stackoverflow.com/a/63744934/3423324#how-to-shrink-normalize-an-svg-so-it-fits-in-a-specific-viewbox
-    const fitter = new Pathfit({viewBox: newViewBox}, undefined, newPath);
-    console.log({wantedWidth, wantedHeight});
-    const finalPath = fitter.scale_with_aspect_ratio(wantedWidth, wantedHeight);
-    viewBox[2] = wantedWidth;
-    viewBox[3] = wantedHeight;
-    console.log({newViewBox: newViewBox, finalPath});
-    $path.value = finalPath;
+        console.log({x: m.groups.x, y: m.groups.y, rest: m.groups.rest})
+        const pathPath2 = `m${m.groups.x} ${m.groups.y}${m.groups.rest}`;
+        if (pathPath !== pathPath2) {
+            console.log({path3: pathPath, path2: pathPath2});
+            throw new Error('Path could not be parsed.');
+        }
+        let startPosition = [Number.parseFloat(m.groups.x), Number.parseFloat(m.groups.y)]
+        console.log({startPosition})
 
-    svg.querySelector('svg > path').setAttribute('path', finalPath);
-    svg.querySelector('svg > path').removeAttribute('transform');
-    svg.querySelector('svg').setAttribute('viewBox', newViewBox);
+        if (transform) {
+            const matchTransform = /^translate\((?<x>-?\d+(?:\.\d+)?) (?<y>-?\d+(?:\.\d+)?)\)$/g.exec(transform);  // https://regex101.com/r/UJvDFK/1
+            viewBox[2] += matchTransform.groups.x;
+            viewBox[3] += matchTransform.groups.y;
+        }
+        console.log({viewBox, pathPath});
+
+        if (viewBox[0] !== 0) {
+            viewBox[2] += viewBox[0];
+            startPosition[0] += viewBox[0] / 2;
+            viewBox[0] = 0;
+        }
+        if (viewBox[1] !== 0) {
+            viewBox[3] += viewBox[1];
+            startPosition[1] += viewBox[1] / 2;
+            viewBox[1] = 0;
+        }
+        console.log({startPosition, test: `m${startPosition} ${startPosition[1]}${m.groups.rest}`})
+        const newPath = `m${startPosition[0]} ${startPosition[1]}${m.groups.rest}`;
+        const newViewBox = `${viewBox[0]} ${viewBox[1]} ${viewBox[2]} ${viewBox[3]}`;
+        console.log({newViewBox, newPath});
+
+        // https://stackoverflow.com/a/63744934/3423324#how-to-shrink-normalize-an-svg-so-it-fits-in-a-specific-viewbox
+        const fitter = new Pathfit({viewBox: newViewBox}, undefined, newPath);
+        console.log({wantedWidth, wantedHeight});
+        const finalPath = fitter.scale_with_aspect_ratio(wantedWidth, wantedHeight);
+        viewBox[2] = wantedWidth;
+        viewBox[3] = wantedHeight;
+        console.log({newViewBox: newViewBox, finalPath});
+        $path.value = finalPath;
+        path.setAttribute('path', finalPath);
+        path.removeAttribute('transform');
+        svg.querySelector('svg').setAttribute('viewBox', newViewBox);
+    }
 
     const serializer = new XMLSerializer();
     const newSvg = serializer.serializeToString(svg);
