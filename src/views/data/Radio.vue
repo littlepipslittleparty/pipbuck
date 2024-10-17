@@ -4,7 +4,6 @@
       <li
           v-for="(track, name) in radio.tracks" :key="track.file"
           class="track" :class="{ disabled: track.disabled }"
-          v-if="!track.disabled"
       >
         <a
             :class="{ active: radio.currentFile === track.file }"
@@ -45,7 +44,7 @@ const radio = useRadioStore();
 const style = useStyleStore();
 
 const audioElement = computed(() => {
-  return this.$parent.$parent.$parent.$refs.radio;
+  // return this.$parent.$parent.$parent.$refs.radio;
 });
 
 const playTrack = (name) => {
