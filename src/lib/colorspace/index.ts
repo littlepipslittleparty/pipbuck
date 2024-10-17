@@ -140,7 +140,7 @@ export function RGBtoHSL(r: number | RGB, g?: number, b?: number): HSL {
 export function HSLtoRGB(h: number, s: number, l: number): RGB;  // eslint-disable-line no-unused-vars,max-len
 export function HSLtoRGB(h: HSL): RGB;  // eslint-disable-line no-unused-vars,max-len
 export function HSLtoRGB(h: number | HSL, s?: number, l?: number): RGB {
-  if (isHSL(h)) {
+  if (isHSL(h, true)) {
     if (s !== undefined && l !== undefined) {
       throw new Error(
         'If you provide an HSL object as first "h" parameter, '
@@ -307,7 +307,7 @@ export function HSBtoRGB(h: number, s: number, v: number): RGB {
 export function hsl(h: number, s: number, l: number, a?: number|null): string;  // eslint-disable-line no-unused-vars,max-len
 export function hsl(h: HSL|HSLA): string;  // eslint-disable-line no-unused-vars,max-len
 export function hsl(h: number|HSL|HSLA, s?: number, l?: number, a?: number|null): string {
-  if (isHSLA(h)) {
+  if (isHSLA(h, true)) {
     if (s !== undefined && l !== undefined && a !== undefined) {
       throw new Error(
         'If you provide an HSL(A) object as first "h" parameter, '
@@ -317,7 +317,7 @@ export function hsl(h: number|HSL|HSLA, s?: number, l?: number, a?: number|null)
     }
     return hsl(h.h, h.s, h.l, h.a);
   }
-  if (isHSL(h)) {
+  if (isHSL(h, true)) {
     if (s !== undefined && l !== undefined && a !== undefined) {
       throw new Error(
         'If you provide an HSL(A) object as first "h" parameter, '
@@ -329,8 +329,9 @@ export function hsl(h: number|HSL|HSLA, s?: number, l?: number, a?: number|null)
   }
   if (s === undefined || l === undefined) {
     throw new Error(
-      'If you don\'t provide an HSL object as first "h" parameter, ' +
-      'you must specify the two other parameters "s" and "l". "a" is optional.'
+      'If you don\'t provide an HSL object as first "h" parameter, '
+      + 'you must specify the two other parameters "s" and "l". "a" is optional.'
+      + '',
     );
   }
   const HSLs = {
