@@ -1,16 +1,4 @@
-module.exports = {
-  root: true,
-  env: {
-    node: true,
-  },
-  extends: [
-    'plugin:vue/vue3-essential',
-    '@vue/airbnb',
-    '@vue/typescript/recommended',
-  ],
-  parserOptions: {
-    ecmaVersion: 2020,
-  },
+export const _default = {
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -18,7 +6,7 @@ module.exports = {
     'no-multi-spaces': ['error', { ignoreEOLComments: true }],
     'no-unused-vars': ['error', { varsIgnorePattern: '^(ignored)$', argsIgnorePattern: '^(ignored|event)$' }],
     'vue/no-use-v-if-with-v-for': 'off',
-    "max-len": ["warning", {
+    "max-len": ["warn", {
       "ignoreTemplateLiterals": true,
       "ignoreStrings": true,
       "ignorePattern": "d=\"([\\s\\S]*?)\"",
@@ -28,15 +16,6 @@ module.exports = {
       "ignoreRegExpLiterals": true,
     }]
   },
-  overrides: [
-    {
-      files: [
-        '**/__tests__/*.{j,t}s?(x)',
-        '**/tests/unit/**/*.spec.{j,t}s?(x)',
-      ],
-      env: {
-        mocha: true,
-      },
-    },
-  ],
 };
+
+export { _default as default };
