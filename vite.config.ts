@@ -1,6 +1,7 @@
 // vite.config.ts
 /* eslint-disable import/no-extraneous-dependencies */
 import {defineConfig} from 'vite';
+import vueDevTools from 'vite-plugin-vue-devtools'
 import vue from '@vitejs/plugin-vue';
 import svgLoader from 'vite-svg-loader';
 import path from 'path';
@@ -10,6 +11,10 @@ export default defineConfig({
     plugins: [
       vue(),
       svgLoader(),
+      vueDevTools({
+        componentInspector: true, // default
+        launchEditor: 'pycharm',
+      }),
     ],
     resolve: {
         alias: {
