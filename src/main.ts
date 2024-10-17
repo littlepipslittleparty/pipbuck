@@ -19,14 +19,14 @@ app.use(metaManager);
 
 
 app.use(VueGtag, {
-    config: {
-        id: process.env.NODE_ENV !== 'production' ? 'UA-47744366-5' : 'UA-47744366-4',
-        params: {
-            send_page_view: true,
-        },
-        appName: 'Pipbuck v2'
+  config: {
+    id: process.env.NODE_ENV !== 'production' ? 'UA-47744366-5' : 'UA-47744366-4',
+    params: {
+      send_page_view: true,
     },
-    pageTrackerScreenviewEnabled: true,
+    appName: 'Pipbuck v2'
+  },
+  pageTrackerScreenviewEnabled: true,
 }, router);
 app.mount('#app');
 
