@@ -65,6 +65,10 @@ export const useRadioStore = defineStore(
     const selected = ref<keyof typeof tracks.value | null>(null);
 
     const selectTrack = (name: keyof typeof tracks.value) => {
+        if (tracks.value[name].disabled) {
+          console.log('Disabled Track selected.');
+          return;
+        }
         selected.value = name;
     };
 
