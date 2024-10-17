@@ -2,28 +2,28 @@
   <div class="columns">
     <ul class="left-list">
       <li
-        v-for="(track, name) in radio.tracks" :key="track.file"
-        class="track" :class="{ disabled: track.disabled }"
-        v-if="!track.disabled"
+          v-for="(track, name) in radio.tracks" :key="track.file"
+          class="track" :class="{ disabled: track.disabled }"
+          v-if="!track.disabled"
       >
         <a
-          :class="{ active: radio.currentFile === track.file }"
-          @click="playTrack(name)"
+            :class="{ active: radio.currentFile === track.file }"
+            @click="playTrack(name)"
         >{{ name }}</a>
       </li>
     </ul>
     <div class="right-content">
-      <oscilloscope
-        class="oscilloscope"
-        :color="style.colorFront"
-        :fftSize="fftSize"
-        :fftEach="fftEach"
-        :rounded="rounded"
-        :squared="squared"
-        :zigzagg="zigzagg"
-        :canvasHeight="128"
-        :canvasWidth="128"
-        :audio-element="audioElement"
+      <Oscilloscope
+          class="oscilloscope"
+          :color="style.colorFront"
+          :fftSize="fftSize"
+          :fftEach="fftEach"
+          :rounded="rounded"
+          :squared="squared"
+          :zigzagg="zigzagg"
+          :canvasHeight="128"
+          :canvasWidth="128"
+          :audio-element="audioElement"
       />
     </div>
   </div>
@@ -83,6 +83,7 @@ defineComponent({
   flex-direction: row;
   justify-content: space-between;
 }
+
 ul.left-list {
   text-align: left;
 
@@ -90,8 +91,10 @@ ul.left-list {
     margin-top: 1rem;
   }
 }
+
 .right-content {
 }
+
 .oscilloscope {
   max-width: 50vmin;
   max-height: 50vmin;
