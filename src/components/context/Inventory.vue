@@ -136,19 +136,19 @@ export default {
     top:10vmin;
     flex-shrink: 2;
     box-sizing: border-box;
-    > svg {
+    :slotted(> svg) {
       box-sizing: border-box;
     }
   }
 
-  .row{
+  :slotted(.row) {
     order: 1;
     display: flex;
     flex-direction: row;
     width: 100%;
   }
 
-  .detail {
+  :slotted(.detail) {
     display: flex;
     justify-content: space-between;
 
