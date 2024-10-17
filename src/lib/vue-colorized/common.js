@@ -37,9 +37,9 @@ const common = {
         : { width: img.naturalWidth, height: img.naturalHeight }
     );
   },
-  calculateImage(img, width, height, hue) {
+  calculateImage(img, width, height, hue, saturation, lightness) {
     // const { width, height } = calculateScale(this.preScale, this.$refs.img, this.img);
-    // const computedSrc = common.calculateImage(this.img, width, height, this.hue);
+    // const computedSrc = common.calculateImage(this.img, width, height, this.hue, this.saturation, this.lightness);
     // this.computedSrc = computedSrc !== null ? computedSrc : img.src;
     console.log(
       'applying img.', width, height,
@@ -54,13 +54,26 @@ const common = {
     const ctx = canvas.getContext('2d');
     ctx.drawImage(img, 0, 0, width, height);
 
+
     const imgData = ctx.getImageData(0, 0, width, height);
     const pixels = imgData.data;
 
-    // Loops through all of the pixels and modifies the components.
+    // Loops through all the pixels and modifies the components. Pixels are R, G, B, A.
     for (let i = 0, n = pixels.length; i < n; i += 4) {
-      const { s, l } = RGBtoHSL(pixels[i + 0], pixels[i + 1], pixels[i + 2]);
-      const { r, g, b } = HSLtoRGB(hue, s, l);
+      // noinspection PointlessArithmeticExpressionJS
+      let { h, s, l } = RGBtoHSL(pixels[i + 0], pixels[i + 1], pixels[i + 2]);
+      // pixels[i+3] is the transparency, which is kept unchanged.
+      if (typeof hue === 'number') {
+        h = hue;
+      }
+      if (typeof saturation === 'number') {
+        s = saturation;
+      }
+      if (typeof lightness === 'number') {
+        l = lightness;
+      }
+      const { r, g, b } = HSLtoRGB(h, s, l);
+      // noinspection PointlessArithmeticExpressionJS
       pixels[i + 0] = r; // red
       pixels[i + 1] = g; // blue
       pixels[i + 2] = b; // green

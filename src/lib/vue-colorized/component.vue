@@ -11,11 +11,22 @@
 import common from './common';
 
 export default {
-  name: 'colorized',
+  name: 'vue-colorized',
   props: {
     hue: {
-      default: 0.08,
+      default: null,
       type: Number,
+      required: false,
+    },
+    saturation: {
+      default: null,
+      type: Number,
+      required: false,
+    },
+    lightness: {
+      default: null,
+      type: Number,
+      required: false,
     },
     src: {
       default: null,
@@ -44,6 +55,8 @@ export default {
   watch: {
     src() { this.loadImage(); },
     hue() { this.applyImage(); },
+    saturation() { this.applyImage(); },
+    lightness() { this.applyImage(); },
     preScale() { this.applyImage(); },
   },
   methods: {
@@ -62,7 +75,7 @@ export default {
     },
     applyImage() {
       const { width, height } = common.calculateScale(this.preScale, this.$refs.img, this.img);
-      const computedSrc = common.calculateImage(this.img, width, height, this.hue);
+      const computedSrc = common.calculateImage(this.img, width, height, this.hue, this.saturation, this.lightness);
       if (!computedSrc) {
         return; // we couldn't calculate anything, as the image was not yet loaded.
       }

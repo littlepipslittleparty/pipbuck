@@ -62,7 +62,7 @@ const directive = {
   // eslint-disable-line no-param-reassign
   applyImage(options) {
     const { width, height } = common.calculateScale(options.preScale, options.target, options.img);
-    const computedSrc = common.calculateImage(options.img, width, height, options.hue);
+    const computedSrc = common.calculateImage(options.img, width, height, options.hue, null, null);
     if (!computedSrc) {
       return; // we couldn't calculate anything, as the image was not yet loaded.
     }
