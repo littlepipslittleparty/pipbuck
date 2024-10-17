@@ -197,6 +197,9 @@ a {
     background-color: rgba(255, 225, 255, 0.1);
 
   }
+  &.disabled {
+    opacity: 0.5;
+  }
 }
 
 ul li {

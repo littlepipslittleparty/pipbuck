@@ -3,11 +3,12 @@
     <ul class="left-list">
       <li
           v-for="(track, name) in radio.tracks" :key="track.file"
-          class="track" :class="{ disabled: track.disabled }"
+          class="track"
       >
         <a
             :class="{
-                active: radio.currentFile === track.file,
+                active: radio.currentFile === track.file && ! track.disabled,
+                disabled: track.disabled,
             }"
             @click="playTrack(name)"
         >{{ name }}</a>
