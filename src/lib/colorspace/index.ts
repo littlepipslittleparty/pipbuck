@@ -1,8 +1,17 @@
 // basically some approaches from the internet, squeezed through my linter.
-import type { RGB, HSL, HSLA, HSV } from './types';
-import {isHSL, isHSLA, isRGB} from "./types";
-type HexColor = string;
+import type {
+  RGB,
+  HSL,
+  HSLA,
+  HSV,
+} from './types';
+import {
+  isHSL,
+  isHSLA,
+  isRGB,
+} from './types';
 
+type HexColor = string;
 
 /**
  * Converts a color component to hex.
@@ -23,7 +32,7 @@ function componentToHex(c: number): string {
  * @param rgb {{r: number, g: number, b: number}}
  * @returns {string} The hex string `#RRGGBB`
  * @see https://stackoverflow.com/a/5624139/3423324
- */// eslint-disable-next-line no-unused-vars
+ */
 export function RGBtoHex(rgb: RGB): HexColor {
   return `#${componentToHex(rgb.r)}${componentToHex(rgb.g)}${componentToHex(rgb.b)}` as HexColor;
 }
@@ -34,11 +43,14 @@ export function RGBtoHex(rgb: RGB): HexColor {
  * @param hex {string} The hex string: `#RRGGBB`.
  * @returns {{r: number, g: number, b: number}} The RGBs.
  * @see https://stackoverflow.com/a/5624139/3423324
- */// eslint-disable-next-line no-unused-vars
+ */
 export function HexToRGB(hex: HexColor): RGB | null {
   // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
   const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-  const convertedHex = (hex as string).replace(shorthandRegex, (m: string, r: string, g: string, b: string) => r + r + g + g + b + b);
+  const convertedHex = (hex as string).replace(
+    shorthandRegex,
+    (m: string, r: string, g: string, b: string) => r + r + g + g + b + b,
+  );
 
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(convertedHex);
   return result ? {
@@ -60,24 +72,29 @@ export function HexToRGB(hex: HexColor): RGB | null {
  * @param b {number} The blue color value
  * @return {{h: number, s: number,  l: number }} The HSL representation
    * @see http://rgb2hsl.nichabi.com/javascript-function.php
- */// eslint-disable-next-line no-unused-vars
-export function RGBtoHSL(r: number, g: number, b: number): HSL;
-export function RGBtoHSL(r: RGB): HSL;
+ */
+export function RGBtoHSL(r: number, g: number, b: number): HSL;  // eslint-disable-line no-unused-vars,max-len
+export function RGBtoHSL(r: RGB): HSL;  // eslint-disable-line no-unused-vars,max-len
 export function RGBtoHSL(r: number | RGB, g?: number, b?: number): HSL {
   if (isRGB(r)) {
     if (g !== undefined && b !== undefined) {
-      throw new Error('If you provide an RGB object as first "r" parameter, you shouldn\'t specify the two other parameters "g" and "b".')
+      throw new Error(
+        'If you provide an RGB object as first "r" parameter, '
+        + 'you shouldn\'t specify the two other parameters "g" and "b".'
+        + '',
+      );
     }
     return RGBtoHSL(r.r, r.g, r.b);
-  } else if (g === undefined || b === undefined) {
-      throw new Error('If you don\'t provide an RGB object as first "r" parameter, you must specify the two other parameters "g" and "b".')
+  }
+  if (g === undefined || b === undefined) {
+    throw new Error('If you don\'t provide an RGB object as first "r" parameter, you must specify the two other parameters "g" and "b".')
   }
   const calculatedR = r / 255;
   const calculatedG = g / 255;
   const calculatedB = b / 255;
 
-  const max = Math.max(calculatedR, calculatedG, calculatedB); const
-    min = Math.min(calculatedR, calculatedG, calculatedB);
+  const max = Math.max(calculatedR, calculatedG, calculatedB);
+  const min = Math.min(calculatedR, calculatedG, calculatedB);
   let h = 0; // default for achromatic
   let s = 0; // default for achromatic
   let l = (max + min) / 2;
@@ -119,19 +136,30 @@ export function RGBtoHSL(r: number | RGB, g?: number, b?: number): HSL {
  * @param l The lightness
  * @returns {} The RGB representation
  * @see http://hsl2rgb.nichabi.com/javascript-function.php
- */// eslint-disable-next-line no-unused-vars
-export function HSLtoRGB(h: number, s: number, l: number): RGB;
-export function HSLtoRGB(h: HSL): RGB;
+ */
+export function HSLtoRGB(h: number, s: number, l: number): RGB;  // eslint-disable-line no-unused-vars,max-len
+export function HSLtoRGB(h: HSL): RGB;  // eslint-disable-line no-unused-vars,max-len
 export function HSLtoRGB(h: number | HSL, s?: number, l?: number): RGB {
   if (isHSL(h)) {
     if (s !== undefined && l !== undefined) {
-      throw new Error('If you provide an HSL object as first "h" parameter, you shouldn\'t specify the two other parameters "s" and "l".')
+      throw new Error(
+        'If you provide an HSL object as first "h" parameter, '
+        + 'you shouldn\'t specify the two other parameters "s" and "l".'
+        + '',
+      );
     }
     return HSLtoRGB(h.h, h.s, h.l);
-  } else if (s === undefined || l === undefined) {
-      throw new Error('If you don\'t provide an HSL object as first "h" parameter, you must specify the two other parameters "s" and "l".')
   }
-  let r, g, b;
+  if (s === undefined || l === undefined) {
+    throw new Error(
+      'If you don\'t provide an HSL object as first "h" parameter, '
+      + 'you must specify the two other parameters "s" and "l".'
+      + '',
+    );
+  }
+  let r;
+  let g;
+  let b;
   let computedH: number = !Number.isFinite(h) ? 0 : h;
   let computedS: number = !Number.isFinite(s) ? 0 : s;
   let computedL: number = !Number.isFinite(l) ? 0 : l;
@@ -191,8 +219,8 @@ export function HSLtoRGB(h: number | HSL, s?: number, l?: number): RGB {
  * @param g {number} The green color value
  * @param b {number} The blue color value
  * @return {{h: number, s: number,  v: number }} The HSV representation
- */// eslint-disable-next-line no-unused-vars
-function RGBtoHSV(r: number, g: number, b: number): HSV {
+ */
+export function RGBtoHSV(r: number, g: number, b: number): HSV {
   const calculatedR = r / 255;
   const calculatedG = g / 255;
   const calculatedB = b / 255;
@@ -236,8 +264,8 @@ function RGBtoHSV(r: number, g: number, b: number): HSV {
  * @param s {number}  The saturation.
  * @param v {number}  The brightness.
  * @return {{r: number, g: number,  b: number }}  The RGB representation
- */// eslint-disable-next-line no-unused-vars
-function HSBtoRGB(h: number, s: number, v: number): RGB {
+ */
+export function HSBtoRGB(h: number, s: number, v: number): RGB {
   let r;
   let g;
   let b;
@@ -261,46 +289,62 @@ function HSBtoRGB(h: number, s: number, v: number): RGB {
   return { r: r * 255, g: g * 255, b: b * 255 };
 }
 
-
 /**
- * Converts HSL to a css string.
- * Either the hex format `"#RRGGBB"` without alpha, or `"rgba(R, G, B, A)"` if an numeric alpha is given.
+ * Converts HSL to a CSS string.
+ * Either the hex format `"#RRGGBB"` without alpha,
+ * or `"rgba(R, G, B, A)"` if a numeric alpha is given.
  *
  * @param h {number|{h: number, s: number, l: number, a: number}|{h:number,s:number,l:number}}
  *        Hue. 0° - 359°
  * @param s {number?} Saturation. 0% - 100%.
  * @param l {number?} Luminescence. 0% - 100%.
- * @param a {number?|null} Alpha. 0% - 100%. Or null/undefined/NaN if you want the hex color instead of an rgba(…) result.
- * @returns {string} Either the hex format `"#RRGGBB"` without alpha, or `"rgba(R, G, B, A)"` if an numeric alpha is given.
+ * @param a {number?|null}
+ *    Alpha. 0% - 100%. Or null/undefined/NaN if you want the hex color instead of a rgba(…) result.
+ * @returns {string}
+ *    Either the hex format `"#RRGGBB"` without alpha,
+ *    or `"rgba(R, G, B, A)"` if a numeric alpha is given.
  */
-export function hsl(h: number, s: number, l: number, a?: number|null): string;
-export function hsl(h: HSL|HSLA): string;
+export function hsl(h: number, s: number, l: number, a?: number|null): string;  // eslint-disable-line no-unused-vars,max-len
+export function hsl(h: HSL|HSLA): string;  // eslint-disable-line no-unused-vars,max-len
 export function hsl(h: number|HSL|HSLA, s?: number, l?: number, a?: number|null): string {
   if (isHSLA(h)) {
     if (s !== undefined && l !== undefined && a !== undefined) {
-      throw new Error('If you provide an HSL(A) object as first "h" parameter, you shouldn\'t specify the two other parameters "s", "l" and "a".')
+      throw new Error(
+        'If you provide an HSL(A) object as first "h" parameter, '
+        + 'you shouldn\'t specify the two other parameters "s", "l" and "a".'
+        + '',
+      );
     }
     return hsl(h.h, h.s, h.l, h.a);
-  } else if (isHSL(h)) {
+  }
+  if (isHSL(h)) {
     if (s !== undefined && l !== undefined && a !== undefined) {
-      throw new Error('If you provide an HSL(A) object as first "h" parameter, you shouldn\'t specify the two other parameters "s", "l" and "a".')
+      throw new Error(
+        'If you provide an HSL(A) object as first "h" parameter, '
+        + 'you shouldn\'t specify the two other parameters "s", "l" and "a".'
+        + '',
+      );
     }
     return hsl(h.h, h.s, h.l);
-  } else if (s === undefined || l === undefined) {
-      throw new Error('If you don\'t provide an HSL object as first "h" parameter, you must specify the two other parameters "s" and "l". "a" is optional.')
   }
-  const HSL = {
+  if (s === undefined || l === undefined) {
+    throw new Error(
+      'If you don\'t provide an HSL object as first "h" parameter, ' +
+      'you must specify the two other parameters "s" and "l". "a" is optional.'
+    );
+  }
+  const HSLs = {
     h: Number.isFinite(h) ? h % 360 : 0,  // 0° - 359°, 360° == 0°
     s: Number.isFinite(s) ? Math.min(Math.max(s, 0), 100) : 0, // 0% - 100%
     l: Number.isFinite(l) ? Math.min(Math.max(l, 0), 100) : 0, // 0% - 100%
   };
-  const RGB = HSLtoRGB(HSL);
+  const RGBs = HSLtoRGB(HSLs);
   if (a === undefined || a === null || !Number.isFinite(a)) {
     // use hex "#RRGGBB"
-    return RGBtoHex(RGB);
+    return RGBtoHex(RGBs);
   }
   // use hex "rgba(R, G, B, A)"
-  const { r, g, b } = RGB;
+  const { r, g, b } = RGBs;
   return `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
