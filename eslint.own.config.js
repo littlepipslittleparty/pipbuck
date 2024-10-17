@@ -27,7 +27,7 @@ export const _default = {
     "vue/multi-word-component-names": 'warn',
     "vue/no-reserved-component-names": 'warn',
   },
-  ignores: ["tauri-src/*"],
+  ignores: ["src-tauri/*"],
 };
 
 export { _default as default };
