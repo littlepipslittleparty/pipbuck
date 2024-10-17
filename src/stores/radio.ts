@@ -73,4 +73,7 @@ export const useRadioStore = defineStore(
         isPlaying,
     };
   },
+  {
+    persist: true,
+  }
 );

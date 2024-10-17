@@ -7,9 +7,13 @@ import App from './App.vue';
 import router from './router';
 import store from './state';
 import {createPinia} from "pinia";
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
+
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate)
 
 const app = createApp(App);
-app.use(createPinia())
+app.use(pinia)
     .use(router)
     .use(store)
     .use(createMetaManager())

@@ -52,4 +52,7 @@ export const useStyleStore = defineStore(
         setHardwareButtons,
     };
   },
+  {
+    persist: true,
+  },
 );
