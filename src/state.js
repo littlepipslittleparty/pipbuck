@@ -1,4 +1,6 @@
 /* eslint no-param-reassign: ["error", { "props": false }] */
+/* eslint-disable */ // <- we'll throw out vuex anyway.
+
 import { createStore } from 'vuex';
 import VuexPersistence from 'vuex-persist';
 import { hsl } from './lib/colorspace';
