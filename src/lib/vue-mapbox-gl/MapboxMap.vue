@@ -36,7 +36,7 @@ export default {
       required: true,
     },
     mapOptions: {
-      type: object as PropType<MapboxOptions>,
+      type: Object as PropType<MapboxOptions>,
       required: true,
     },
     mapMarkers: {
@@ -45,14 +45,14 @@ export default {
       default: () => [],
     },
     navControl: {
-      type: object,
+      type: Object,
       default: () => ({
         show: true,
         position: 'top-right',
       }),
     },
     geolocateControl: {
-      type: object,
+      type: Object,
       default: () => ({
         show: false,
         position: 'top-left',
@@ -60,7 +60,7 @@ export default {
       }),
     },
     scaleControl: {
-      type: object,
+      type: Object,
       default: () => ({
         show: false,
         position: 'top-left',
@@ -68,7 +68,7 @@ export default {
       }),
     },
     fullscreenControl: {
-      type: object,
+      type: Object,
       default: () => ({
         show: false,
         position: 'top-right',
