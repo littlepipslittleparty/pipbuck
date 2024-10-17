@@ -35,7 +35,11 @@
 import Oscilloscope from '../../components/Oscilloscope.vue';
 import {useRadioStore} from "@/stores/radio";
 import {useStyleStore} from "@/stores/style";
-import {computed, defineComponent} from "vue";
+import {
+  computed,
+  defineComponent,
+  getCurrentInstance,
+} from "vue";
 
 const rounded = true;
 const squared = false;
@@ -46,14 +50,16 @@ const fftEach = 3;
 const radio = useRadioStore();
 const style = useStyleStore();
 
+const self = getCurrentInstance();
+
 const audioElement = computed(() => {
-  return null;
-  // return this.$parent.$parent.$parent.$refs.radio;
+  // https://stackoverflow.com/a/79100101/3423324#vue-3-get-access-to-parent
+  return self.parent.parent.parent.parent.parent.refs.radio;
 });
 
 const playTrack = (name) => {
   console.log('<radio-element>', audioElement.value);
-  console.log('file', radio.selected, name);
+  console.log('file', radio.selected, '->', name);
   if (radio.selected !== null && radio.selected !== name) {
     // is already playing something else.
     // turn off
@@ -71,7 +77,6 @@ const playTrack = (name) => {
 
 defineComponent({
   name: 'Radio',
-  components: {Oscilloscope},
 });
 </script>
 
