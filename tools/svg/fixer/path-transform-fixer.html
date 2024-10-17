@@ -8,8 +8,9 @@
 <div id="render" style="float: right; display: inline"></div>
 <h1>SVG</h1>
 <textarea id="svg">
-  <svg height="800" viewBox="0 0 20 15.5" width="800" xmlns="http://www.w3.org/2000/svg">
-    <path d="m0.292308 2.61583c-.389744.40488-.389744 1.06036 0 1.46421l8.263565 8.56263c.780487.80977 2.046655.80977 2.827141 0l8.324526-8.62476c.385746-.40075.390743-1.04794.009993-1.45386-.388744-.4142-1.029323-.41938-1.424063-.01139l-7.616991 7.8937c-.390743.40488-1.023327.40488-1.41407 0l-7.55703-7.83053c-.389744-.40489-1.022328-.40489-1.413071 0"/>
+  <svg viewBox="212.445 217.724 572.599 572.598" xmlns="http://www.w3.org/2000/svg">
+    <path clip-path="url(#h)" d="m-776.542 903.1c-5.643 33.217-37.167 71.086-98.05 87.258l101.696 3z" fill="#bbb000"
+				transform="translate(1359.1403 -329.43182)"/>
   </svg>
 </textarea>
 <hr>
@@ -52,7 +53,7 @@
 
     let viewBox = svg.querySelector('svg').getAttribute('viewBox').split(' ').map((item) => Number.parseFloat(item));
     let path = svg.querySelector('svg > path').getAttribute('d');
-    const transform = svg.querySelector('svg > path').getAttribute('transform');
+    const transform = svg.querySelector('svg path').getAttribute('transform');
 
     if (!path.indexOf('m') === 0) {
       throw new Error('Path must start with "m"!')
@@ -60,7 +61,7 @@
 
     let [ left, top, width, height ] = viewBox;
     console.log({viewBox, path});
-    const m = /^m(?<x>\d+(?:\.\d+)?) (?<y>\d+(?:\.\d+)?)(?<rest>\w.+)$/g.exec(path);  // https://regex101.com/r/iIgl3a/1
+    const m = /^m(?<x>-?\d+(?:\.\d+)?) (?<y>-?\d+(?:\.\d+)?)(?<rest>\w.+)$/g.exec(path);  // https://regex101.com/r/iIgl3a/1
     if (!m) {
       throw new Error('Path must start with "m<NUM> <NUM>".')
     }
@@ -74,10 +75,9 @@
     console.log({startPosition})
 
     if(transform) {
-      const matchTransform = /^translate\((?<x>-?\d+) (?<y>-?\d+)\)$/g.exec(transform);  // https://regex101.com/r/UJvDFK/1
-      const transform = [ matchTransform.groups.x, matchTransform.groups.y ];
-      viewBox[2] += transform[0];
-      viewBox[3] += transform[1];
+      const matchTransform = /^translate\((?<x>-?\d+(?:\.\d+)?) (?<y>-?\d+(?:\.\d+)?)\)$/g.exec(transform);  // https://regex101.com/r/UJvDFK/1
+      viewBox[2] +=  matchTransform.groups.x;
+      viewBox[3] += matchTransform.groups.y;
     }
     console.log({viewBox, path});
 
@@ -116,6 +116,6 @@
   }
 </script>
 <script async src="https://raw.githubusercontent.com/ccprog/pathfit/master/pathfit.js"></script><!-- online -->
-<script async src="./pathfit.js"></script><!-- offline -->
+<script async src="pathfit.js"></script><!-- offline -->
 </body>
 </html>
