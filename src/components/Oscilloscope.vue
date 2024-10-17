@@ -4,13 +4,13 @@
       ref="canvas"
       :style="{ borderBottom: canvasBorderStyle, 'border-right': canvasBorderStyle }"
     ></canvas>
-    <div v-if="isPlaying">PLAYING!</div>
+    <div v-if="radio.isPlaying">PLAYING!</div>
     <div v-else>PAUSED!</div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { useRadioStore } from "@/stores/radio";
 
 // calculate the median, https://stackoverflow.com/a/39639518/3423324
 function median(arr) {
@@ -21,6 +21,13 @@ function median(arr) {
 
 export default {
   name: 'oscilloscope',
+  setup() {
+    const radio = useRadioStore();
+
+    return {
+      radio,
+    }
+  },
   props: {
     // needed settings
     audioElement: {},  // supply a reference to an audio element.
@@ -310,7 +317,6 @@ export default {
     },
   },
   computed: {
-    ...mapGetters({ isPlaying: 'radio/isPlaying' }),
     canvasElement() {
       return this.$refs.canvas;
     },
