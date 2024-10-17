@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SVG Viewbox Fixer</title>
+</head>
+<body>
+<div id="render" style="float: right; display: inline"></div>
+<h1>SVG</h1>
+<textarea id="svg">
+  <svg height="800" viewBox="0 0 20 15.5" width="800" xmlns="http://www.w3.org/2000/svg">
+    <path d="m0.292308 2.61583c-.389744.40488-.389744 1.06036 0 1.46421l8.263565 8.56263c.780487.80977 2.046655.80977 2.827141 0l8.324526-8.62476c.385746-.40075.390743-1.04794.009993-1.45386-.388744-.4142-1.029323-.41938-1.424063-.01139l-7.616991 7.8937c-.390743.40488-1.023327.40488-1.41407 0l-7.55703-7.83053c-.389744-.40489-1.022328-.40489-1.413071 0"/>
+  </svg>
+</textarea>
+<hr>
+<h3>Target Size</h3>
+<input type="number" min="1" id="width" value="20"/> &times; <input type="number" min="1" id="height" value="20" />
+<hr>
+<h3>Calculate</h3>
+<button onclick="calculate()">Calculate</button>
+<hr>
+<h1>Output</h1>
+<h3>SVG</h3>
+<textarea id="output"></textarea>
+<hr>
+<h3>Path</h3>
+<textarea id="path"></textarea>
+
+<script>
+  /**
+   * Example:
+   * <svg height="800" viewBox="0 0 20 15.5" width="800" xmlns="http://www.w3.org/2000/svg">
+   *   <path d="m0.292308 2.61583c-.389744.40488-.389744 1.06036 0 1.46421l8.263565 8.56263c.780487.80977 2.046655.80977 2.827141 0l8.324526-8.62476c.385746-.40075.390743-1.04794.009993-1.45386-.388744-.4142-1.029323-.41938-1.424063-.01139l-7.616991 7.8937c-.390743.40488-1.023327.40488-1.41407 0l-7.55703-7.83053c-.389744-.40489-1.022328-.40489-1.413071 0"/>
+   * </svg>
+   */
+  console.log('loading script');
+  const $svg = document.querySelector('#svg');
+  const $path = document.querySelector('#path');
+  const $width = document.querySelector('#width');
+  const $height = document.querySelector('#height');
+  const $output = document.querySelector('#output');
+  const $render = document.querySelector('#render');
+  console.log('loading script: done');
+
+  function calculate() {
+    console.log('calculate()');
+    const parser = new DOMParser();
+    const svg = parser.parseFromString($svg.value, "text/xml");
+    const wantedWidth = Number.parseInt($width.value);
+    const wantedHeight = Number.parseInt($height.value);
+    console.log({svg, wantedWidth, wantedHeight});
+
+    let viewBox = svg.querySelector('svg').getAttribute('viewBox').split(' ').map((item) => Number.parseFloat(item));
+    let path = svg.querySelector('svg > path').getAttribute('d');
+    const transform = svg.querySelector('svg > path').getAttribute('transform');
+
+    if (!path.indexOf('m') === 0) {
+      throw new Error('Path must start with "m"!')
+    }
+
+    let [ left, top, width, height ] = viewBox;
+    console.log({viewBox, path});
+    const m = /^m(?<x>\d+(?:\.\d+)?) (?<y>\d+(?:\.\d+)?)(?<rest>\w.+)$/g.exec(path);  // https://regex101.com/r/iIgl3a/1
+    if (!m) {
+      throw new Error('Path must start with "m<NUM> <NUM>".')
+    }
+    console.log({x: m.groups.x, y: m.groups.y, rest: m.groups.rest})
+    const path2 = `m${m.groups.x} ${m.groups.y}${m.groups.rest}`;
+    if (path !== path2) {
+      console.log({ path3: path, path2 });
+      throw new Error('Path could not be parsed.');
+    }
+    let startPosition = [Number.parseFloat(m.groups.x), Number.parseFloat(m.groups.y)]
+    console.log({startPosition})
+
+    if(transform) {
+      const matchTransform = /^translate\((?<x>-?\d+) (?<y>-?\d+)\)$/g.exec(transform);  // https://regex101.com/r/UJvDFK/1
+      const transform = [ matchTransform.groups.x, matchTransform.groups.y ];
+      viewBox[2] += transform[0];
+      viewBox[3] += transform[1];
+    }
+    console.log({viewBox, path});
+
+    if (viewBox[0] !== 0) {
+      viewBox[2] += viewBox[0];
+      startPosition[0] += viewBox[0] / 2;
+      viewBox[0] = 0;
+    }
+    if (viewBox[1] !== 0) {
+      viewBox[3] += viewBox[1];
+      startPosition[1] += viewBox[1] / 2;
+      viewBox[1] = 0;
+    }
+    console.log({startPosition, test: `m${startPosition} ${startPosition[1]}${m.groups.rest}`})
+    const newPath = `m${startPosition[0]} ${startPosition[1]}${m.groups.rest}`;
+    const newViewBox = `${viewBox[0]} ${viewBox[1]} ${viewBox[2]} ${viewBox[3]}`;
+    console.log({newViewBox, newPath});
+
+    // https://stackoverflow.com/a/63744934/3423324#how-to-shrink-normalize-an-svg-so-it-fits-in-a-specific-viewbox
+    const fitter = new Pathfit({viewBox: newViewBox}, undefined, newPath);
+    console.log({wantedWidth, wantedHeight});
+    const finalPath = fitter.scale_with_aspect_ratio(wantedWidth, wantedHeight);
+    viewBox[2] = wantedWidth;
+    viewBox[3] = wantedHeight;
+    console.log({newViewBox: newViewBox, finalPath});
+    $path.value = finalPath;
+
+    svg.querySelector('svg > path').setAttribute('path', finalPath);
+    svg.querySelector('svg > path').removeAttribute('transform');
+    svg.querySelector('svg').setAttribute('viewBox', newViewBox);
+
+    const serializer = new XMLSerializer();
+    const newSvg = serializer.serializeToString(svg);
+    $output.value = newSvg;
+    $render.innerHTML = newSvg;
+  }
+</script>
+<script async src="https://raw.githubusercontent.com/ccprog/pathfit/master/pathfit.js"></script><!-- online -->
+<script async src="./pathfit.js"></script><!-- offline -->
+</body>
+</html>
