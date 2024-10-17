@@ -126,8 +126,9 @@ export default app;
         <div
             class="effect display-background"
             v-colorized-bg="{
-            src: bgImage, hue: hair.h,
-          }"
+              src: bgImage,
+              hue: hair.h,
+            }"
         ></div>
       </div>
       <virtual-buttons
