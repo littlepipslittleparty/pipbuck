@@ -44,6 +44,7 @@ const radio = useRadioStore();
 const style = useStyleStore();
 
 const audioElement = computed(() => {
+  return null;
   // return this.$parent.$parent.$parent.$refs.radio;
 });
 
