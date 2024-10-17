@@ -234,7 +234,7 @@ export default createRouter({
           // route level code-splitting
           // this generates a separate chunk (main.[hash].js) for this route
           // which is lazy-loaded when the route is visited.
-          component: () => import(/* webpackChunkName: "main" */ './views/xtras/Settings.vue'),
+          component: () => import(/* webpackChunkName: "main" */ './views/xtras/SettingsExtra.vue'),
           // component: Settings,
         },
       ],
@@ -246,7 +246,7 @@ export default createRouter({
       // route level code-splitting
       // this generates a separate chunk (extra.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "extra" */ './views/xtras/ExtraStats.vue'),
+      component: () => import(/* webpackChunkName: "extra" */ './views/xtras/DataExtra.vue'),
       // component: ExtraStats,
     },
     {
@@ -256,7 +256,7 @@ export default createRouter({
       // route level code-splitting
       // this generates a separate chunk (extra.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "extra" */ './views/xtras/ExtraItems.vue'),
+      component: () => import(/* webpackChunkName: "extra" */ './views/xtras/ItemsExtra.vue'),
       // component: ExtraItems,
     },
     {

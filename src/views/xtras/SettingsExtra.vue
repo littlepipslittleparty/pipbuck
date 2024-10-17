@@ -40,7 +40,7 @@ import {ui} from '../../sound';
 import {useStyleStore} from "@/stores/style";
 
 export default {
-  name: 'Settings',
+  name: 'SettingsExtra',
   components: {StableColt},
   setup() {
     const styleStore = useStyleStore();

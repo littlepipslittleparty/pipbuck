@@ -14,7 +14,16 @@ export const _default = {
       "ignoreComments": true,
       "ignoreTrailingComments": true,
       "ignoreRegExpLiterals": true,
-    }]
+    }],
+    "vue/block-lang": [
+      "error",
+      {
+        "script": {
+          "lang": ["ts", "js"], // needed to be able to upgrade existing code.
+        }
+      }
+    ],
+    "vue/multi-word-component-names": 'warn',
   },
 };
 

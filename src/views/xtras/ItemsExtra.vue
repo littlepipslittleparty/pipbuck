@@ -14,7 +14,7 @@ import { ui } from '../../sound';
 import HowlerSprites from '../../lib/howler_sprites/index.vue';
 
 export default {
-  name: 'ExtraData',
+  name: 'ItemsExtra',
   components: {
     HowlerSprites,
   },

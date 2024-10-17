@@ -49,7 +49,7 @@ import { ui } from '../sound';
 
 // https://stackoverflow.com/a/40460122/3423324#showing-loading-spinner-for-async-vue-2-components
 export default {
-  name: 'boot',
+  name: 'Boot',
   components: { Menu, StableColt, TyperCss },
   data() {
     return {

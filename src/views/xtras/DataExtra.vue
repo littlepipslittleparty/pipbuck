@@ -21,7 +21,7 @@ import StatsPony from '../../components/StatsPony.vue';
 import Checkbox from '../../components/Checkbox.vue';
 
 export default {
-  name: 'ExtraData',
+  name: 'DataExtra',
   components: { StatsPony, Checkbox },
   data() {
     return {
