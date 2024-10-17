@@ -25,8 +25,8 @@ app.use(pinia)
             params: {
                 send_page_view: true,
             },
-            appName: 'Pipbuck v2'
         },
+        appName: 'Pipbuck v3',
         pageTrackerScreenviewEnabled: true,
     }, router);
 app.mount('#app');
