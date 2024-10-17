@@ -320,7 +320,7 @@ export default {
       }
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     // eslint-disable-next-line no-underscore-dangle
     if (this._map) {
       this._map.remove();
