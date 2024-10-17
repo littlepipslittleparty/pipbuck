@@ -16,21 +16,15 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
 import MapboxMap from '@/lib/vue-mapbox-gl/MapboxMap.vue';
+import { defineComponent } from "vue";
 
-export default {
+defineComponent({
   name: 'WorldMap',
-  // eslint-disable-next-line vue/no-unused-components
-  components: { MapboxMap },
-  data() {
-    return {
-      // es-lint-disable-next-line: max-len
-      apiToken: 'pk.eyJ1IjoibHVja3lkb25hbGQiLCJhIjoiY2o4MjExcDRnNnh1aDJxcGticXJqbmVkZiJ9.AeqEDvUViPfbMGqmPHLnBw',
-    };
-  },
-};
+})
+const apiToken = 'pk.eyJ1IjoibHVja3lkb25hbGQiLCJhIjoiY2o4MjExcDRnNnh1aDJxcGticXJqbmVkZiJ9.AeqEDvUViPfbMGqmPHLnBw';
 </script>
 <style scoped lang="scss">
 .page {
@@ -38,10 +32,8 @@ export default {
   padding-right: 3vmin;
   padding-bottom: 2vmin;
 }
-</style>
-<style lang="scss">/* unscoped */
-#map .mapboxgl-control-container,
-#map .mapboxgl-control-container .mapboxgl-ctrl
+:global(#map .mapboxgl-control-container),
+:global(#map .mapboxgl-control-container .mapboxgl-ctrl)
 {
   display: none !important;
   pointer-events: auto!important;
