@@ -1,4 +1,5 @@
-/*
+/* eslint-disable */
+/**
  * pathfit v1.0.4
  * (c) 2022 Claus Colloseus <ccprog@gmx.de>
  * MIT License
