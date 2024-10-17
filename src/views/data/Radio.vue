@@ -6,7 +6,9 @@
           class="track" :class="{ disabled: track.disabled }"
       >
         <a
-            :class="{ active: radio.currentFile === track.file }"
+            :class="{
+                active: radio.currentFile === track.file,
+            }"
             @click="playTrack(name)"
         >{{ name }}</a>
       </li>
