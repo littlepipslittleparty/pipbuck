@@ -6,11 +6,11 @@
         <div class="detail blank"/>
         <div class="detail weight">
           <div class="label">WG</div>
-          <div class="value">{{ activeItem.weight | dashedZero }}</div>
+          <div class="value">{{ dashedZero(activeItem.weight) }}</div>
         </div>
         <div class="detail value">
           <div class="label">VAL</div>
-          <div class="value">{{ activeItem.value | dashedZero }}</div>
+          <div class="value">{{ dashedZero(activeItem.value) }}</div>
         </div>
       </div>
       <div class="row">
@@ -26,14 +26,14 @@
 
 <script>
 import misc, { empty } from '../../data/misc';
-import { dashedZero } from '../../filters/inventory';
+import { dashedZero } from '@/filters/inventory';
 import Inventory from '../../components/context/Inventory.vue';
 import InventoryMixin from '../../components/context/InventoryMixin';
 
 export default {
   name: 'Misc',
   components: { Inventory },
-  filters: { dashedZero },
+  methods: { dashedZero },
   mixins: [InventoryMixin],
   data() {
     const hasItems = (
