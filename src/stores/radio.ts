@@ -42,8 +42,10 @@ export const useRadioStore = defineStore(
             position: 0,
         },
         'Fillydelphia Radio': {
+            // seems to have gone 404 :(
+            // — but like since 2016 ?!?  https://www.facebook.com/FillydelphiaRadio/posts/hey-guys-its-westj-heregot-some-bad-newsyou-might-have-known-for-a-while-this-mi/1371714502916087/
             file: 'https://fillyradio.com/stream-320k',
-            disabled: false,
+            disabled: true,
             hidden: false,
             position: 0,
         },
