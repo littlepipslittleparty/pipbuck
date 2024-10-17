@@ -1,12 +1,22 @@
 import {defineStore} from 'pinia';
 import {computed, ref} from 'vue';
 
+export type RadioStation = {
+  file: string;
+  disabled: boolean;
+  hidden: boolean;
+  position: number;
+};
+
+export type NullRadioStation = {
+  [ignored in keyof RadioStation]: null;
+};
+
 export const useRadioStore = defineStore(
   'radio',
   () => {
     const current_time = ref(0);
-    const selected = ref<string | null>(null);
-    const tracks = ref({
+    const tracks = ref<{[stationName: string]: RadioStation | NullRadioStation}>({
         null: {
             file: null,
             disabled: null,
@@ -38,8 +48,9 @@ export const useRadioStore = defineStore(
             position: 0,
         },
     });
+    const selected = ref<keyof typeof tracks.value | null>(null);
 
-    const selectTrack = (name: string) => {
+    const selectTrack = (name: keyof typeof tracks.value) => {
         selected.value = name;
     };
 

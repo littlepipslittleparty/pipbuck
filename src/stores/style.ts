@@ -19,17 +19,17 @@ export const useStyleStore = defineStore(
     const showHardwareButtons = ref(true);
 
     // Actions to update the state
-    const setFrontColor = (newColor) => {
+    const setFrontColor = (newColor: string) => {
         console.log('Set front color', newColor);
         colorFront.value = newColor;
     };
 
-    const setBackColor = (newColor) => {
+    const setBackColor = (newColor: string) => {
         console.log('Set back color', newColor);
         colorBack.value = newColor;
     };
 
-    const setHardwareButtons = (state) => {
+    const setHardwareButtons = (state: boolean) => {
         console.log('toggleHardwareButtons');
         showHardwareButtons.value = state
     };
