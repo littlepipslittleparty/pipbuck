@@ -1,20 +1,34 @@
 <template>
   <div
-    :id="(mapOptions.hasOwnProperty('container') ? mapOptions.container : 'map')"
+    :id="
+      mapOptions.hasOwnProperty('container') &&
+     mapOptions.container !== undefined &&
+      typeof mapOptions.container === 'string'
+        ? mapOptions.container
+        : 'map'
+    "
     class="mapbox-map" :class="{ 'hide-credits': hideCredits }"
   ></div>
 </template>
 
-<script>
+<script lang="ts">
 import mapboxgl from 'mapbox-gl';
+import type { MapboxOptions as FullMapboxOptions } from 'mapbox-gl';
+import type { PropType } from 'vue';
+
+export const Marker = mapboxgl.Marker;
+export type LightMapboxOptions = Omit<FullMapboxOptions, 'container'>;
+export type MapboxOptions = LightMapboxOptions & { container?: FullMapboxOptions['container']};
 
 export default {
-  name: 'Map',
+  name: 'MapboxMap',
   data() {
     return {
       // eslint-disable-next-line vue/no-reserved-keys
-      _map: null,
-    };
+      _map: null as mapboxgl.Map | null,
+      // eslint-disable-next-line vue/no-reserved-keys
+      _mapOptions: null as MapboxOptions | null,
+    }
   },
   props: {
     accessToken: {
@@ -22,8 +36,13 @@ export default {
       required: true,
     },
     mapOptions: {
-      type: Object,
+      type: Object as PropType<MapboxOptions>,
       required: true,
+    },
+    mapMarkers: {
+      type: Array as PropType<mapboxgl.Marker[]>,
+      required: false,
+      default: () => [],
     },
     navControl: {
       type: Object,
@@ -75,35 +94,38 @@ export default {
     mapInit() {
       // Mapbox GL access token
       mapboxgl.accessToken = this.accessToken;
-
-      const newMapOptions = { ...this.mapOptions };
       // Add container to options object
       // eslint-disable-next-line no-prototype-builtins
-      if (!newMapOptions.hasOwnProperty('container')) {
-        newMapOptions.container = 'map';
+      let mapOptions: MapboxOptions = { ...this.mapOptions } as MapboxOptions | FullMapboxOptions
+      if (!Object.prototype.hasOwnProperty.call(mapOptions, 'container')) {
+        mapOptions = { ...mapOptions, container: 'map' } as FullMapboxOptions
       }
-
+      this._mapOptions = mapOptions
       // New Mapbox Instance
-      const map = new mapboxgl.Map(newMapOptions);
+      const map = new mapboxgl.Map(mapOptions as FullMapboxOptions);
+      // apply markers to the map.
+      this.mapMarkers.forEach((marker: mapboxgl.Marker) => {
+        marker.addTo(map);
+      });
       // Emit init event passing map object
       this.$emit('map-init', map);
       return map;
     },
-    registerEvents(map) {
+    registerEvents(map: mapboxgl.Map) {
       // Map Loaded
       map.on('load', () => {
         this.$emit('map-load', map);
       });
       // Map Mouse Move
-      map.on('mousemove', (e) => {
+      map.on('mousemove', (e: Object | undefined) => {
         this.$emit('map-mousemove', map, e);
       });
       // Map Clicked
-      map.on('click', (e) => {
+      map.on('click', (e: Object | undefined) => {
         this.$emit('map-click', map, e);
       });
       // Map Context Menu
-      map.on('contextmenu', (e) => {
+      map.on('contextmenu', (e: Object | undefined) => {
         this.$emit('map-contextmenu', map, e);
       });
       // Map Resized
@@ -111,11 +133,11 @@ export default {
         this.$emit('map-resize', map);
       });
       // Map Webgl Context Lost
-      map.on('webglcontextlost', (e) => {
+      map.on('webglcontextlost', (e: Object | undefined) => {
         this.$emit('map-webglcontextlost', map, e);
       });
       // Map Webgl Context Restored
-      map.on('webglcontextrestored', (e) => {
+      map.on('webglcontextrestored', (e: Object | undefined) => {
         this.$emit('map-webglcontextrestored', map, e);
       });
       // Map Removed
@@ -123,59 +145,59 @@ export default {
         this.$emit('map-remove', map);
       });
       // Map Source Data Loading
-      map.on('sourcedataloading', (e) => {
+      map.on('sourcedataloading', (e: Object | undefined) => {
         this.$emit('map-sourcedataloading', map, e);
       });
       // Map Touch Start
-      map.on('touchstart', (e) => {
+      map.on('touchstart', (e: Object | undefined) => {
         this.$emit('map-touchstart', map, e);
       });
       // Map Move Start
-      map.on('movestart', (e) => {
+      map.on('movestart', (e: Object | undefined) => {
         this.$emit('map-movestart', map, e);
       });
       // Map Move
-      map.on('move', (e) => {
+      map.on('move', (e: Object | undefined) => {
         this.$emit('map-move', map, e);
       });
       // Map Move End
-      map.on('moveend', (e) => {
+      map.on('moveend', (e: Object | undefined) => {
         this.$emit('map-moveend', map, e);
       });
       // Map Error
-      map.on('error', (e) => {
+      map.on('error', (e: Object | undefined) => {
         this.$emit('map-error', map, e);
       });
       // Map Data
-      map.on('data', (e) => {
+      map.on('data', (e: Object | undefined) => {
         this.$emit('map-data', map, e);
       });
       // Map Style Data
-      map.on('styledata', (e) => {
+      map.on('styledata', (e: Object | undefined) => {
         this.$emit('map-styledata', map, e);
       });
       // Map Mouse Up
-      map.on('mouseup', (e) => {
+      map.on('mouseup', (e: Object | undefined) => {
         this.$emit('map-mouseup', map, e);
       });
       // Map Touch Cancel
-      map.on('touchcancel', (e) => {
+      map.on('touchcancel', (e: Object | undefined) => {
         this.$emit('map-touchcancel', map, e);
       });
       // Map Source Data
-      map.on('sourcedata', (e) => {
+      map.on('sourcedata', (e: Object | undefined) => {
         this.$emit('map-sourcedata', map, e);
       });
       // Map Data Loading
-      map.on('dataloading', (e) => {
+      map.on('dataloading', (e: Object | undefined) => {
         this.$emit('map-dataloading', map, e);
       });
       // Map Style Data Loading
-      map.on('styledataloading', (e) => {
+      map.on('styledataloading', (e: Object | undefined) => {
         this.$emit('map-styledataloading', map, e);
       });
       // Map Double Click
-      map.on('dblclick', (e) => {
+      map.on('dblclick', (e: Object | undefined) => {
         this.$emit('map-dblclick', map, e);
       });
       // Map Render
@@ -183,87 +205,87 @@ export default {
         this.$emit('map-render', map);
       });
       // Map Mouse Out
-      map.on('mouseout', (e) => {
+      map.on('mouseout', (e: Object | undefined) => {
         this.$emit('map-mouseout', map, e);
       });
       // Map Mouse Down
-      map.on('mousedown', (e) => {
+      map.on('mousedown', (e: Object | undefined) => {
         this.$emit('map-mousedown', map, e);
       });
       // Map Mouse Over
-      map.on('mouseover', (e) => {
+      map.on('mouseover', (e: Object | undefined) => {
         this.$emit('map-mouseover', map, e);
       });
       // Map Touch End
-      map.on('touchend', (e) => {
+      map.on('touchend', (e: Object | undefined) => {
         this.$emit('map-touchend', map, e);
       });
       // Map Touch Move
-      map.on('touchmove', (e) => {
+      map.on('touchmove', (e: Object | undefined) => {
         this.$emit('map-touchmove', map, e);
       });
       // Map Zoom Start
-      map.on('zoomstart', (e) => {
+      map.on('zoomstart', (e: Object | undefined) => {
         this.$emit('map-zoomstart', map, e);
       });
       // Map Zoom End
-      map.on('zoomend', (e) => {
+      map.on('zoomend', (e: Object | undefined) => {
         this.$emit('map-zoomend', map, e);
       });
       // Map Zoom
-      map.on('zoom', (e) => {
+      map.on('zoom', (e: Object | undefined) => {
         this.$emit('map-zoom', map, e);
       });
       // Map Box Zoom Cancel
-      map.on('boxzoomcancel', (e) => {
+      map.on('boxzoomcancel', (e: Object | undefined) => {
         this.$emit('map-boxzoomcancel', map, e);
       });
       // Map Box Zoom End
-      map.on('boxzoomend', (e) => {
+      map.on('boxzoomend', (e: Object | undefined) => {
         this.$emit('map-boxzoomend', map, e);
       });
       // Map Box Zoom Start
-      map.on('boxzoomstart', (e) => {
+      map.on('boxzoomstart', (e: Object | undefined) => {
         this.$emit('map-boxzoomstart', map, e);
       });
       // Map Rotate Start
-      map.on('rotatestart', (e) => {
+      map.on('rotatestart', (e: Object | undefined) => {
         this.$emit('map-rotatestart', map, e);
       });
       // Map Rotate
-      map.on('rotate', (e) => {
+      map.on('rotate', (e: Object | undefined) => {
         this.$emit('map-rotate', map, e);
       });
       // Map Rotate End
-      map.on('rotateend', (e) => {
+      map.on('rotateend', (e: Object | undefined) => {
         this.$emit('map-rotateend', map, e);
       });
       // Map Drag End
-      map.on('dragend', (e) => {
+      map.on('dragend', (e: Object | undefined) => {
         this.$emit('map-dragend', map, e);
       });
       // Map Drag
-      map.on('drag', (e) => {
+      map.on('drag', (e: Object | undefined) => {
         this.$emit('map-drag', map, e);
       });
       // Map Drag
-      map.on('dragstart', (e) => {
+      map.on('dragstart', (e: Object | undefined) => {
         this.$emit('map-dragstart', map, e);
       });
       // Map Pitch
-      map.on('pitch', (e) => {
+      map.on('pitch', (e: Object | undefined) => {
         this.$emit('map-pitch', map, e);
       });
       // Map Pitch Start
-      map.on('pitchstart', (e) => {
+      map.on('pitchstart', (e: Object | undefined) => {
         this.$emit('map-pitchstart', map, e);
       });
       // Map Pitch End
-      map.on('pitchend', (e) => {
+      map.on('pitchend', (e: Object | undefined) => {
         this.$emit('map-pitchend', map, e);
       });
     },
-    addControls(map) {
+    addControls(map: mapboxgl.Map) {
       // Nav Control
       if (this.navControl.show) {
         const nav = new mapboxgl.NavigationControl();
@@ -298,45 +320,44 @@ export default {
       }
     },
   },
-  beforeUnmount() {
+  beforeDestroy() {
     // eslint-disable-next-line no-underscore-dangle
-    this._map.remove();
+    if (this._map) {
+      this._map.remove();
+    }
+  },
+  watch: {
+    mapMarkers(oldMarkers, newMarkers) {
+      if (oldMarkers) {
+        oldMarkers.forEach((oldMarker: mapboxgl.Marker) => {
+          if (!newMarkers || newMarkers.indexOf(oldMarker) === -1) {
+            // '--> no longer in the marker list
+            oldMarker.remove();
+          }
+        });
+      }
+      if (newMarkers) {
+        newMarkers.forEach((newMarker: mapboxgl.Marker) => {
+          if ((!oldMarkers || oldMarkers.indexOf(newMarker) === -1) && this._map != null) {
+            // '--> was never in the marker list
+            newMarker.addTo(this._map as any);
+          }
+        });
+      }
+    },
   },
 };
+
 </script>
 
 <style lang="scss">
-//@import '~mapbox-gl/dist/mapbox-gl.css';
+@use 'mapbox-gl/dist/mapbox-gl.css' as mapbox;
 
 .mapbox-map {
-  height: 100%;
-  width: 100%;
-
   &.hide-credits .mapboxgl-ctrl-logo,
   &.hide-credits .mapboxgl-ctrl-attrib {
     display: none !important;
     visibility: hidden !important;
-  }
-  .mapboxgl-canvas-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-  .mapboxgl-canvas {
-    left: 0;
-    position: absolute!important;
-  }
-  .mapboxgl-ctrl-bottom-right {
-    position: absolute;
-    pointer-events: none;
-  }
-  .mapboxgl-ctrl-bottom-right {
-    right: 5vmin;
-    bottom: 2vmin;
-  }
-  .mapboxgl-ctrl-attrib {
-    font-size: 2vmin;
-    pointer-events: auto;
   }
 }
 </style>

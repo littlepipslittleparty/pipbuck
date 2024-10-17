@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <keep-alive>
-      <Map
+      <MapboxMap
         :access-token="apiToken"
         :map-options="{
           style: 'mapbox://styles/luckydonald/cjqwaq8xs3x9j2sn2cbsdzyt6',
@@ -17,12 +17,13 @@
 </template>
 
 <script>
-import Map from '../../lib/vue-mapbox-gl/map.vue';
+
+import MapboxMap from '@/lib/vue-mapbox-gl/MapboxMap.vue';
 
 export default {
   name: 'WorldMap',
   // eslint-disable-next-line vue/no-unused-components
-  components: { Map },
+  components: { MapboxMap },
   data() {
     return {
       // es-lint-disable-next-line: max-len
