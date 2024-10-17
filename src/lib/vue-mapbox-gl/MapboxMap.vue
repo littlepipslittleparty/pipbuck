@@ -340,6 +340,7 @@ export default {
         newMarkers.forEach((newMarker: mapboxgl.Marker) => {
           if ((!oldMarkers || oldMarkers.indexOf(newMarker) === -1) && this._map != null) {
             // '--> was never in the marker list
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             newMarker.addTo(this._map as any);
           }
         });
