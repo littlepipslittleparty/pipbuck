@@ -2,10 +2,10 @@
   <div class="page-wrapper">
     <div class="stats">
       <div class="row">
-        <div class="edge left down" />
-        <div class="hr left" />
+        <div class="edge left down"/>
+        <div class="hr left"/>
         <a class="title" @click="navigateToTitle">{{ title }}</a>
-        <div class="hr middle" />
+        <div class="hr middle"/>
         <div class="grouping" v-if="!disableStats">
           <slot name="statistics">
             <div class="stat">Batz 42</div>
@@ -14,33 +14,35 @@
             <div class="stat">BP L.Pip</div>
           </slot>
         </div>
-        <div class="edge right down" />
+        <div class="edge right down"/>
       </div>
     </div>
     <div id="nav" class="nav">
-      <div class="edge left up" />
-      <div class="hr" />
+      <div class="edge left up"/>
+      <div class="hr"/>
       <template v-for="link in links" :key="`${link.label}_link`">
         <router-link class="item" :to="link.to" @click="playTab">
           {{ link.label }}
         </router-link>
-        <div :data-key="`${link.label}_hr`" class="hr" />
+        <div :data-key="`${link.label}_hr`" class="hr"/>
       </template>
-      <div class="edge right up" />
+      <div class="edge right up"/>
     </div>
     <div class="page-content">
-      <slot><Placeholder/></slot>
+      <slot>
+        <Placeholder/>
+      </slot>
     </div>
   </div>
 </template>
 
 <script>
-import { ui } from '../sound';
+import {ui} from '../sound';
 import Placeholder from './Placeholder.vue';
 
 export default {
   name: 'Menu',
-  components: { Placeholder },
+  components: {Placeholder},
   props: {
     title: {
       default: 'Info',
@@ -86,12 +88,14 @@ $border-width: 0.75vmin;
   height: 100%;
   width: 100%;
 }
+
 .current {
   flex-shrink: 0;
   order: -1;
 }
+
 .page-content {
-  height: 70%;  // why the fuck not 100% ?
+  height: 70%; // why the fuck not 100% ?
   flex-shrink: 1;
   flex-grow: 1;
   order: 1;
@@ -103,6 +107,7 @@ $border-width: 0.75vmin;
     height: 100%;
   }
 }
+
 .nav, .stats > .row {
   flex-shrink: 0;
   display: flex;
@@ -113,6 +118,7 @@ $border-width: 0.75vmin;
   padding-left: 2vmin;
   padding-right: 2vmin;
 }
+
 .stats {
   order: 0;
   margin-bottom: 5vmin;
@@ -134,16 +140,19 @@ $border-width: 0.75vmin;
     flex-shrink: 1;
     max-width: 7.5vmin;
   }
+
   .hr.middle {
     flex-grow: 4;
     flex-shrink: 2;
   }
+
   .hr.right {
     flex-grow: 1;
     flex-shrink: 1;
     max-width: 7.5vmin;
   }
-  .grouping {  // stats
+
+  .grouping { // stats
     flex-shrink: 4;
     flex-grow: 1;
     padding: 0;
@@ -157,10 +166,12 @@ $border-width: 0.75vmin;
       flex-grow: 1;
       white-space: nowrap;
       margin-left: 1.2vmin;
+
       &:first-child {
         margin-left: 0;
         text-align: right;
       }
+
       &:last-child::after {
         display: none;
       }
@@ -172,6 +183,7 @@ $border-width: 0.75vmin;
   order: 2;
   margin-top: 1vmin;
 }
+
 .item, .title, .stat {
   flex-shrink: 0;
   flex-grow: 0;
@@ -180,12 +192,15 @@ $border-width: 0.75vmin;
   &.router-link-active, .active {
     border-color: var(--color-front);
   }
+
   padding: 0.75vmin 1vmin;
 }
+
 .title {
   text-transform: uppercase;
   letter-spacing: +0.05em;
 }
+
 .stat {
   top: 50%;
   padding: 0.5vmin 1vmin;
@@ -203,7 +218,7 @@ $border-width: 0.75vmin;
   border-top-style: solid;
   // prepare for creating a top border per :before
   position: relative;
-  margin-top: -$border-width;  // space for border top
+  margin-top: -$border-width; // space for border top
   padding-right: 2vmin;
 
   &::after {
@@ -221,13 +236,14 @@ $border-width: 0.75vmin;
     border-right-style: solid;
     border-right-color: var(--color-front);
     -webkit-border-image: -webkit-gradient(
-        linear, 0 0, 0 100%, from(var(--color-front)), to(rgba(0, 0, 0, 0))
+            linear, 0 0, 0 100%, from(var(--color-front)), to(rgba(0, 0, 0, 0))
     ) 1 100%;
     border-image: linear-gradient(
-        to bottom, var(--color-front), rgba(0, 0, 0, 0)
+            to bottom, var(--color-front), rgba(0, 0, 0, 0)
     ) 1 100%;
 
   }
+
   &.ammunition {
     flex-grow: 2;
   }
@@ -239,46 +255,54 @@ $border-width: 0.75vmin;
   flex-shrink: 1;
   flex-grow: 1;
 }
+
 .edge {
   //align-self: flex-start;
 
   &.up {
     -webkit-border-image: -webkit-gradient(
-        linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0)), to(var(--color-front))
+            linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0)), to(var(--color-front))
     ) 1 100%;
     border-image: linear-gradient(
-        to bottom, rgba(0, 0, 0, 0), var(--color-front)
+            to bottom, rgba(0, 0, 0, 0), var(--color-front)
     ) 1 100%;
   }
+
   &.down {
     -webkit-border-image: -webkit-gradient(
-        linear, 0 100%, 0 0, from(rgba(0, 0, 0, 0)), to(var(--color-front))
+            linear, 0 100%, 0 0, from(rgba(0, 0, 0, 0)), to(var(--color-front))
     ) 1 100%;
     border-image: linear-gradient(
-        to top, rgba(0, 0, 0, 0), var(--color-front)
+            to top, rgba(0, 0, 0, 0), var(--color-front)
     ) 1 100%;
   }
 
   // prepare for creating a top border per :after
   position: relative;
+
   &.right {
     border-right-width: $border-width;
     border-right-style: solid;
     border-right-color: transparent;
+
     &.up {
       transform: translateY(-50%) translateX(-.5vmin);
     }
+
     &.down {
       transform: translateY(+50%) translateX(-.5vmin);
     }
   }
+
   &.left {
     border-left-width: $border-width;
     border-left-style: solid;
     border-left-color: transparent;
+
     &.up {
       transform: translateY(-50%) translateX(.5vmin);
     }
+
     &.down {
       transform: translateY(+50%) translateX(.5vmin);
     }
