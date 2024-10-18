@@ -30,9 +30,11 @@ export default {
   flex-direction: column;
   justify-content: center;
 }
+
 .statuses {
-    padding-bottom: 15vmin;
+  padding-bottom: 15vmin;
 }
+
 .status {
   margin-left: 20vmin;
   left: 0;

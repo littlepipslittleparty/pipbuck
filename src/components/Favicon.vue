@@ -1,13 +1,15 @@
 <template>
   <div v-show="false">
     <slot ref="svg"></slot>
-    <slot name="link"><link rel='icon' ref="icon" :urn="data" /></slot>
+    <slot name="link">
+      <link rel='icon' ref="icon" :urn="data"/>
+    </slot>
   </div>
 </template>
 
 <script>
 // https://github.com/EvanHahn/canvas-to-favicon/blob/master/canvas-to-favicon.js
-import { mapState } from 'vuex';
+import {mapState} from 'vuex';
 
 export default {
   name: 'favicon',

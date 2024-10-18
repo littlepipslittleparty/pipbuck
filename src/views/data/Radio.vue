@@ -35,11 +35,7 @@
 import Oscilloscope from '../../components/Oscilloscope.vue';
 import {useRadioStore} from "@/stores/radio";
 import {useStyleStore} from "@/stores/style";
-import {
-  computed,
-  defineComponent,
-  getCurrentInstance,
-} from "vue";
+import {computed, defineComponent, getCurrentInstance,} from "vue";
 
 const rounded = true;
 const squared = false;

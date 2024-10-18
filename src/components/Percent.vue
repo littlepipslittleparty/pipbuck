@@ -27,16 +27,19 @@ export default {
 .bar {
   display: flex;
 }
+
 .background, .progress {
   background-color: var(--color-front);
   height: 100%;
 
 }
+
 .background {
   flex-shrink: 2;
   flex-grow: 2;
   opacity: 0.5;
 }
+
 .progress {
   background-color: var(--color-front);
 }

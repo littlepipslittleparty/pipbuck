@@ -1,24 +1,24 @@
 <template>
   <div
-    :id="
+      :id="
       mapOptions.hasOwnProperty('container') &&
      mapOptions.container !== undefined &&
       typeof mapOptions.container === 'string'
         ? mapOptions.container
         : 'map'
     "
-    class="mapbox-map" :class="{ 'hide-credits': hideCredits }"
+      class="mapbox-map" :class="{ 'hide-credits': hideCredits }"
   ></div>
 </template>
 
 <script lang="ts">
+import type {MapboxOptions as FullMapboxOptions} from 'mapbox-gl';
 import mapboxgl from 'mapbox-gl';
-import type { MapboxOptions as FullMapboxOptions } from 'mapbox-gl';
-import type { PropType } from 'vue';
+import type {PropType} from 'vue';
 
 export const Marker = mapboxgl.Marker;
 export type LightMapboxOptions = Omit<FullMapboxOptions, 'container'>;
-export type MapboxOptions = LightMapboxOptions & { container?: FullMapboxOptions['container']};
+export type MapboxOptions = LightMapboxOptions & { container?: FullMapboxOptions['container'] };
 
 export default {
   name: 'MapboxMap',
@@ -96,9 +96,9 @@ export default {
       mapboxgl.accessToken = this.accessToken;
       // Add container to options object
       // eslint-disable-next-line no-prototype-builtins
-      let mapOptions: MapboxOptions = { ...this.mapOptions } as MapboxOptions | FullMapboxOptions
+      let mapOptions: MapboxOptions = {...this.mapOptions} as MapboxOptions | FullMapboxOptions
       if (!Object.prototype.hasOwnProperty.call(mapOptions, 'container')) {
-        mapOptions = { ...mapOptions, container: 'map' } as FullMapboxOptions
+        mapOptions = {...mapOptions, container: 'map'} as FullMapboxOptions
       }
       this._mapOptions = mapOptions
       // New Mapbox Instance

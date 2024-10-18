@@ -1,6 +1,6 @@
 <!-- basically https://stackoverflow.com/q/9163283/3423324 as vue component -->
 <template>
-  <img :src="computedSrc" ref="img" />
+  <img :src="computedSrc" ref="img"/>
 </template>
 
 <!--<body>
@@ -53,11 +53,21 @@ export default {
     },
   },
   watch: {
-    src() { this.loadImage(); },
-    hue() { this.applyImage(); },
-    saturation() { this.applyImage(); },
-    lightness() { this.applyImage(); },
-    preScale() { this.applyImage(); },
+    src() {
+      this.loadImage();
+    },
+    hue() {
+      this.applyImage();
+    },
+    saturation() {
+      this.applyImage();
+    },
+    lightness() {
+      this.applyImage();
+    },
+    preScale() {
+      this.applyImage();
+    },
   },
   methods: {
     loadImage() {
@@ -74,7 +84,7 @@ export default {
       this.applyImage(this.img);
     },
     applyImage() {
-      const { width, height } = common.calculateScale(this.preScale, this.$refs.img, this.img);
+      const {width, height} = common.calculateScale(this.preScale, this.$refs.img, this.img);
       const computedSrc = common.calculateImage(this.img, width, height, this.hue, this.saturation, this.lightness);
       if (!computedSrc) {
         return; // we couldn't calculate anything, as the image was not yet loaded.

@@ -1,8 +1,8 @@
 <template>
   <div>
     <canvas
-      ref="canvas"
-      :style="{ borderBottom: canvasBorderStyle, 'border-right': canvasBorderStyle }"
+        ref="canvas"
+        :style="{ borderBottom: canvasBorderStyle, 'border-right': canvasBorderStyle }"
     ></canvas>
     <div v-if="radio.isPlaying">PLAYING!</div>
     <div v-else>PAUSED!</div>
@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { useRadioStore } from "@/stores/radio";
+import {useRadioStore} from "@/stores/radio";
 
 // calculate the median, https://stackoverflow.com/a/39639518/3423324
 function median(arr) {
@@ -33,19 +33,19 @@ export default {
     audioElement: {},  // supply a reference to an audio element.
 
     // display settings
-    rounded: { default: true },
-    squared: { default: false },
-    zigzagg: { default: false },
+    rounded: {default: true},
+    squared: {default: false},
+    zigzagg: {default: false},
     // styling
-    color: { default: '#dc5990' },
-    lineWidth: { default: 2 },
+    color: {default: '#dc5990'},
+    lineWidth: {default: 2},
 
     // canvas settings
-    canvasHeight: { default: 200 },  // Pixel of the render.
-    canvasWidth: { default: 400 },   // Pixel of the render.
-    fftSize: { default: 32 }, // Increases Audio resolution. Must be power of 2, range [32, 32768].
-    fftEach: { default: 1 },  // Decreases Audio resolution. Use only every x data point.
-    size: { default: 12 },  // how many values should be plotted
+    canvasHeight: {default: 200},  // Pixel of the render.
+    canvasWidth: {default: 400},   // Pixel of the render.
+    fftSize: {default: 32}, // Increases Audio resolution. Must be power of 2, range [32, 32768].
+    fftEach: {default: 1},  // Decreases Audio resolution. Use only every x data point.
+    size: {default: 12},  // how many values should be plotted
   },
   data() {
     return {
@@ -77,9 +77,9 @@ export default {
       console.log('attachAnalyser()');
       console.log('BaseAudioContext: create');
       this.context = new (
-        window.AudioContext
-        || window.webkitAudioContext
-        || window.mozAudioContext
+          window.AudioContext
+          || window.webkitAudioContext
+          || window.mozAudioContext
       )();
       // suspend
       // See:
@@ -227,9 +227,9 @@ export default {
         //
         if (this.rounded) {
           this.canvas_2d.bezierCurveTo( // startPoint (A) is implicit from last iteration of loop
-            stepMid, heightOld, // controlPoint1 (P)
-            stepMid, heightNew, // controlPoint2 (Q)
-            stepNew, heightNew, // endPoint (B)
+              stepMid, heightOld, // controlPoint1 (P)
+              stepMid, heightNew, // controlPoint2 (Q)
+              stepNew, heightNew, // endPoint (B)
           );
         }
         if (this.squared && this.rounded) {

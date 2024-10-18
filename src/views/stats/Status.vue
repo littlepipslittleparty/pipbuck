@@ -5,7 +5,7 @@
       <router-link to="/stats/status/radiation">RAD</router-link>
       <router-link to="/stats/status/effects">EFF</router-link>
     </div>
-    <router-view />
+    <router-view/>
   </div>
 </template>
 
@@ -20,6 +20,7 @@ export default {
 .page {
   height: 100%;
 }
+
 .tabs {
   position: absolute;
   left: 5vmin;

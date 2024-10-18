@@ -1,19 +1,19 @@
 <template>
   <div class="page">
     <scrollbar
-      class="scroll-wrapper"
-      content-class=""
-      scrollbar-class="scroll"
-      :items="itemSelection"
-      @equip="$emit('equip', $event)"
-      @unequip="$emit('unequip', $event)"
-      :selected="activeId"
-      @select="$emit('select', $event)"
+        class="scroll-wrapper"
+        content-class=""
+        scrollbar-class="scroll"
+        :items="itemSelection"
+        @equip="$emit('equip', $event)"
+        @unequip="$emit('unequip', $event)"
+        :selected="activeId"
+        @select="$emit('select', $event)"
     >
       <template v-slot="item">
         <a class="item">
           {{ item.name }}
-          <span v-if="item.amount > 1"> ({{item.amount}})</span>
+          <span v-if="item.amount > 1"> ({{ item.amount }})</span>
         </a>
       </template>
     </scrollbar>
@@ -24,22 +24,24 @@
           <svg-unknown :style="{ fill: 'var(--color-front)' }"/>
         </slot>
       </div>
-      <div><slot name="rows">
-        <!-- some example details -->
-        <div class="row">
-          <div class="detail">Data would be here.</div>
-        </div>
-        <div class="row">
-          <div class="detail blank"/>
-          <div class="detail weight">
-            <div class="label">Foobar</div>
-            <div class="value">4458</div>
+      <div>
+        <slot name="rows">
+          <!-- some example details -->
+          <div class="row">
+            <div class="detail">Data would be here.</div>
           </div>
-        </div>
-        <div class="row">
-          <div class="detail blank">&nbsp;</div>
-        </div>
-      </slot></div>
+          <div class="row">
+            <div class="detail blank"/>
+            <div class="detail weight">
+              <div class="label">Foobar</div>
+              <div class="value">4458</div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="detail blank">&nbsp;</div>
+          </div>
+        </slot>
+      </div>
     </div>
   </div>
 </template>
@@ -51,7 +53,7 @@ import InventoryMixin from './InventoryMixin';
 
 export default {
   name: 'Inventory',
-  components: { Scrollbar, SvgUnknown },
+  components: {Scrollbar, SvgUnknown},
   mixins: [InventoryMixin],
   delimiters: ['{{', '}}'],
   model: {
@@ -70,10 +72,10 @@ export default {
     activeId: {
       default(props) {
         const hasItems = (
-          props.items !== undefined
-          && typeof props.items === 'object'
-          && Array.isArray(props.items)
-          && props.items.length > 0
+            props.items !== undefined
+            && typeof props.items === 'object'
+            && Array.isArray(props.items)
+            && props.items.length > 0
         );
         return hasItems ? props.items[0].baseId : null;
       },
@@ -106,11 +108,13 @@ export default {
   flex-direction: row;
   height: 100%;
 }
+
 .scroll-wrapper {
   order: 0;
   flex-grow: 1;
   flex-shrink: 1;
 }
+
 .apparel {
   text-align: left;
   width: 100%;
@@ -133,9 +137,10 @@ export default {
   .image {
     order: 0;
     padding: 10vmin;
-    top:10vmin;
+    top: 10vmin;
     flex-shrink: 2;
     box-sizing: border-box;
+
     :slotted(> svg) {
       box-sizing: border-box;
     }
@@ -164,6 +169,7 @@ export default {
       width: calc(#{((100% / 3) * 2)} + #{$detail-margin-left});
       flex-grow: 2;
     }
+
     &.cols-3 {
       width: 100%;
       flex-grow: 3;
@@ -174,14 +180,14 @@ export default {
     border-right-style: solid;
     border-right-color: transparent;
     -webkit-border-image: -webkit-gradient(
-        linear, 0 0, 0 100%, from(var(--color-front)), to(rgba(0, 0, 0, 0))
+            linear, 0 0, 0 100%, from(var(--color-front)), to(rgba(0, 0, 0, 0))
     ) 1 100%;
     border-image: linear-gradient(
-        to bottom, var(--color-front), rgba(0, 0, 0, 0)
+            to bottom, var(--color-front), rgba(0, 0, 0, 0)
     ) 1 100%;
     // prepare for creating a top border per :after
     position: relative;
-    margin-top: .75vmin;  // space for border top
+    margin-top: .75vmin; // space for border top
 
     &:after {
       position: absolute;
@@ -196,19 +202,23 @@ export default {
     &.blank {
       border-right-color: transparent;
       border-image: none;
+
       &:after {
         background-color: transparent;
       }
     }
+
     > .label,
     > .value {
       display: inline;
     }
+
     > .value.percentage {
       width: 100%;
       height: 100%;
       padding-left: 2vmin;
       display: flex;
+
       & > .bar {
         height: 3.5vmin;
         width: 100%;

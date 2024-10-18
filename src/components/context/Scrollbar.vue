@@ -5,8 +5,8 @@
       <div class="button down" v-show="needScrollbar"/>
       <div class="track" ref="track" v-show="needScrollbar">
         <div
-          class="bar"
-          :style="{
+            class="bar"
+            :style="{
             height: cssHeight,
             top: cssOffset,
           }"
@@ -17,11 +17,11 @@
       <div class="scrollable" ref="element">
         <ul ref="list" class="list" :class="contentClass">
           <li
-            v-for="item in items" :key="item.id"
-            :class="{ equipped: item.equipped, active: item.id === selected }"
-            @mouseenter="select(item.id)"
-            @click.exact="equip(item.id, !item.equipped)"
-            @keypress.enter="equip(item.id, !item.equipped)"
+              v-for="item in items" :key="item.id"
+              :class="{ equipped: item.equipped, active: item.id === selected }"
+              @mouseenter="select(item.id)"
+              @click.exact="equip(item.id, !item.equipped)"
+              @keypress.enter="equip(item.id, !item.equipped)"
           >
             <!-- the text -->
             <div class="label">
@@ -33,11 +33,11 @@
                 <svg-list-box v-if="theme === 'fo3'" :style="{
                   fill: 'transparent',
                   stroke: 'var(--color-front)',
-                }" preserveAspectRatio="xMidYMid meet" />
+                }" preserveAspectRatio="xMidYMid meet"/>
                 <svg-list-arrow v-if="theme === 'foe'" :style="{
                   fill: 'transparent',
                   stroke: 'var(--color-front)',
-                }" preserveAspectRatio="xMidYMid meet" />
+                }" preserveAspectRatio="xMidYMid meet"/>
               </slot>
             </div>
             <!-- the equipped element -->
@@ -46,15 +46,15 @@
                 <svg-list-box v-if="theme === 'fo3'" :style="{
                   fill: 'var(--color-front)',
                   stroke: 'var(--color-front)',
-                }" preserveAspectRatio="xMidYMid meet" />
+                }" preserveAspectRatio="xMidYMid meet"/>
                 <svg-list-arrow v-if="theme === 'foe'" :style="{
                   fill: 'var(--color-front)',
                   stroke: 'var(--color-front)',
-                }" preserveAspectRatio="xMidYMid meet" />
+                }" preserveAspectRatio="xMidYMid meet"/>
               </slot>
             </div>
             <!-- equally sized placeholder if no svg was found-->
-            <div v-show="item.id !== selected && !item.equipped" class="img placeholder" />
+            <div v-show="item.id !== selected && !item.equipped" class="img placeholder"/>
           </li>
         </ul>
       </div>
@@ -63,13 +63,13 @@
 </template>
 
 <script>
-import { ui } from '../../sound';
+import {ui} from '../../sound';
 import SvgListBox from '../../assets/img/ui/list/list-fo3-box.svg';
 import SvgListArrow from '../../assets/img/ui/list/list-foe-arrow.svg';
 
 export default {
   name: 'Scrollbar',
-  components: { SvgListBox, SvgListArrow },
+  components: {SvgListBox, SvgListArrow},
   props: {
     /**
      * Choose a theme. Any of ['foe', 'fo3'] if you want a pre-build one.
@@ -102,10 +102,10 @@ export default {
     selected: {
       default(props) {
         const hasItems = (
-          props.items !== undefined
-          && typeof props.items === 'object'
-          && Array.isArray(props.items)
-          && props.items.length > 0
+            props.items !== undefined
+            && typeof props.items === 'object'
+            && Array.isArray(props.items)
+            && props.items.length > 0
         );
         return hasItems ? props.items[0].id : null;
       },
@@ -234,7 +234,7 @@ export default {
     },
     equip(id, flag) {
       this.$emit(flag ? 'equip' : 'unequip', id);
-      console.log('equipppsound', flag ? 'equip' : 'unequip', ui.sounds.select, id, flag, { lel: ui.sounds.select });
+      console.log('equipppsound', flag ? 'equip' : 'unequip', ui.sounds.select, id, flag, {lel: ui.sounds.select});
       ui.audio.play(ui.sounds.select);
       // this.$emit('pipbuck-play', ui.sounds.select);
     },
@@ -293,10 +293,10 @@ export default {
        */
       const available = this.element.clientHeight;
       console.log(
-        'measureElement',
-        available, // the part we display
-        needed,  // the total length we could go
-        this.$refs.track.clientHeight,
+          'measureElement',
+          available, // the part we display
+          needed,  // the total length we could go
+          this.$refs.track.clientHeight,
       );
       // needed space / available space
       if (!this.element) {
@@ -362,6 +362,7 @@ $bar-width: 1vmin;
     display: flex;
     flex-direction: column;
   }
+
   .hide-scroll {
     order: 1;
     position: relative;
@@ -369,6 +370,7 @@ $bar-width: 1vmin;
     height: 100%;
     overflow: hidden;
   }
+
   .scrollable {
     /* Pick an arbitrary margin/padding that should be bigger
      * than the max width of all the scroll bars across
@@ -388,11 +390,13 @@ $bar-width: 1vmin;
     // try to hide the scrollbar
     // https://stackoverflow.com/a/13184693/3423324#hiding-the-scrollbar
     scrollbar-width: none;
+
     ::-webkit-scrollbar {
       display: none
     }
   }
 }
+
 .all-the-stuff .bar-and-buttons .button {
   flex-grow: 0;
   flex-shrink: 0;
@@ -417,16 +421,19 @@ $bar-width: 1vmin;
     position: absolute;
     display: block;
     //height: 10px; width: 10px;
-    height: 50%; width: 50%;
+    height: 50%;
+    width: 50%;
     left: 25%;
     align-self: center;
     border-width: 1vmin 1vmin 0 0;
     border-style: solid;
   }
+
   &.up:after {
     bottom: 0;
     transform: rotate((0   - 45deg));
   }
+
   &.down:after {
     top: 0;
     transform: rotate((180 - 45deg));
@@ -464,20 +471,22 @@ $bar-width: 1vmin;
     right: 0;
     //background: orange!important;
   }
+
   &:before {
     bottom: 100%;
     background-image: -webkit-gradient(
-        linear, 0 100%, 0 0, from(var(--color-front)), to(transparent)
+            linear, 0 100%, 0 0, from(var(--color-front)), to(transparent)
     );
     background-image: -webkit-linear-gradient(transparent, var(--color-front));
     background-image: -moz-linear-gradient(transparent, var(--color-front));
     background-image: -o-linear-gradient(transparent, var(--color-front));
     background-image: linear-gradient(transparent, var(--color-front));
   }
+
   &:after {
     top: 100%;
     background-image: -webkit-gradient(
-        linear, 100% 0, 0 0, from(var(--color-front)), to(transparent)
+            linear, 100% 0, 0 0, from(var(--color-front)), to(transparent)
     );
     background-image: -webkit-linear-gradient(to top, transparent, var(--color-front));
     background-image: -moz-linear-gradient(to top, transparent, var(--color-front));
@@ -485,6 +494,7 @@ $bar-width: 1vmin;
     background-image: linear-gradient(to top, transparent, var(--color-front));
   }
 }
+
 .list {
   text-align: left;
 
@@ -521,10 +531,12 @@ $bar-width: 1vmin;
   .list {
     li {
       border: transparent 1vmin solid;
+
       a {
         border: none;
       }
     }
+
     li.active {
       border-color: inherit;
     }

@@ -1,51 +1,52 @@
 <template>
   <div>
     <div
-      ref="waveform"
-      class="waveform"
-      :class="orientation"
-      :style="{
+        ref="waveform"
+        class="waveform"
+        :class="orientation"
+        :style="{
         [styleKeySizing]: `${fullLength * 0.050}px`,
         'background-image': `url(${waveBackground})`,
       }"
     >
       <!-- Sprite Click Areas -->
       <div class="sprite-wrapper"
-        v-for="(sprite, name) in audio.config.sprite" :key="name"
+           v-for="(sprite, name) in audio.config.sprite" :key="name"
       >
         <div
-        class="sprite"
-        :style="{
+            class="sprite"
+            :style="{
           [styleKeyOffset]: `${sprite[0] * 0.050}px`,
           [styleKeySizing]: `${sprite[1] * 0.050}px`,
         }"
-        @click="play(name)"
+            @click="play(name)"
         >
           <div
-            v-for="(data, id) in sounds[name]" :key="id"
-            class="progress"
-            :style="{ [styleKeySizing]: ((data.seek * 100000 / data.length) || 0) + '%' }"
+              v-for="(data, id) in sounds[name]" :key="id"
+              class="progress"
+              :style="{ [styleKeySizing]: ((data.seek * 100000 / data.length) || 0) + '%' }"
           >
             <div class="time">
-              &nbsp;{{data.seek.toFixed(2)}}<br>
-              {{(data.seek - (data.length/1000)).toFixed(2)}}<br>
+              &nbsp;{{ data.seek.toFixed(2) }}<br>
+              {{ (data.seek - (data.length / 1000)).toFixed(2) }}<br>
             </div>
           </div>
         </div>
         <div
-          class="label"
-          :style="{
+            class="label"
+            :style="{
             [styleKeyOffset]: `${(sprite[0] + (sprite[1] / 2)) * 0.050}px`,
           }"
-          @click="play(name)"
-        >{{ name }}</div>
+            @click="play(name)"
+        >{{ name }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { Howler } from 'howler';
+import {Howler} from 'howler';
 
 export default {
   name: 'HowlerSprites',
@@ -78,11 +79,11 @@ export default {
   methods: {
     createSoundsArray() {
       return Object.keys(this.audio.config.sprite)
-        .reduce((prev, curr) => {
-          // eslint-disable-next-line no-param-reassign,prefer-destructuring
-          prev[curr] = {};
-          return prev;
-        }, {});
+          .reduce((prev, curr) => {
+            // eslint-disable-next-line no-param-reassign,prefer-destructuring
+            prev[curr] = {};
+            return prev;
+          }, {});
     },
     play(key) {
       console.log(this);
@@ -92,7 +93,7 @@ export default {
       play.loop(false);
 
       if (Object.keys(this.sounds)
-        .indexOf(key) < 0) {
+          .indexOf(key) < 0) {
         // create list if not there yet.
         // this.sounds[key] = {};
         this.$set(this.sounds, key, {});
@@ -284,28 +285,32 @@ export default {
   opacity: 0.5;
   position: relative;
 }
+
 .sprite-wrapper {
   position: absolute;
   width: 100%;
 }
+
 .sprite {
   position: absolute;
   overflow: hidden;
 
   border: var(--color-front) 2px solid;
-  background-color: rgba(255,225,255, 0.1);
+  background-color: rgba(255, 225, 255, 0.1);
 
   .left &,
   .right & {
     top: 1px;
     bottom: 1px;
   }
+
   .up &,
   .down & {
     left: 1px;
     right: 1px;
   }
 }
+
 .label {
   position: absolute;
   left: 50%;
@@ -319,29 +324,33 @@ export default {
 
 .progress {
   position: absolute;
-  background-color: rgba(255,225,255, 0.1);
+  background-color: rgba(255, 225, 255, 0.1);
 
   .up & {
     bottom: 0;
     width: 100%;
     border-top: var(--color-front) 1px solid;
   }
+
   .left & {
     right: 0;
     height: 100%;
     border-left: var(--color-front) 1px solid;
   }
+
   .right & {
     left: 0;
     height: 100%;
     border-right: var(--color-front) 1px solid;
   }
+
   .down & {
     top: 0;
     width: 100%;
     border-bottom: var(--color-front) 1px solid;
   }
 }
+
 .time {
   position: absolute;
   display: block;
@@ -349,12 +358,15 @@ export default {
   .up & {
     top: 0;
   }
+
   .left & {
     right: 0;
   }
+
   .left & {
     left: 0;
   }
+
   .down & {
     bottom: 0;
   }

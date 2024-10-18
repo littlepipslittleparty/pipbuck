@@ -1,46 +1,46 @@
 <template>
   <inventory :items="items" :limit="limit" v-model="activeId">
     <template v-slot:rows>
-    <div class="rows">
-      <div class="row">
-        <div class="detail blank"/>
-        <div class="detail weight">
-          <div class="label">WG</div>
-          <div class="value">{{ dashedZero(activeItem.weight) }}</div>
+      <div class="rows">
+        <div class="row">
+          <div class="detail blank"/>
+          <div class="detail weight">
+            <div class="label">WG</div>
+            <div class="value">{{ dashedZero(activeItem.weight) }}</div>
+          </div>
+          <div class="detail value">
+            <div class="label">VAL</div>
+            <div class="value">{{ dashedZero(activeItem.value) }}</div>
+          </div>
         </div>
-        <div class="detail value">
-          <div class="label">VAL</div>
-          <div class="value">{{ dashedZero(activeItem.value) }}</div>
+        <div class="row">
+          <div class="detail blank">&nbsp;</div>
+        </div>
+        <div class="row">
+          <div class="detail blank">&nbsp;</div>
         </div>
       </div>
-      <div class="row">
-        <div class="detail blank">&nbsp;</div>
-      </div>
-      <div class="row">
-        <div class="detail blank">&nbsp;</div>
-      </div>
-    </div>
     </template>
   </inventory>
 </template>
 
 <script>
-import misc, { empty } from '../../data/misc';
-import { dashedZero } from '@/filters/inventory';
+import misc, {empty} from '../../data/misc';
+import {dashedZero} from '@/filters/inventory';
 import Inventory from '../../components/context/Inventory.vue';
 import InventoryMixin from '../../components/context/InventoryMixin';
 
 export default {
   name: 'Misc',
-  components: { Inventory },
-  methods: { dashedZero },
+  components: {Inventory},
+  methods: {dashedZero},
   mixins: [InventoryMixin],
   data() {
     const hasItems = (
-      misc !== undefined
-      && typeof misc === 'object'
-      && Array.isArray(misc)
-      && misc.length > 0
+        misc !== undefined
+        && typeof misc === 'object'
+        && Array.isArray(misc)
+        && misc.length > 0
     );
     return {
       misc,
@@ -52,11 +52,11 @@ export default {
   computed: {
     items() {
       return this.misc
-        .map((item) => Object.assign(item, {
-          id: item.baseId,
-          amount: Math.floor(Math.random() * 5),
-        }))
-        .filter((item) => item.amount >= 1);
+          .map((item) => Object.assign(item, {
+            id: item.baseId,
+            amount: Math.floor(Math.random() * 5),
+          }))
+          .filter((item) => item.amount >= 1);
     },
   },
 };

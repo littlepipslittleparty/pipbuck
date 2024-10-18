@@ -1,5 +1,5 @@
 <template>
-  <div class="page" >
+  <div class="page">
     <div class="off" v-if="off">
       <button @click="preparePreparation">Fullscreen</button>
       <button @click="prepareBoot">Turn on</button>
@@ -7,18 +7,18 @@
       <a href="http://github.com/luckydonald/pipbuck">Source code on Github</a>
     </div>
     <Menu
-      v-show="!off"
-      title="Pip-OS(R) v12 build 4458"
-      :links="[]"
-      :disableStats="true"
+        v-show="!off"
+        title="Pip-OS(R) v12 build 4458"
+        :links="[]"
+        :disableStats="true"
     >
       <template v-slot:statistics>&nbsp;</template>
       <div class="animation" v-if="!off && !loading">
         <typer-css
-          :chars="1"
-          :duration="3500"
-          :running="!off && !loading"
-          class="text"
+            :chars="1"
+            :duration="3500"
+            :running="!off && !loading"
+            class="text"
         >
           Copyright 2075 Robronco(R)<br>
           Loader V2.0<br>
@@ -31,7 +31,7 @@
       </div>
       <div class="loader" v-else-if="!off" v-show="loading">
         <div class="loading">
-          <stable-colt class="svg" />
+          <stable-colt class="svg"/>
           <div>Initiating...</div>
         </div>
       </div>
@@ -45,12 +45,12 @@ import screenfull from 'screenfull';
 import Menu from './Menu.vue';
 import StableColt from '../components/StableColt.vue';
 import TyperCss from '../components/typer/TyperCss.vue';
-import { ui } from '../sound';
+import {ui} from '../sound';
 
 // https://stackoverflow.com/a/40460122/3423324#showing-loading-spinner-for-async-vue-2-components
 export default {
   name: 'Boot',
-  components: { Menu, StableColt, TyperCss },
+  components: {Menu, StableColt, TyperCss},
   data() {
     return {
       off: true,  // is turned off, waiting for turning on
@@ -63,8 +63,10 @@ export default {
     preparePreparation() {
       ui.play(ui.sounds.nav_fullscreen);
       screenfull
-        .request()
-        .catch(() => { ui.play('ui_karma_down'); });
+          .request()
+          .catch(() => {
+            ui.play('ui_karma_down');
+          });
     },
     prepareBoot() {
       /** @var {PlayingSprite} */
@@ -84,7 +86,7 @@ export default {
       setTimeout(this.doneLoading, 500);
     },
     doneLoading() {
-      this.$nextTick(this.$router.push({ name: 'Status' }));
+      this.$nextTick(this.$router.push({name: 'Status'}));
     },
   },
 };
@@ -94,6 +96,7 @@ export default {
 .page, .animation {
   height: 100%;
 }
+
 .off {
   width: 100%;
   height: 100%;
@@ -113,14 +116,17 @@ export default {
     background-color: transparent;
   }
 }
+
 .svg {
   max-height: 70vmin;
 }
+
 .text {
   padding-left: 10vw;
   padding-top: 10vh;
   text-align: left;
 }
+
 .loader {
   display: flex;
   width: 100%;
@@ -130,6 +136,7 @@ export default {
   align-items: center;
   justify-content: center;
 }
+
 .loader .loading {
   div {
     animation: loading 1000ms infinite linear;

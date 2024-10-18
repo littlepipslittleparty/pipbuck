@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import { getChildrenTextContent } from './helper';
+import {getChildrenTextContent} from './helper';
 
 export default {
   name: 'typer-js',

@@ -4,25 +4,25 @@
     <checkbox class="checkbox" v-model="changeColor">Colorize</checkbox>
     <checkbox class="checkbox" v-model="changeHP">Change HP</checkbox>
     <stats-pony class="img"
-      :white="white"
-      :mane="mane"
-      :body="body"
-      :bars="bars"
-      :eyes="eyes"
-      :hp="hp"
-      :face-name="'auto'"
+                :white="white"
+                :mane="mane"
+                :body="body"
+                :bars="bars"
+                :eyes="eyes"
+                :hp="hp"
+                :face-name="'auto'"
     />
   </div>
 </template>
 
 <script>
-import { hsl } from '../../lib/colorspace';
+import {hsl} from '../../lib/colorspace';
 import StatsPony from '../../components/StatsPony.vue';
 import Checkbox from '../../components/Checkbox.vue';
 
 export default {
   name: 'DataExtra',
-  components: { StatsPony, Checkbox },
+  components: {StatsPony, Checkbox},
   data() {
     return {
       changeColor: false,
@@ -110,10 +110,11 @@ export default {
 .img >>> path,
 .img >>> rect {
   transition: fill 0.5s ease-in-out,
-              stroke 0.5s ease-in-out,
-              width 0.5s ease-in-out,
-              transform 0.5s ease-in-out;
+  stroke 0.5s ease-in-out,
+  width 0.5s ease-in-out,
+  transform 0.5s ease-in-out;
 }
+
 .checkbox {
   font-size: 6.7vmin;
 }

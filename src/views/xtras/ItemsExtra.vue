@@ -1,16 +1,16 @@
 <template>
   <div class="page">
     <howler-sprites
-      class="howler-sprites"
-      :audio="ui"
-      :color="color"
-      :orientation="orientation"
+        class="howler-sprites"
+        :audio="ui"
+        :color="color"
+        :orientation="orientation"
     />
   </div>
 </template>
 
 <script>
-import { ui } from '../../sound';
+import {ui} from '../../sound';
 import HowlerSprites from '../../lib/howler_sprites/index.vue';
 
 export default {
@@ -37,6 +37,7 @@ export default {
   overflow: auto;
   height: 100%;
 }
+
 /**
  * Styling the label in the howler-sprites.
  * See https://vue-loader.vuejs.org/guide/scoped-css.html#deep-selectors

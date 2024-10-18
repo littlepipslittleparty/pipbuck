@@ -2,9 +2,9 @@
   <label>
     <slot></slot>
     <input
-      type="checkbox"
-      :checked="checked"
-      @input="$emit('change', $event.target.checked)"
+        type="checkbox"
+        :checked="checked"
+        @input="$emit('change', $event.target.checked)"
     />
     <span class="checkmark"></span>
   </label>

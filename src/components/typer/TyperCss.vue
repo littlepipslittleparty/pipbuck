@@ -1,27 +1,28 @@
 <template>
   <div class="typer">
     <div class="line"
-      v-for="(line, i) in lines" :key="line"
+         v-for="(line, i) in lines" :key="line"
     >
       <div class="scaling-wrapper">
         <div class="banana-for-scale">{{ line }}</div>
         <div
-          class="animated"
-          :class="{ running: running }"
-          :style="{
+            class="animated"
+            :class="{ running: running }"
+            :style="{
             'animation-timing-function': `steps(${lengths[i]}, end)`,
             'animation-play-state': paused ? 'paused' : 'running',
             'animation-delay': `${offsetMilliseconds[i].toFixed(0)}ms`,
             'animation-duration': `${durationMilliseconds[i].toFixed(0)}ms`,
           }"
-        >{{ line }}</div>
+        >{{ line }}
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { getChildrenTextContent } from './helper';
+import {getChildrenTextContent} from './helper';
 
 export default {
   name: 'typer-css',
@@ -136,26 +137,39 @@ export default {
   display: block;
   // float: left;
 }
-.line::after{
+
+.line::after {
   content: "";
   clear: both;
 }
+
 .scaling-wrapper {
   position: relative;
   display: inline-block;
 }
+
 .animated, .banana-for-scale {
   white-space: nowrap; /* Keeps the content on a single line */
   display: inline;
 }
+
 .banana-for-scale {
   color: transparent;
 }
+
 /* The typing effect */
 @keyframes typing {
-  0% { width: 0; opacity: 0 }
-  0.1% { opacity: 1 }  // opacity hack to not show the first character.
-  100% { width: 100% }
+  0% {
+    width: 0;
+    opacity: 0
+  }
+  0.1% {
+    opacity: 1
+  }
+  // opacity hack to not show the first character.
+  100% {
+    width: 100%
+  }
 }
 
 .animated {
@@ -165,6 +179,7 @@ export default {
   left: 0;
   width: 0;
 }
+
 .animated.running {
   animation-name: typing;
   // animation-iteration-count: infinite;

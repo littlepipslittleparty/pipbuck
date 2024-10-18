@@ -8,9 +8,9 @@ import vColorizedBg from './lib/vue-colorized/directive';
 import bgImage from './assets/img/bg.png';
 import {useStyleStore} from "@/stores/style";
 import {computed} from "vue";
-import {beforeDestroy, mounted, mapButtonPositionToFlex, calcHwBtnPosition} from "@/lib/app-helper";
+import {beforeDestroy, calcHwBtnPosition, mapButtonPositionToFlex, mounted} from "@/lib/app-helper";
 import {useRadioStore} from "@/stores/radio";
-import { useHead } from "@unhead/vue";
+import {useHead} from "@unhead/vue";
 
 const app = {
   name: 'app',
@@ -196,6 +196,7 @@ a {
     background-color: rgba(255, 225, 255, 0.1);
 
   }
+
   &.disabled {
     opacity: 0.5;
   }

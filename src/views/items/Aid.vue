@@ -1,50 +1,50 @@
 <template>
   <inventory :items="items" :limit="limit" v-model="activeId" @equip="onEquip">
-   <template v-slot:rows>
-   <div class="rows">
-     <div class="row">
-      <div class="detail damage blank">
-      </div>
-      <div class="detail weight">
-        <div class="label">WG</div>
-        <div class="value">{{ activeItem.weight }}</div>
-      </div>
-      <div class="detail value">
-        <div class="label">VAL</div>
-        <div class="value">{{ activeItem.value }}</div>
-      </div>
-      </div>
-      <div class="row">
-        <div class="detail effects">
-          <div class="label">EFFECTS</div>
-          <div class="value">{{ activeItem.Effect }}</div>
+    <template v-slot:rows>
+      <div class="rows">
+        <div class="row">
+          <div class="detail damage blank">
+          </div>
+          <div class="detail weight">
+            <div class="label">WG</div>
+            <div class="value">{{ activeItem.weight }}</div>
+          </div>
+          <div class="detail value">
+            <div class="label">VAL</div>
+            <div class="value">{{ activeItem.value }}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="detail effects">
+            <div class="label">EFFECTS</div>
+            <div class="value">{{ activeItem.Effect }}</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="detail blank">
+            &nbsp;
+          </div>
         </div>
       </div>
-     <div class="row">
-        <div class="detail blank">
-          &nbsp;
-        </div>
-      </div>
-    </div>
-   </template>
+    </template>
   </inventory>
 </template>
 
 <script>
-import aid, { empty } from '../../data/aid';
+import aid, {empty} from '../../data/aid';
 import Inventory from '../../components/context/Inventory.vue';
 import InventoryMixin from '../../components/context/InventoryMixin';
 
 export default {
   name: 'Aid',
-  components: { Inventory },
+  components: {Inventory},
   mixins: [InventoryMixin],
   data() {
     const hasItems = (
-      aid !== undefined
-      && typeof aid === 'object'
-      && Array.isArray(aid)
-      && aid.length > 0
+        aid !== undefined
+        && typeof aid === 'object'
+        && Array.isArray(aid)
+        && aid.length > 0
     );
     return {
       aid,
@@ -56,11 +56,11 @@ export default {
   computed: {
     items() {
       return this.aid
-        .map((item) => Object.assign(item, {
-          id: item.baseId,
-          amount: Math.floor(Math.random() * 10),
-        }))
-        .filter((item) => item.amount >= 1);
+          .map((item) => Object.assign(item, {
+            id: item.baseId,
+            amount: Math.floor(Math.random() * 10),
+          }))
+          .filter((item) => item.amount >= 1);
     },
   },
   methods: {
