@@ -10,10 +10,10 @@
     ]"
   >
     <template v-slot:statistics>
-      <div class="stat">LVL {{ level }}</div>
-      <div class="stat">HP {{ healthPoints }}/{{ maxHealthPoints }}</div>
-      <div class="stat">AP {{ actionPoints }}/{{ maxActionPoints }}</div>
-      <div class="stat">XP {{ experiencePoints }}/{{ nextLevelXP }}</div>
+      <TopStatElement :text="`LVL ${level}`" is-first/>
+      <TopStatElement :text="`HP ${healthPoints}/${maxHealthPoints}`"/>
+      <TopStatElement :text="`AP ${actionPoints}/${maxActionPoints}`"/>
+      <TopStatElement :text="`XP ${experiencePoints}/${nextLevelXP}`" is-last/>
     </template>
     <router-view/>
   </Menu>
@@ -22,10 +22,11 @@
 <script>
 import {betterMapGetters, betterMapState} from '../lib/better-vuex-getter';
 import Menu from './Menu.vue';
+import TopStatElement from "@/components/TopStatElement.vue";
 
 export default {
   name: 'Stats',
-  components: {Menu},
+  components: {TopStatElement, Menu},
   computed: {
     ...betterMapState('game/PlayerInfo', {
       level: ['XPLevel', Math.floor],

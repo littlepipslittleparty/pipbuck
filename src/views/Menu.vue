@@ -8,10 +8,10 @@
         <div class="hr middle"/>
         <div class="grouping" v-if="!disableStats">
           <slot name="statistics">
-            <div class="stat">Batz 42</div>
-            <div class="stat">Foo 1337</div>
-            <div class="stat">Bar 4458</div>
-            <div class="stat">BP L.Pip</div>
+            <TopStatElement is-first>Batz 42</TopStatElement>
+            <TopStatElement>Foo 1337</TopStatElement>
+            <TopStatElement>Bar 4458</TopStatElement>
+            <TopStatElement is-last>BP L.Pip</TopStatElement>
           </slot>
         </div>
         <div class="edge right down"/>
@@ -39,10 +39,11 @@
 <script>
 import {ui} from '../sound';
 import Placeholder from './Placeholder.vue';
+import TopStatElement from "@/components/TopStatElement.vue";
 
 export default {
   name: 'Menu',
-  components: {Placeholder},
+  components: {TopStatElement: TopStatElement, Placeholder},
   props: {
     title: {
       default: 'Info',
@@ -201,54 +202,6 @@ $border-width: 0.75vmin;
   letter-spacing: +0.05em;
 }
 
-.stat {
-  top: 50%;
-  padding: 0.5vmin 1vmin;
-
-  width: (100% / 3);
-
-  flex-grow: 1;
-
-  display: block;
-  justify-content: space-between;
-
-  // right border is fading
-  border: none;
-  border-top-width: calc(#{$border-width} - 0.25px);
-  border-top-style: solid;
-  // prepare for creating a top border per :before
-  position: relative;
-  margin-top: -$border-width; // space for border top
-  padding-right: 2vmin;
-
-  &::after {
-    position: absolute;
-    content: "";
-    padding: 0;
-    margin: 0;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    //margin-right: -$border-width;  // space for border top
-
-    border-right-width: $border-width;
-    border-right-style: solid;
-    border-right-color: var(--color-front);
-    -webkit-border-image: -webkit-gradient(
-            linear, 0 0, 0 100%, from(var(--color-front)), to(rgba(0, 0, 0, 0))
-    ) 1 100%;
-    border-image: linear-gradient(
-            to bottom, var(--color-front), rgba(0, 0, 0, 0)
-    ) 1 100%;
-
-  }
-
-  &.ammunition {
-    flex-grow: 2;
-  }
-}
-
 .hr {
   align-self: center;
   border-top: $border-width solid;
@@ -257,8 +210,6 @@ $border-width: 0.75vmin;
 }
 
 .edge {
-  //align-self: flex-start;
-
   &.up {
     -webkit-border-image: -webkit-gradient(
             linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0)), to(var(--color-front))

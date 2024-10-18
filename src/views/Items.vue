@@ -10,22 +10,24 @@
     ]"
   >
     <template v-slot:statistics>
-      <div class="stat">Wg {{ weight }}/{{ maxWeight }}</div>
-      <div class="stat">HP {{ healthPoints }}/{{ maxHealthPoints }}</div>
-      <div class="stat">DR {{ damageResistance }}</div>
-      <div class="stat">Caps {{ bottlecaps }}</div>
+      <TopStatElement :text="`Wg ${weight}/${maxWeight}`" is-first/>
+      <TopStatElement :text="`HP ${healthPoints}/${maxHealthPoints}`"/>
+      <TopStatElement :text="`DR ${damageResistance}`"/>
+      <TopStatElement :text="`Caps ${bottlecaps}`" is-last/>
     </template>
-    <router-view/>
+    <RouterView/>
   </Menu>
 </template>
 
 <script>
+// TODO: Rewrite to pinia
 import {betterMapGetters, betterMapState} from '../lib/better-vuex-getter';
 import Menu from './Menu.vue';
+import TopStatElement from "@/components/TopStatElement.vue";
 
 export default {
   name: 'Items',
-  components: {Menu},
+  components: {TopStatElement, Menu},
   computed: {
     ...betterMapState('game/PlayerInfo', {
       healthPoints: ['CurrHP', Math.floor],

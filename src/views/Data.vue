@@ -10,8 +10,8 @@
     ]"
   >
     <template v-slot:statistics>
-      <div class="stat location">{{ location }}</div>
-      <div class="stat">{{ day }}.{{ month }}.{{ year }}, {{ hour }}:{{ minute }}</div>
+      <TopStatElement :text="location" is-first/>
+      <TopStatElement :text="`${day}.${month}.${year}, ${hour}:${minute}`" is-last/>
     </template>
     <router-view/>
   </Menu>
@@ -20,10 +20,11 @@
 <script>
 import {betterMapGetters, mapState} from '../lib/better-vuex-getter';
 import Menu from './Menu.vue';
+import TopStatElement from "@/components/TopStatElement.vue";
 
 export default {
   name: 'Data',
-  components: {Menu},
+  components: {TopStatElement: TopStatElement, Menu},
   computed: {
     ...mapState([
       'showHardwareButtons',
