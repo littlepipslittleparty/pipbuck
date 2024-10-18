@@ -1,102 +1,79 @@
-<script>
+<script setup>
 import {ui} from './sound';
-import {HexToHSL, hsl} from './lib/colorspace';
+import {computed, defineComponent, watch} from "vue";
+import vColorizedBg from './lib/vue-colorized/directive';
+import {HexToHSL} from "@/lib/colorspace/index";
+import {useHead} from "@unhead/vue";
+import bgImage from "@/assets/img/bg.png";
+import {calcHwBtnPosition, mapButtonPositionToFlex} from "@/lib/app-helper";
+// Stores
+import {useStyleStore} from "@/stores/style";
+import {useSystemStore} from "@/stores/system";
+import {useRadioStore} from "@/stores/radio";
+// Components
 import VirtualButtons from './components/VirtualButtons.vue';
 import Favicon from './components/Favicon.vue';
 import StableColt from './components/StableColt.vue';
-import vColorizedBg from './lib/vue-colorized/directive';
-import bgImage from './assets/img/bg.png';
-import {useStyleStore} from "@/stores/style";
-import {computed} from "vue";
-import {beforeDestroy, calcHwBtnPosition, mapButtonPositionToFlex, mounted} from "@/lib/app-helper";
-import {useRadioStore} from "@/stores/radio";
-import {useHead} from "@unhead/vue";
-import {useSystemStore} from "@/stores/system";
 
-const app = {
-  name: 'app',
-  components: {VirtualButtons, Favicon, StableColt},
-  directives: {ColorizedBg: vColorizedBg},
-  setup() {
-    const styleStore = useStyleStore();
-    const systemStore = useSystemStore();
+// const scroll = 0.00; // Unused
+// const scroll_prevent = null; // Unused
+let hardwareButtonPosition = 'right';
 
-    // Access the reactive properties from the store
-    const showHardwareButtons = computed(() => systemStore.showHardwareButtons);
-    const colorFront = computed(() => styleStore.colorFront);
-    const colorBack = computed(() => styleStore.colorBack);
-
-    const hair = computed(() => HexToHSL(colorFront.value));
-    const back = computed(() => HexToHSL(colorBack.value));
-
-    const shadow = computed(() => {
-      const color1 = hair.value;
-      const color2 = hair.value;
-      color1.s /= 2;
-      color2.s /= 2;
-      // TODO: Use as a text jitter effect on screen change
-      const result = `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)}`;
-      return 'none';
-      // noinspection UnreachableCodeJS
-      return result;
-    });
-
-    const radioStore = useRadioStore();
-    const currentFile = computed(() => radioStore.currentFile);
-
-    useHead({
-      // Theme Color for Chrome, Firefox OS and Opera
-      'theme-color': colorFront.value,
-      // Color for windows tiles
-      'msapplication-TileColor': colorFront.value,
-    });
-
-    return {
-      showHardwareButtons,
-      colorFront,
-      colorBack,
-      hair,
-      back,
-      shadow,
-      // radio
-      currentFile,
-    };
-  },
-  data() {
-    return {
-      scroll: 0.00,
-      scroll_prevent: null,
-      hardwareButtonPosition: this.calculateHardwareButtonPosition(),
-      bgImage,
-    };
-  },
-  computed: {
-    wrapperFlex() {
-      return mapButtonPositionToFlex(this.hardwareButtonPosition);
-    },
-  },
-  watched: {
-    colorFront(newColor) {
-      console.log('color changed', newColor);
-    },
-  },
-  methods: {
-    pipbuckSound(sound) {
-      console.log('pipbuckSound', sound);
-      ui.audio.play(sound);
-    },
-    updateHardwareButtonPosition() {
-      this.hardwareButtonPosition = this.calculateHardwareButtonPosition();
-    },
-    calculateHardwareButtonPosition() {
-      const orientation = window.screen.msOrientation || (window.screen.orientation || window.screen.mozOrientation || {}).type;
-      return calcHwBtnPosition(orientation);
-    },
-  },
-  mounted,
-  beforeDestroy,
+const calculateHardwareButtonPosition = () => {
+  const orientation = window.screen.msOrientation || (window.screen.orientation || window.screen.mozOrientation || {}).type;
+  return calcHwBtnPosition(orientation);
 };
-export default app;
+// TODO: Wire this to orientation change
+// const updateHardwareButtonPosition = () => {
+//   hardwareButtonPosition = calculateHardwareButtonPosition();
+// };
+hardwareButtonPosition = calculateHardwareButtonPosition();
+
+
+// Computed
+const pipbuckSound = (sound) => {
+  console.log('pipbuckSound', sound);
+  ui.audio.play(sound);
+};
+
+// Setup
+const styleStore = useStyleStore();
+const systemStore = useSystemStore();
+
+// Computed
+const showHardwareButtons = computed(() => systemStore.showHardwareButtons);
+const colorFront = computed(() => styleStore.colorFront);
+const colorBack = computed(() => styleStore.colorBack);
+const wrapperFlex = computed(() => mapButtonPositionToFlex(hardwareButtonPosition));
+const hair = computed(() => HexToHSL(colorFront.value));
+const back = computed(() => HexToHSL(colorBack.value));
+
+// TODO: Use as a text jitter effect on screen change
+const shadow = computed(() => {
+  const color1 = hair.value;
+  const color2 = hair.value;
+  color1.s /= 2;
+  color2.s /= 2;
+  // TODO: Use as a text jitter effect on screen change
+  // return `2px 0 ${hsl(color1)}, -2px 0 ${hsl(color1)}`;
+  return 'none';
+});
+
+const radioStore = useRadioStore();
+
+watch(colorFront, (newColor) => {
+  useHead({
+    // Theme Color for Chrome, Firefox OS and Opera
+    'theme-color': newColor,
+    // Color for windows tiles
+    'msapplication-TileColor': newColor,
+  });
+}, { immediate: true });
+
+defineComponent({
+  name: 'App',
+  directives: {ColorizedBg: vColorizedBg},
+});
 </script>
 
 <template>
@@ -104,27 +81,28 @@ export default app;
       id="app"
       :style="{ '--color-front': colorFront, '--color-back': colorBack, 'text-shadow': shadow }"
   >
-    <favicon>
-      <stable-colt :hair="hair" :back="back"/>
-    </favicon>
-    <keep-alive>
+    <Favicon>
+      <StableColt :hair="hair" :back="back"/>
+    </Favicon>
+    <KeepAlive>
       <audio
           ref="radio"
-          :src="currentFile"
+          :src="radioStore.currentFile"
           autoplay="autoplay"
-          autobuffer playsinline
+          autobuffer
+          playsinline
           loop="loop"
           preload="auto"
           controls="controls"
           crossorigin="anonymous"
       />
-    </keep-alive> <!-- :crossorigin="currentFile.anonymousCrossorigin"
+    </KeepAlive> <!-- :crossorigin="currentFile.anonymousCrossorigin"
     @timeupdate="this.updated()" -->
     <div class="outer" :style="{ 'flex-direction': wrapperFlex }">
       <div class="wrapper">
         <div class="effect display-animations"></div>
         <div class="crt">
-          <router-view @pipbuck-play="pipbuckSound"/>
+          <RouterView @pipbuck-play="pipbuckSound"/>
         </div>
         <div
             class="effect display-background"
@@ -134,7 +112,7 @@ export default app;
             }"
         ></div>
       </div>
-      <virtual-buttons
+      <VirtualButtons
           v-if="showHardwareButtons"
           class="hardware noscroll"
           :position="hardwareButtonPosition"
@@ -174,6 +152,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  color: var(--color-front);
+}
+
+// Dirty fix after moving to setup script. Somewhy the color in stats is defaulting to black
+div {
   color: var(--color-front);
 }
 
