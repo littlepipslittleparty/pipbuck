@@ -48,6 +48,15 @@ export const usePlayerStore = defineStore(
             maxAP.value = newMaxAP;
         };
 
+        // TODO: Move to another store
+        // Previously this.$store.state.game.Map.CurrWorldspace;
+        const location = ref('Ponyville');
+
+        const setLocation = (newLocation: string) => {
+            console.log('Set location', newLocation);
+            location.value = newLocation;
+        }
+
         return {
             lvl,
             hp,
@@ -64,6 +73,10 @@ export const usePlayerStore = defineStore(
             setMaxXP,
             setAP,
             setMaxAP,
+
+            // TODO: Move to another store
+            location,
+            setLocation,
         };
     },
     {

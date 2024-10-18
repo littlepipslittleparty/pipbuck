@@ -5,10 +5,18 @@ export const useSystemStore = defineStore(
     'system',
     () => {
         const showHardwareButtons = ref(true);
+        // Previously 'game/PlayerInfo'
         const date = ref({
             day: 23,
             month: 10,
             year: 2077,
+        });
+
+        // Previously 'game/PlayerInfo/time'
+        const time = ref({
+            hours: 12,
+            minutes: 0,
+            seconds: 0,
         });
 
         // Actions to update the state
@@ -22,12 +30,19 @@ export const useSystemStore = defineStore(
             date.value = newDate;
         };
 
+        const setTime = (newTime: { hours: number, minutes: number, seconds: number }) => {
+            console.log('Set time', newTime);
+            time.value = newTime;
+        }
+
         return {
             showHardwareButtons,
             date,
+            time,
             // Actions
             setHardwareButtons,
             setDate,
+            setTime,
         };
     },
     {

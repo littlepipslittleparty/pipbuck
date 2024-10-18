@@ -8,10 +8,6 @@
         <div class="hr middle"/>
         <div class="grouping" v-if="!disableStats">
           <slot name="statistics">
-            <TopStatElement is-first>Batz 42</TopStatElement>
-            <TopStatElement>Foo 1337</TopStatElement>
-            <TopStatElement>Bar 4458</TopStatElement>
-            <TopStatElement is-last>BP L.Pip</TopStatElement>
           </slot>
         </div>
         <div class="edge right down"/>
@@ -39,11 +35,10 @@
 <script>
 import {ui} from '../sound';
 import Placeholder from './Placeholder.vue';
-import TopStatElement from "@/components/TopStatElement.vue";
 
 export default {
   name: 'Menu',
-  components: {TopStatElement: TopStatElement, Placeholder},
+  components: {Placeholder},
   props: {
     title: {
       default: 'Info',

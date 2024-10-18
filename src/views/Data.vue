@@ -10,39 +10,32 @@
     ]"
   >
     <template v-slot:statistics>
-      <TopStatElement :text="location" is-first/>
-      <TopStatElement :text="`${day}.${month}.${year}, ${hour}:${minute}`" is-last/>
+      <TopStatElement :text="playerStore.location" is-first/>
+      <TopStatElement :text="dateStr" is-last/>
     </template>
     <router-view/>
   </Menu>
 </template>
 
-<script>
-import {betterMapGetters, mapState} from '../lib/better-vuex-getter';
-import Menu from './Menu.vue';
+<script setup>
+import {useSystemStore} from "@/stores/system";
+import {usePlayerStore} from "@/stores/player";
+import {defineComponent} from "vue";
 import TopStatElement from "@/components/TopStatElement.vue";
+import Menu from "@/views/Menu.vue";
 
-export default {
+const systemStore = useSystemStore();
+const playerStore = usePlayerStore();
+
+const date = systemStore.date;
+const time = systemStore.time;
+
+const timeStr = `${time.hours.toString().padStart(2, '0')}:${time.minutes.toString().padStart(2, '0')}`;
+const dateStr = `${date.day}.${date.month}.${date.year}, ${timeStr}`;
+
+defineComponent({
   name: 'Data',
-  components: {TopStatElement: TopStatElement, Menu},
-  computed: {
-    ...mapState([
-      'showHardwareButtons',
-    ]),
-    location() {
-      return this.$store.state.game.Map.CurrWorldspace;
-    },
-    ...mapState('game/PlayerInfo', {
-      day: 'DateDay',
-      month: 'DateMonth',
-    }),
-    ...betterMapGetters('game/PlayerInfo/time', {
-      minute: 'minutes',
-      hour: 'hours',
-      year: 'halfYear',
-    }),
-  },
-};
+});
 </script>
 
 <style scoped>
