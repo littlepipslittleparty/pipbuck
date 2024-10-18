@@ -38,12 +38,14 @@ import {HexToHSL, hsl} from '../../lib/colorspace';
 import StableColt from '../../components/StableColt.vue';
 import {ui} from '../../sound';
 import {useStyleStore} from "@/stores/style";
+import {useSystemStore} from "@/stores/system";
 
 export default {
   name: 'SettingsExtra',
   components: {StableColt},
   setup() {
     const styleStore = useStyleStore();
+    const systemStore = useSystemStore();
     const colors = reactive([
       [
         {
@@ -115,7 +117,7 @@ export default {
     const leToggleVirtualButtons = (state) => {
       console.log('commiting toggleHardwareButtons state: ', state);
       // styleStore.commit('toggleHardwareButtons', state);
-      styleStore.setHardwareButtons(state);
+      systemStore.setHardwareButtons(state);
     };
 
     const toggleFullscreen = () => {

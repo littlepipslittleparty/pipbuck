@@ -11,6 +11,7 @@ import {computed} from "vue";
 import {beforeDestroy, calcHwBtnPosition, mapButtonPositionToFlex, mounted} from "@/lib/app-helper";
 import {useRadioStore} from "@/stores/radio";
 import {useHead} from "@unhead/vue";
+import {useSystemStore} from "@/stores/system";
 
 const app = {
   name: 'app',
@@ -18,9 +19,10 @@ const app = {
   directives: {ColorizedBg: vColorizedBg},
   setup() {
     const styleStore = useStyleStore();
+    const systemStore = useSystemStore();
 
     // Access the reactive properties from the store
-    const showHardwareButtons = computed(() => styleStore.showHardwareButtons);
+    const showHardwareButtons = computed(() => systemStore.showHardwareButtons);
     const colorFront = computed(() => styleStore.colorFront);
     const colorBack = computed(() => styleStore.colorBack);
 

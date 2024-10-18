@@ -16,7 +16,6 @@ export const useStyleStore = defineStore(
         const color_body_normal = '#08401f';
         const color_body_dark = '#063016';
         const color_bg = '#021709';
-        const showHardwareButtons = ref(true);
 
         // Actions to update the state
         const setFrontColor = (newColor: string) => {
@@ -27,11 +26,6 @@ export const useStyleStore = defineStore(
         const setBackColor = (newColor: string) => {
             console.log('Set back color', newColor);
             colorBack.value = newColor;
-        };
-
-        const setHardwareButtons = (state: boolean) => {
-            console.log('toggleHardwareButtons');
-            showHardwareButtons.value = state
         };
 
         return {
@@ -45,11 +39,9 @@ export const useStyleStore = defineStore(
             color_body_normal,
             color_body_dark,
             color_bg,
-            showHardwareButtons,
             // Actions
             setFrontColor,
             setBackColor,
-            setHardwareButtons,
         };
     },
     {
