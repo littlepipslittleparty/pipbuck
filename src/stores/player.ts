@@ -1,83 +1,92 @@
 import {defineStore} from 'pinia';
 import {ref} from 'vue';
 
+// Progress type
+export interface Progress {
+    lvl: number;
+    xp: number;
+    nextLvlXp: number;
+    ap: number;
+    maxAp: number;
+}
+
+// Location type
+export interface Location {
+    city: string;
+    region: string;
+    coordinates: {
+        longitude: number;
+        latitude: number;
+    }
+}
+
+// Health type
+export interface Health {
+    hp: number;
+    maxHp: number;
+    head: number;
+    torso: number;
+    leftArm: number;
+    rightArm: number;
+    leftLeg: number;
+    rightLeg: number;
+}
+
+// Player store
 export const usePlayerStore = defineStore(
     'player',
     () => {
-        const lvl = ref(6);
-        const hp = ref(105);
-        const maxHp = ref(120);
-        const xp = ref(1758);
-        const maxXP = ref(2500);
-        const ap = ref(70);
-        const maxAP = ref(90);
+        const progress = ref({
+            lvl: 5,
+            xp: 1758,
+            nextLvlXp: 2500,
+            ap: 70,
+            maxAp: 90,
+        });
 
-        // Actions to update the state
-        const setLevel = (newLvl: number) => {
-            console.log('Set level', newLvl);
-            lvl.value = newLvl;
-        };
+        const setProgress = (newProgress: Progress) => { // Too lazy to type this out
+            console.log('Set progress', newProgress);
+            progress.value = newProgress;
+        }
 
-        const setHP = (newHP: number) => {
-            console.log('Set HP', newHP);
-            hp.value = newHP;
-        };
+        const location = ref({
+            city: 'Ponyville',
+            region: 'Equestria',
+            coordinates: {
+                longitude: 0,
+                latitude: 0,
+            }
+        });
 
-        const setMaxHP = (newMaxHP: number) => {
-            console.log('Set Max HP', newMaxHP);
-            maxHp.value = newMaxHP;
-        };
-
-        const setXP = (newXP: number) => {
-            console.log('Set XP', newXP);
-            xp.value = newXP;
-        };
-
-        const setMaxXP = (newMaxXP: number) => {
-            console.log('Set Max XP', newMaxXP);
-            maxXP.value = newMaxXP;
-        };
-
-        const setAP = (newAP: number) => {
-            console.log('Set AP', newAP);
-            ap.value = newAP;
-        };
-
-        const setMaxAP = (newMaxAP: number) => {
-            console.log('Set Max AP', newMaxAP);
-            maxAP.value = newMaxAP;
-        };
-
-        // TODO: Move to another store
-        // Previously this.$store.state.game.Map.CurrWorldspace;
-        const location = ref('Ponyville');
-
-        const setLocation = (newLocation: string) => {
+        const setLocation = (newLocation: Location) => {
             console.log('Set location', newLocation);
             location.value = newLocation;
         }
 
-        return {
-            lvl,
-            hp,
-            maxHp,
-            xp,
-            maxXP,
-            ap,
-            maxAP,
-            // Actions
-            setLevel,
-            setHP,
-            setMaxHP,
-            setXP,
-            setMaxXP,
-            setAP,
-            setMaxAP,
+        const health = ref({
+            hp: 105,
+            maxHp: 120,
+            head: 10,
+            torso: 30,
+            leftArm: 15,
+            rightArm: 15,
+            leftLeg: 20,
+            rightLeg: 20,
+        });
 
-            // TODO: Move to another store
+        const setHealth = (newHealth: Health) => {
+            console.log('Set health', newHealth);
+            health.value = newHealth;
+        }
+
+        return {
+            progress,
+            setProgress,
             location,
             setLocation,
-        };
+            health,
+            setHealth,
+        }
     },
     {
         persist: true,

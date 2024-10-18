@@ -10,7 +10,7 @@
     ]"
   >
     <template v-slot:statistics>
-      <TopStatElement :text="playerStore.location" is-first/>
+      <TopStatElement :text="playerStore.location.city" is-first/>
       <TopStatElement :text="dateStr" is-last/>
     </template>
     <router-view/>

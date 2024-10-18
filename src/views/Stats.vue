@@ -10,38 +10,33 @@
     ]"
   >
     <template v-slot:statistics>
-      <TopStatElement :text="`LVL ${level}`" is-first/>
-      <TopStatElement :text="`HP ${healthPoints}/${maxHealthPoints}`"/>
-      <TopStatElement :text="`AP ${actionPoints}/${maxActionPoints}`"/>
-      <TopStatElement :text="`XP ${experiencePoints}/${nextLevelXP}`" is-last/>
+      <TopStatElement :text="lvlText" is-first/>
+      <TopStatElement :text="healthText"/>
+      <TopStatElement :text="apText"/>
+      <TopStatElement :text="xpText" is-last/>
+<!--      <TopStatElement :text="`LVL ${level}`" is-first/>-->
+<!--      <TopStatElement :text="`HP ${healthPoints}/${maxHealthPoints}`"/>-->
+<!--      <TopStatElement :text="`AP ${actionPoints}/${maxActionPoints}`"/>-->
+<!--      <TopStatElement :text="`XP ${experiencePoints}/${nextLevelXP}`" is-last/>-->
     </template>
     <router-view/>
   </Menu>
 </template>
 
-<script>
-import {betterMapGetters, betterMapState} from '../lib/better-vuex-getter';
-import Menu from './Menu.vue';
-import TopStatElement from "@/components/TopStatElement.vue";
+<script setup>
 
-export default {
-  name: 'Stats',
-  components: {TopStatElement, Menu},
-  computed: {
-    ...betterMapState('game/PlayerInfo', {
-      level: ['XPLevel', Math.floor],
-      healthPoints: ['CurrHP', Math.floor],
-      maxHealthPoints: ['MaxHP', Math.floor],
-      actionPoints: ['CurrAP', Math.floor],
-      maxActionPoints: ['MaxAP', Math.floor],
-      bottlecaps: ['Caps', Math.floor],
-    }),
-    ...betterMapGetters('game/PlayerInfo/levelHP', {
-      experiencePoints: 'current',
-      nextLevelXP: 'next',
-    }),
-  },
-};
+import TopStatElement from "@/components/TopStatElement.vue";
+import {usePlayerStore} from "@/stores/player.ts";
+import Menu from "@/views/Menu.vue";
+
+const playerStore = usePlayerStore();
+const progress = playerStore.progress;
+const health = playerStore.health;
+
+const lvlText = `LVL ${progress.lvl}`;
+const healthText = `HP ${health.hp}/${health.maxHp}`;
+const apText = `AP ${progress.ap}/${progress.maxAp}`;
+const xpText = `XP ${progress.xp}/${progress.nextLvlXp}`;
 </script>
 
 <style scoped lang="scss">
