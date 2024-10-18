@@ -1,38 +1,30 @@
 <template>
   <div class="page-inner">
-    <stats-pony
+    <StatsPony
         class="img" :face-name="'auto'"
-        :mane="front" :body="front" :eyes="front" :bars="front" :white="front"
+        :mane="front"
+        :body="front"
+        :eyes="front"
+        :bars="front"
+        :white="front"
         :hp="{ head, body, legFrontLeft, legFrontRight, legHindLeft, legHindRight }"
     />
     <div class="player">{{ name }} - Level {{ level }}</div>
   </div>
 </template>
 
-<script>
-import {betterMapGetters, mapState} from '../../../lib/better-vuex-getter';
-import StatsPony from '../../../components/StatsPony.vue';
+<script setup>
+import StatsPony from "@/components/StatsPony.vue";
+import {usePlayerStore} from "@/stores/player";
+import {useStyleStore} from "@/stores/style";
 
-export default {
-  name: 'Condition',
-  components: {StatsPony},
-  computed: {
-    front() {
-      return this.$store.state.colorFront;
-    },
-    ...betterMapGetters('game/PlayerInfo/health/parts', [
-      'head', 'body',
-      'legFrontLeft',
-      'legFrontRight',
-      'legHindLeft',
-      'legHindRight',
-    ]),
-    ...mapState('game/PlayerInfo', {
-      level: 'XPLevel',
-      name: 'PlayerName',
-    }),
-  },
-};
+const styleStore = useStyleStore();
+const front = styleStore.colorFront;
+
+const playerStore = usePlayerStore();
+const { head, body, legFrontLeft, legFrontRight, legHindLeft, legHindRight } = playerStore.health.parts;
+const name = playerStore.profile.name;
+const level = playerStore.progress.lvl;
 </script>
 
 <style scoped>

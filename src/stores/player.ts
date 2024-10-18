@@ -24,18 +24,29 @@ export interface Location {
 export interface Health {
     hp: number;
     maxHp: number;
-    head: number;
-    torso: number;
-    leftArm: number;
-    rightArm: number;
-    leftLeg: number;
-    rightLeg: number;
+    parts: { // 0.0 - 1.0
+        head: number;
+        body: number;
+        legFrontLeft: number;
+        legFrontRight: number;
+        legHindLeft: number;
+        legHindRight: number;
+    }
 }
 
 // Player store
 export const usePlayerStore = defineStore(
     'player',
     () => {
+        const profile = ref({
+            name: 'Littlepip',
+        });
+
+        const setProfile = (newProfile: {name: string}) => {
+            console.log('Set profile', newProfile);
+            profile.value = newProfile;
+        }
+
         const progress = ref({
             lvl: 5,
             xp: 1758,
@@ -66,12 +77,14 @@ export const usePlayerStore = defineStore(
         const health = ref({
             hp: 105,
             maxHp: 120,
-            head: 10,
-            torso: 30,
-            leftArm: 15,
-            rightArm: 15,
-            leftLeg: 20,
-            rightLeg: 20,
+            parts: {
+                head: 0.8,
+                body: 0.9,
+                legFrontLeft: 0.7,
+                legFrontRight: 0.7,
+                legHindLeft: 0.6,
+                legHindRight: 0.6,
+            }
         });
 
         const setHealth = (newHealth: Health) => {
@@ -80,6 +93,8 @@ export const usePlayerStore = defineStore(
         }
 
         return {
+            profile,
+            setProfile,
             progress,
             setProgress,
             location,
